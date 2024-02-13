@@ -1,0 +1,1538 @@
+{
+    "credit": "Dumper created by uniquadev, please report any wrong value.",
+    "version": "version-f2b5c592c03b4183.bin",
+    "subs": [
+        {
+            "name": "GetDataModelDescriptor",
+            "offset": "0x1396690",
+            "address": "0x7ff686746690",
+            "hashsim": "2ecbb9895471849f78762e05422c1c31",
+            "cc": "int *()"
+        },
+        {
+            "name": "GetTaskScheduler",
+            "offset": "0x2917bc0",
+            "address": "0x7ff687cc7bc0",
+            "hashsim": "4ecb9bed4210f419fbfc950b503f00c4"
+        },
+        {
+            "name": "lua_openbase",
+            "offset": "0x230df90",
+            "address": "0x7ff6876bdf90",
+            "hashsim": "6e8b39c1c604a59d7c77af0e223f9244",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "RBXPrintf",
+            "offset": "0x1238f80",
+            "address": "0x7ff6865e8f80",
+            "hashsim": "61969a5e45985673c3bef2242bb917f",
+            "cc": "void(unsigned int, const char *, ...)"
+        },
+        {
+            "name": "luaL_register",
+            "offset": "0x22f1980",
+            "address": "0x7ff6876a1980",
+            "hashsim": "6e8a39e1e064bd9d7c77af0f623fda44",
+            "cc": "void __fastcall(__int64, unsigned __int64 ii, unsigned __int64 **)"
+        },
+        {
+            "name": "luaopen_coroutine",
+            "offset": "0x2317e80",
+            "address": "0x7ff6876c7e80",
+            "hashsim": "660b39e3ca40b11d7c772f2d263f1ac4",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8, double _XMM2_8)"
+        },
+        {
+            "name": "ScriptContextStartScript",
+            "offset": "0xe55b30",
+            "address": "0x7ff686205b30",
+            "hashsim": "6e8239e1ca44a19d7c77af09623f9ac4",
+            "cc": "__int64 __fastcall(__int64, __int64)"
+        },
+        {
+            "name": "ScriptContextResume",
+            "offset": "0xe07850",
+            "address": "0x7ff6861b7850",
+            "hashsim": "6e08fdef6112ed8dfcf23d44603d037e",
+            "cc": "__int64 __fastcall(__int64, __int64, __int64, unsigned int, char)"
+        },
+        {
+            "name": "debug_info",
+            "offset": "0x22fc000",
+            "address": "0x7ff6876ac000",
+            "hashsim": "6e8b39e16456e99d5f77ad2e403d5874",
+            "cc": "__int64 __fastcall(__int64, __int64, __int64)"
+        },
+        {
+            "name": "debug_traceback",
+            "offset": "0x22fd6e0",
+            "address": "0x7ff6876ad6e0",
+            "hashsim": "239abde1e416ed1d7f77af0a403d02f4",
+            "cc": "__int64 __fastcall(__int64, __int64, __int64, int)"
+        },
+        {
+            "name": "debug_profilebegin",
+            "offset": "0xe12140",
+            "address": "0x7ff6861c2140",
+            "hashsim": "2e91698d2123a41f70bcad4a41bf4455",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "debug_profileend",
+            "offset": "0xe122a0",
+            "address": "0x7ff6861c22a0",
+            "hashsim": "6e0a0da56410f81c7ddb2d2c50be4157",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "debug_loadmodule",
+            "offset": "0xe123d0",
+            "address": "0x7ff6861c23d0",
+            "hashsim": "373182549f9283d4c42c596abba7dd3"
+        },
+        {
+            "name": "debug_getmemorycategory",
+            "offset": "0xe123f0",
+            "address": "0x7ff6861c23f0",
+            "hashsim": "277a38457522afbd16a38f2bd0be0284",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "debug_setmemorycategory",
+            "offset": "0xe12420",
+            "address": "0x7ff6861c2420",
+            "hashsim": "353182549f9283dcc428496a3fa7df3"
+        },
+        {
+            "name": "debug_resetmemorycategory",
+            "offset": "0xe12440",
+            "address": "0x7ff6861c2440",
+            "hashsim": "6f9339cd215be10759bfed0462bdddd7",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "debug_dumpheap",
+            "offset": "0xe125b0",
+            "address": "0x7ff6861c25b0",
+            "hashsim": "373182549f9283dcc42c496abfa7df3"
+        },
+        {
+            "name": "debug_dumprefs",
+            "offset": "0xe125d0",
+            "address": "0x7ff6861c25d0",
+            "hashsim": "6f0a3d856850a09d7d23a70bc23f15c4"
+        },
+        {
+            "name": "_graphemes",
+            "offset": "0xe129c0",
+            "address": "0x7ff6861c29c0",
+            "hashsim": "6e9b39c1c64efc9f7cf3ed23623d1454",
+            "cc": "__int64 __fastcall(unsigned __int8 *)"
+        },
+        {
+            "name": "_nfcnormalize",
+            "offset": "0xe12f20",
+            "address": "0x7ff6861c2f20",
+            "hashsim": "6e0b39d7f670fd3d3c77cf05729d9cc6",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "_nfdnormalize",
+            "offset": "0xe13990",
+            "address": "0x7ff6861c3990",
+            "hashsim": "6e1b3de3f652e19d7c77cd42429d99e6",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "Color3_new",
+            "offset": "0xd95720",
+            "address": "0x7ff686145720",
+            "hashsim": "26087ba14413e91e1e73af1bd26e870f",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8)"
+        },
+        {
+            "name": "Color3_fromRGB",
+            "offset": "0xd95800",
+            "address": "0x7ff686145800",
+            "hashsim": "2608f3a10401a98e1c338f0ad22e174d",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8)"
+        },
+        {
+            "name": "Color3_toHSV",
+            "offset": "0xd95af0",
+            "address": "0x7ff686145af0",
+            "hashsim": "660239c1c151b88d7c77ad2af33ec694",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "Color3_fromHSV",
+            "offset": "0xd958f0",
+            "address": "0x7ff6861458f0",
+            "hashsim": "208839e50640e89d7c72af23e1bd1674",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8)"
+        },
+        {
+            "name": "Color3_fromHex",
+            "offset": "0xd95cb0",
+            "address": "0x7ff686145cb0",
+            "hashsim": "459de8812c94e83e757ccb13686c6b97",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "Ray_new",
+            "offset": "0xd960a0",
+            "address": "0x7ff6861460a0",
+            "hashsim": "260a39c54645f18d3c73af37e27e1c24",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8, double _XMM2_8, double _XMM3_8)"
+        },
+        {
+            "name": "Region3_new",
+            "offset": "0xd96500",
+            "address": "0x7ff686146500",
+            "hashsim": "660a39e10041a09d7d63af2c423f13c4",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8, double _XMM2_8)"
+        },
+        {
+            "name": "Region3int16_new",
+            "offset": "0xd96820",
+            "address": "0x7ff686146820",
+            "hashsim": "208239a10850e99f3df62d8a403f8244",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "PhysicalProperties_new",
+            "offset": "0xd96b10",
+            "address": "0x7ff686146b10",
+            "hashsim": "240a39e54850a09d7d77af45603f8666",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "Rect_new",
+            "offset": "0xd97090",
+            "address": "0x7ff686147090",
+            "hashsim": "64c8b9e54a44b59dfc66a7096a259004",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "Vector3_new",
+            "offset": "0xd9a1b0",
+            "address": "0x7ff68614a1b0",
+            "hashsim": "6608ffe54611f90f58338f7bf23f476f",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8)"
+        },
+        {
+            "name": "Vector3_FromNormalId",
+            "offset": "0xdc0f80",
+            "address": "0x7ff686170f80",
+            "hashsim": "ad82ade5034098855833252a12bf10e5",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8)"
+        },
+        {
+            "name": "Vector3_fromNormalId",
+            "offset": "0xdc0f80",
+            "address": "0x7ff686170f80",
+            "hashsim": "ad82ade5034098855833252a12bf10e5",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8)"
+        },
+        {
+            "name": "Vector3_FromAxis",
+            "offset": "0xdc1020",
+            "address": "0x7ff686171020",
+            "hashsim": "78aa5840250e10d18e1242b3e3f4245",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8)"
+        },
+        {
+            "name": "Vector3_fromAxis",
+            "offset": "0xdc1020",
+            "address": "0x7ff686171020",
+            "hashsim": "78aa5840250e10d18e1242b3e3f4245",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8)"
+        },
+        {
+            "name": "Vector3_min",
+            "offset": "0xd9a7e0",
+            "address": "0x7ff68614a7e0",
+            "hashsim": "9e06b9c50550f80c18f56d1b626d4706",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8, double _XMM2_8, double _XMM3_8)"
+        },
+        {
+            "name": "Vector3_max",
+            "offset": "0xd9a970",
+            "address": "0x7ff68614a970",
+            "hashsim": "9e14b9850550b80c58f1691b606d5706",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8, double _XMM2_8, double _XMM3_8)"
+        },
+        {
+            "name": "Vector3int16_new",
+            "offset": "0xd9be90",
+            "address": "0x7ff68614be90",
+            "hashsim": "26cbb9ad4857a80d7c67a50bc2bf0cb0",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "Vector2int16_new",
+            "offset": "0xd9c9f0",
+            "address": "0x7ff68614c9f0",
+            "hashsim": "208bbba10865e89dfc762705e1350506",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "BrickColor_new",
+            "offset": "0xd9e4c0",
+            "address": "0x7ff68614e4c0",
+            "hashsim": "24803f810000a5977cf2ad034cbe11d4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "BrickColor_random",
+            "offset": "0xdc15a0",
+            "address": "0x7ff6861715a0",
+            "hashsim": "a449f8817622a5947414263e043f4114",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "BrickColor_palette",
+            "offset": "0xdc15e0",
+            "address": "0x7ff6861715e0",
+            "hashsim": "6fc2ad95420383b770b56ee7421cdd45",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "BrickColor_New",
+            "offset": "0xd9e4c0",
+            "address": "0x7ff68614e4c0",
+            "hashsim": "24803f810000a5977cf2ad034cbe11d4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "BrickColor_Random",
+            "offset": "0xdc15a0",
+            "address": "0x7ff6861715a0",
+            "hashsim": "a449f8817622a5947414263e043f4114",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "BrickColor_White",
+            "offset": "0xd9e370",
+            "address": "0x7ff68614e370",
+            "hashsim": "a2492be57e05a1b559432f3f5e371ac6",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "BrickColor_Gray",
+            "offset": "0xd9e3a0",
+            "address": "0x7ff68614e3a0",
+            "hashsim": "b6423be57acce1b578432f2f56271ac4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "BrickColor_DarkGray",
+            "offset": "0xd9e3d0",
+            "address": "0x7ff68614e3d0",
+            "hashsim": "a66a2b656e4ca5a5da632f2f563e1ac6",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "BrickColor_Black",
+            "offset": "0xd9e400",
+            "address": "0x7ff68614e400",
+            "hashsim": "66423b657ec485a558432f2f562d5a87",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "BrickColor_Red",
+            "offset": "0xd9e340",
+            "address": "0x7ff68614e340",
+            "hashsim": "e6633b657644a1ad78420f2f520c1ae6",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "BrickColor_Yellow",
+            "offset": "0xd9e430",
+            "address": "0x7ff68614e430",
+            "hashsim": "b66a7b657e85c5a5d8422f2f563c1a86",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "BrickColor_Green",
+            "offset": "0xd9e460",
+            "address": "0x7ff68614e460",
+            "hashsim": "e6633b657eacb1a57843072f56be1ac4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "BrickColor_Blue",
+            "offset": "0xd9e490",
+            "address": "0x7ff68614e490",
+            "hashsim": "f64a3a647ea8a1a5da6327ab7e8c1a87",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "DateTime_now",
+            "offset": "0xda1bf0",
+            "address": "0x7ff686151bf0",
+            "hashsim": "d979852633ac1cb559ff1b71ef0b1f",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "DateTime_fromUnixTimestamp",
+            "offset": "0xda1c80",
+            "address": "0x7ff686151c80",
+            "hashsim": "6a0b3d056701a007fcb36d0a44e60a1d",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "DateTime_fromUnixTimestampMillis",
+            "offset": "0xda1d50",
+            "address": "0x7ff686151d50",
+            "hashsim": "2a23bda12401e917fcb36d0040fe0a1d",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "DateTime_fromUniversalTime",
+            "offset": "0xda1e20",
+            "address": "0x7ff686151e20",
+            "hashsim": "641a39014a44a4993c678d2bd23f1904",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "DateTime_fromLocalTime",
+            "offset": "0xda2060",
+            "address": "0x7ff686152060",
+            "hashsim": "668a39014a14a09f3c66ad0bc23e1905",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "DateTime_fromIsoDate",
+            "offset": "0xda22a0",
+            "address": "0x7ff6861522a0",
+            "hashsim": "2b9a39814651a91d7bbae71263bfc957"
+        },
+        {
+            "name": "UDim_new",
+            "offset": "0xda2ce0",
+            "address": "0x7ff686152ce0",
+            "hashsim": "2e916da52613f89d5db3ef5a603d493f",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "UDim2_new",
+            "offset": "0xda3240",
+            "address": "0x7ff686153240",
+            "hashsim": "28803bc11754a0153c722d027cbe6715",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "UDim2_fromOffset",
+            "offset": "0xda34d0",
+            "address": "0x7ff6861534d0",
+            "hashsim": "2f0b2d602411a81f7c63ad22e0be0017",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "UDim2_fromScale",
+            "offset": "0xda3620",
+            "address": "0x7ff686153620",
+            "hashsim": "221b3de02551a99f7c636f22423d0434",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "Faces_new",
+            "offset": "0xda3be0",
+            "address": "0x7ff686153be0",
+            "hashsim": "6e9239c3c640a51d5c660e2b0abf1015",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "Axes_new",
+            "offset": "0xda4050",
+            "address": "0x7ff686154050",
+            "hashsim": "641a11c7a840a11d3c232f2b6a3f4114",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "CellId_new",
+            "offset": "0xda4490",
+            "address": "0x7ff686154490",
+            "hashsim": "3228bd8760d4f80c3c41abbbfaec3f26",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8)"
+        },
+        {
+            "name": "SharedTable_new",
+            "offset": "0xda5890",
+            "address": "0x7ff686155890",
+            "hashsim": "279aadac6a5be58d7853a70bc0be5177",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "SharedTable_isFrozen",
+            "offset": "0xda7b50",
+            "address": "0x7ff686157b50",
+            "hashsim": "441339a14001a0975c36a526d0be3864",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "SharedTable_clone",
+            "offset": "0xda7100",
+            "address": "0x7ff686157100",
+            "hashsim": "1373182549fd083dcc42cc862bfa7df3"
+        },
+        {
+            "name": "SharedTable_cloneAndFreeze",
+            "offset": "0xda7110",
+            "address": "0x7ff686157110",
+            "hashsim": "13b11c204dfd083ddc42cd8e6bb93d93"
+        },
+        {
+            "name": "SharedTable_increment",
+            "offset": "0xda5a30",
+            "address": "0x7ff686155a30",
+            "hashsim": "445a78ab447d88cd7147fd3ec6be7d22",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "SharedTable_size",
+            "offset": "0xda79e0",
+            "address": "0x7ff6861579e0",
+            "hashsim": "6e833da06a11ac9d78bbad2656bd4064",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "SharedTable_update",
+            "offset": "0xda5f80",
+            "address": "0x7ff686155f80",
+            "hashsim": "47ca7963427da9cf3557fd3ec68f1f16",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "SharedTable_clear",
+            "offset": "0xda78d0",
+            "address": "0x7ff6861578d0",
+            "hashsim": "6f82b8886041a09f75eead36409e605e",
+            "cc": "__int64 __fastcall(__int64, __int64, __int64)"
+        },
+        {
+            "name": "NumberSequence_new",
+            "offset": "0xda8090",
+            "address": "0x7ff686158090",
+            "hashsim": "2a133de27200810f7d3fad6a603d9354",
+            "cc": "__int64 __fastcall(__int64, __int64, __int64, double _XMM3_8)"
+        },
+        {
+            "name": "ColorSequence_new",
+            "offset": "0xda8b10",
+            "address": "0x7ff686158b10",
+            "hashsim": "6c2abdc42170ed973d16ad8ae22d1744",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "NumberSequenceKeypoint_new",
+            "offset": "0xda94a0",
+            "address": "0x7ff6861594a0",
+            "hashsim": "22123dc02610a80f7d72ad2ad12c0466",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "ColorSequenceKeypoint_new",
+            "offset": "0xda97d0",
+            "address": "0x7ff6861597d0",
+            "hashsim": "e48bbde12240e11f3c222d2ac2340005",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "NumberRange_new",
+            "offset": "0xda9a70",
+            "address": "0x7ff686159a70",
+            "hashsim": "2aa0fd646400e48d7ddaad2afa3f4424",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "TweenInfo_new",
+            "offset": "0xda9d20",
+            "address": "0x7ff686159d20",
+            "hashsim": "66823fe14e44b19d74676f20463e5144",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "DockWidgetPluginGuiInfo_new",
+            "offset": "0xdaa300",
+            "address": "0x7ff68615a300",
+            "hashsim": "62133de04874b01534077f7e472fd647",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8)"
+        },
+        {
+            "name": "PluginDrag_new",
+            "offset": "0xdaa600",
+            "address": "0x7ff68615a600",
+            "hashsim": "664abbe5c054bd3d7456e70e62bf1344",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "Random_new",
+            "offset": "0xdab500",
+            "address": "0x7ff68615b500",
+            "hashsim": "62da3d804650b11f7d636d2ef72f5244",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "PathWaypoint_new",
+            "offset": "0xdac0e0",
+            "address": "0x7ff68615c0e0",
+            "hashsim": "6fc839a14616a99bff72af4a60bfd354",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8, double _XMM2_8)"
+        },
+        {
+            "name": "FloatCurveKey_new",
+            "offset": "0xdac5f0",
+            "address": "0x7ff68615c5f0",
+            "hashsim": "27ca21e40e13e815f8522d3b433d5475",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "RotationCurveKey_new",
+            "offset": "0xdace40",
+            "address": "0x7ff68615ce40",
+            "hashsim": "62ca2bc08655ac8f7d73e5226d250d44",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "RaycastParams_new",
+            "offset": "0xdae080",
+            "address": "0x7ff68615e080",
+            "hashsim": "42a33fc54a0ca5bd5803042b563d1ac4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "OverlapParams_new",
+            "offset": "0xdaf210",
+            "address": "0x7ff68615f210",
+            "hashsim": "420239656600a5a5d802002b56251ad4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "CatalogSearchParams_new",
+            "offset": "0xdafdb0",
+            "address": "0x7ff68615fdb0",
+            "hashsim": "28379f566042561b921042b56270a97",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "Font_new",
+            "offset": "0xdb1940",
+            "address": "0x7ff686161940",
+            "hashsim": "2b9ebfa44203a4095b78a54250bfdb17",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "Font_fromEnum",
+            "offset": "0xdb1ac0",
+            "address": "0x7ff686161ac0",
+            "hashsim": "6982fda14213f59f59bfed10663d9015",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "Font_fromName",
+            "offset": "0xdb1c00",
+            "address": "0x7ff686161c00",
+            "hashsim": "2fba3d806309ad0b773a8f1a40bf4b57",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "Font_fromId",
+            "offset": "0xdb1da0",
+            "address": "0x7ff686161da0",
+            "hashsim": "2eca29a54211bd9d7d6fa70c713d1855",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "Path2DControlPoint_new",
+            "offset": "0xdb80f0",
+            "address": "0x7ff6861680f0",
+            "hashsim": "6cc239a54e54a9157c63a7004ead1446",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "CFrame_new",
+            "offset": "0xd9ec30",
+            "address": "0x7ff68614ec30",
+            "hashsim": "2e0a39e16a54a8077c63ef2c783d1644",
+            "cc": "__int64 __fastcall(__int64, __int64, double _XMM2_8)"
+        },
+        {
+            "name": "CFrame_fromEulerAnglesXYZ",
+            "offset": "0xdc1690",
+            "address": "0x7ff686171690",
+            "hashsim": "668a29e54846b59e7c63672b723f12c4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "CFrame_Angles",
+            "offset": "0xdc1690",
+            "address": "0x7ff686171690",
+            "hashsim": "668a29e54846b59e7c63672b723f12c4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "CFrame_fromEulerAnglesYXZ",
+            "offset": "0xdc1790",
+            "address": "0x7ff686171790",
+            "hashsim": "66ca29e54842b59f7c636729723f12c4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "CFrame_fromOrientation",
+            "offset": "0xdc1790",
+            "address": "0x7ff686171790",
+            "hashsim": "66ca29e54842b59f7c636729723f12c4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "CFrame_fromEulerAngles",
+            "offset": "0xda0a30",
+            "address": "0x7ff686150a30",
+            "hashsim": "660a39856452b10d3c26272e303d1464",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8)"
+        },
+        {
+            "name": "CFrame_fromAxisAngle",
+            "offset": "0xdc1890",
+            "address": "0x7ff686171890",
+            "hashsim": "668ab9e19242b59f3d77af6b703f10c5",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8, double _XMM2_8)"
+        },
+        {
+            "name": "CFrame_fromMatrix",
+            "offset": "0xda1080",
+            "address": "0x7ff686151080",
+            "hashsim": "f453bdc556e1a91d3877ac96ce6f5607",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8)"
+        },
+        {
+            "name": "CFrame_lookAt",
+            "offset": "0xda0cf0",
+            "address": "0x7ff686150cf0",
+            "hashsim": "34403b854440be35b8738709e82e57c4",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8, double _XMM2_8, double _XMM3_8)"
+        },
+        {
+            "name": "CFrame_lookAlong",
+            "offset": "0xda0ed0",
+            "address": "0x7ff686150ed0",
+            "hashsim": "2656b9c54454d94f3c73ed3bf86e3705",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8, double _XMM2_8, double _XMM3_8)"
+        },
+        {
+            "name": "Vector2_new",
+            "offset": "0xd9d510",
+            "address": "0x7ff68614d510",
+            "hashsim": "2488fba14600f91f1f3aad1b5a6c572f",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8)"
+        },
+        {
+            "name": "Vector2_min",
+            "offset": "0xd9d5e0",
+            "address": "0x7ff68614d5e0",
+            "hashsim": "26c2398746128d9d78512f3d52bd4035",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "Vector2_max",
+            "offset": "0xd9d790",
+            "address": "0x7ff68614d790",
+            "hashsim": "22c23b8754118f9d59d1af3b4a7d4037",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "Instance_new",
+            "offset": "0xdcbd90",
+            "address": "0x7ff68617bd90",
+            "hashsim": "6e8a7987601ea59f5cf3ed4244bfc45c",
+            "cc": "__int64 __fastcall(char *, double _XMM1_8, __int64, double)"
+        },
+        {
+            "name": "buffer_create",
+            "offset": "0x233ece0",
+            "address": "0x7ff6876eece0",
+            "hashsim": "a69a3dad2e35ea0f7d67ad72707c0814",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "buffer_fromstring",
+            "offset": "0x233ed90",
+            "address": "0x7ff6876eed90",
+            "hashsim": "2f9a2d8c6413ec0d71aaaf0240becddd",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "buffer_tostring",
+            "offset": "0x233ee80",
+            "address": "0x7ff6876eee80",
+            "hashsim": "26c114b7a051b9193b2b9d53f6f82387",
+            "cc": "double __fastcall(__int64, __int64)"
+        },
+        {
+            "name": "buffer_readi8",
+            "offset": "0x23403e0",
+            "address": "0x7ff6876f03e0",
+            "hashsim": "e02f9144480ac7a7ac0e2d39f54a6533"
+        },
+        {
+            "name": "buffer_readu8",
+            "offset": "0x2340510",
+            "address": "0x7ff6876f0510",
+            "hashsim": "12617f1499f4d91008522dc8ee1102e2"
+        },
+        {
+            "name": "buffer_readi16",
+            "offset": "0x2340640",
+            "address": "0x7ff6876f0640",
+            "hashsim": "2204d91086dc019540197f5c85604168"
+        },
+        {
+            "name": "buffer_readu16",
+            "offset": "0x2340770",
+            "address": "0x7ff6876f0770",
+            "hashsim": "4a9154c812f7c2b613a126089944df79"
+        },
+        {
+            "name": "buffer_readi32",
+            "offset": "0x23408a0",
+            "address": "0x7ff6876f08a0",
+            "hashsim": "c00c648034888a4c908a27443812829"
+        },
+        {
+            "name": "buffer_readu32",
+            "offset": "0x23409c0",
+            "address": "0x7ff6876f09c0",
+            "hashsim": "b9c409f2693c9913bc4360801352079"
+        },
+        {
+            "name": "buffer_readf32",
+            "offset": "0x2340af0",
+            "address": "0x7ff6876f0af0",
+            "hashsim": "67a6f13211083d1000a9c00550424406"
+        },
+        {
+            "name": "buffer_readf64",
+            "offset": "0x2340c20",
+            "address": "0x7ff6876f0c20",
+            "hashsim": "d93ae909ee07aef669e36e19276abdbc"
+        },
+        {
+            "name": "buffer_writei8",
+            "offset": "0x2340d50",
+            "address": "0x7ff6876f0d50",
+            "hashsim": "7f30a088323c15219a268e32166ac7b9"
+        },
+        {
+            "name": "buffer_writeu8",
+            "offset": "0x2340d50",
+            "address": "0x7ff6876f0d50",
+            "hashsim": "7f30a088323c15219a268e32166ac7b9"
+        },
+        {
+            "name": "buffer_writei16",
+            "offset": "0x2340ed0",
+            "address": "0x7ff6876f0ed0",
+            "hashsim": "41ed203cc727400c3180c0cb108203"
+        },
+        {
+            "name": "buffer_writeu16",
+            "offset": "0x2340ed0",
+            "address": "0x7ff6876f0ed0",
+            "hashsim": "41ed203cc727400c3180c0cb108203"
+        },
+        {
+            "name": "buffer_writei32",
+            "offset": "0x2341050",
+            "address": "0x7ff6876f1050",
+            "hashsim": "2e08ade16051a10f7c722d22c07d0074",
+            "cc": "__int64 __fastcall(__int64, __int64, __int64)"
+        },
+        {
+            "name": "buffer_writeu32",
+            "offset": "0x2341050",
+            "address": "0x7ff6876f1050",
+            "hashsim": "2e08ade16051a10f7c722d22c07d0074",
+            "cc": "__int64 __fastcall(__int64, __int64, __int64)"
+        },
+        {
+            "name": "buffer_writef32",
+            "offset": "0x23411d0",
+            "address": "0x7ff6876f11d0",
+            "hashsim": "2e1bbde12450a18f3c72af22c06f0554",
+            "cc": "__int64 __fastcall(__int64, __int64, __int64)"
+        },
+        {
+            "name": "buffer_writef64",
+            "offset": "0x2341360",
+            "address": "0x7ff6876f1360",
+            "hashsim": "220abde06450a1cfbd72af22c03e0414",
+            "cc": "__int64 __fastcall(__int64, __int64, __int64)"
+        },
+        {
+            "name": "buffer_readstring",
+            "offset": "0x233f440",
+            "address": "0x7ff6876ef440",
+            "hashsim": "a027ed07909a8335446ede98c73a8008"
+        },
+        {
+            "name": "buffer_writestring",
+            "offset": "0x233fb50",
+            "address": "0x7ff6876efb50",
+            "hashsim": "931f07001863129628658269d40109b5"
+        },
+        {
+            "name": "buffer_len",
+            "offset": "0x233fe10",
+            "address": "0x7ff6876efe10",
+            "hashsim": "e6c8b0afd3c282478e2e3b083c0f749e",
+            "cc": "void __fastcall()"
+        },
+        {
+            "name": "buffer_copy",
+            "offset": "0x233fe70",
+            "address": "0x7ff6876efe70",
+            "hashsim": "c7262f993b683454007132ab32508569"
+        },
+        {
+            "name": "buffer_fill",
+            "offset": "0x2340160",
+            "address": "0x7ff6876f0160",
+            "hashsim": "e254108f0c2e24ad38d0bfebe8600b09"
+        },
+        {
+            "name": "utf8_offset",
+            "offset": "0x22ff420",
+            "address": "0x7ff6876af420",
+            "hashsim": "66db39a00226f19d7c76af26403c14e4",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "utf8_codepoint",
+            "offset": "0x22fe860",
+            "address": "0x7ff6876ae860",
+            "hashsim": "268a29e36e54f58d7cf7bd26603f0474",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "utf8_char",
+            "offset": "0x22fec40",
+            "address": "0x7ff6876aec40",
+            "hashsim": "661bb9e14414e91d7d77252660bf1ae4",
+            "cc": "__int64 __fastcall(__int64, __int64, __int64, __int64)"
+        },
+        {
+            "name": "utf8_len",
+            "offset": "0x22fe550",
+            "address": "0x7ff6876ae550",
+            "hashsim": "268a39a5c800e19f7d77af2b403d1544",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "utf8_codes",
+            "offset": "0x22ff9a0",
+            "address": "0x7ff6876af9a0",
+            "hashsim": "fdabd88e473e0897deaad6240bed457",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "assert",
+            "offset": "0x2309590",
+            "address": "0x7ff6876b9590",
+            "hashsim": "249b39a04413a00df0ac8d62617560d4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "error",
+            "offset": "0x2304830",
+            "address": "0x7ff6876b4830",
+            "hashsim": "668bb9e36456f19d7c77af04e2add344",
+            "cc": "void __fastcall __noreturn(__int64)"
+        },
+        {
+            "name": "gcinfo",
+            "offset": "0x2308230",
+            "address": "0x7ff6876b8230",
+            "hashsim": "ee427b85c2a0a4ad75adaf28151c825d",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "getfenv",
+            "offset": "0x2305e90",
+            "address": "0x7ff6876b5e90",
+            "hashsim": "269e3f8a64012d8f3312ab5b5035ee54",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "getmetatable",
+            "offset": "0x23051e0",
+            "address": "0x7ff6876b51e0",
+            "hashsim": "3e933fa5403ca19f742a2d0a429c5c54",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "next",
+            "offset": "0x2308c20",
+            "address": "0x7ff6876b8c20",
+            "hashsim": "e64339e1ca54ad1d5c372f26223f9045",
+            "cc": "__int64 __fastcall(char *, __int64, __int64, __int64)"
+        },
+        {
+            "name": "newproxy",
+            "offset": "0x230b700",
+            "address": "0x7ff6876bb700",
+            "hashsim": "6f8abdaa6112bc1d7cb2ad22c4bfc0de",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "print",
+            "offset": "0x2304480",
+            "address": "0x7ff6876b4480",
+            "hashsim": "661219f55245a90178f46d0e5abf50c5",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "rawequal",
+            "offset": "0x2306120",
+            "address": "0x7ff6876b6120",
+            "hashsim": "26a71ce55435a99d7453cf32c0bd0ed5",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "rawget",
+            "offset": "0x23061d0",
+            "address": "0x7ff6876b61d0",
+            "hashsim": "ec0b39c3ca00ad059c672f03623f807d",
+            "cc": "__int64 __fastcall(char *, __int64, unsigned __int64, __int64)"
+        },
+        {
+            "name": "rawset",
+            "offset": "0x2306720",
+            "address": "0x7ff6876b6720",
+            "hashsim": "668bb9e36a14ad1d5c772f0e222f9a44",
+            "cc": "__int64 __fastcall(_QWORD *, __int64, __int64, __int64)"
+        },
+        {
+            "name": "rawlen",
+            "offset": "0x2308180",
+            "address": "0x7ff6876b8180",
+            "hashsim": "1c89eda36236a88f7c1ead28453c41b6",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "select",
+            "offset": "0x2309640",
+            "address": "0x7ff6876b9640",
+            "hashsim": "21b3f212250b88d7a3baf2364bc0434",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "setfenv",
+            "offset": "0x2305f20",
+            "address": "0x7ff6876b5f20",
+            "hashsim": "ec9f98e2613ec0dfd3eaf5360bd4d14",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8)"
+        },
+        {
+            "name": "setmetatable",
+            "offset": "0x2305300",
+            "address": "0x7ff6876b5300",
+            "hashsim": "668ab9e96464ac9f79322f16401d5855",
+            "cc": "__int64 __fastcall(_QWORD *)"
+        },
+        {
+            "name": "tonumber",
+            "offset": "0x2304550",
+            "address": "0x7ff6876b4550",
+            "hashsim": "261a39e18a71b89f75b2ad23413d0456",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "tostring",
+            "offset": "0x230b6a0",
+            "address": "0x7ff6876bb6a0",
+            "hashsim": "46fd9e2d443be89e7cee8f2270be1b85",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "type",
+            "offset": "0x2308270",
+            "address": "0x7ff6876b8270",
+            "hashsim": "6e9ab9e4a470e19d74772f4660add064",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "typeof",
+            "offset": "0x2308750",
+            "address": "0x7ff6876b8750",
+            "hashsim": "6e9839e3c454b19d5477af4c70ad5044",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "coroutine_create",
+            "offset": "0x23175d0",
+            "address": "0x7ff6876c75d0",
+            "hashsim": "6f4aba81cb44b01d7d34e527c23f1054",
+            "cc": "__int64 __fastcall(__int64, __int64)"
+        },
+        {
+            "name": "coroutine_running",
+            "offset": "0x2317cc0",
+            "address": "0x7ff6876c7cc0",
+            "hashsim": "6e6aade1c143c1bfdd79adc96a9d72c4"
+        },
+        {
+            "name": "coroutine_status",
+            "offset": "0x2316180",
+            "address": "0x7ff6876c6180",
+            "hashsim": "66db39e16462f19d5c73af2400ad10c4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "coroutine_wrap",
+            "offset": "0x2317a80",
+            "address": "0x7ff6876c7a80",
+            "hashsim": "6f8a3d80e073f1097ef2af42461f9454",
+            "cc": "__int64 __fastcall(__int64, __int64)"
+        },
+        {
+            "name": "coroutine_yield",
+            "offset": "0x2317c60",
+            "address": "0x7ff6876c7c60",
+            "hashsim": "ebbb3cccb57928ec7e71619268106c10",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "coroutine_isyieldable",
+            "offset": "0x2317d30",
+            "address": "0x7ff6876c7d30",
+            "hashsim": "634b39a54a52a09d5c72a51a5bbf00c3"
+        },
+        {
+            "name": "coroutine_close",
+            "offset": "0x2317d60",
+            "address": "0x7ff6876c7d60",
+            "hashsim": "420a39a54700a08d5c76a53e513d0814",
+            "cc": "__int64 __fastcall(__int64, __int64, __int64, __int64)"
+        },
+        {
+            "name": "string_byte",
+            "offset": "0x231b580",
+            "address": "0x7ff6876cb580",
+            "hashsim": "660abda5c854a19f75b3a72ec03d1144",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "string_char",
+            "offset": "0x231b930",
+            "address": "0x7ff6876cb930",
+            "hashsim": "6bb3f8aa4470988d5d73e35c60be9d01",
+            "cc": "__int64 __fastcall(__int64, __int64, __int64, int)"
+        },
+        {
+            "name": "string_find",
+            "offset": "0x231d660",
+            "address": "0x7ff6876cd660",
+            "hashsim": "3733825497d283dee42c616aaba7df2"
+        },
+        {
+            "name": "string_format",
+            "offset": "0x231fbf0",
+            "address": "0x7ff6876cfbf0",
+            "hashsim": "6c9bf9e14432f88d7ef1e70ae0bd8ad4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "string_gmatch",
+            "offset": "0x231d9f0",
+            "address": "0x7ff6876cd9f0",
+            "hashsim": "2f8abd80e012f91b5d72e562443c9d15",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "string_gsub",
+            "offset": "0x231f5a0",
+            "address": "0x7ff6876cf5a0",
+            "hashsim": "2e9ab981e430e88f7f73af2264bf1394",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "string_len",
+            "offset": "0x2319ed0",
+            "address": "0x7ff6876c9ed0",
+            "hashsim": "2ebc3fa2b250f98eb167c373643d0417",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "string_lower",
+            "offset": "0x231ac30",
+            "address": "0x7ff6876cac30",
+            "hashsim": "6e8abda71252ad8d75f2ef0040bc0697",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "string_match",
+            "offset": "0x231d670",
+            "address": "0x7ff6876cd670",
+            "hashsim": "2a8a39834052fdbf5e37ef0260145d97"
+        },
+        {
+            "name": "string_rep",
+            "offset": "0x231af10",
+            "address": "0x7ff6876caf10",
+            "hashsim": "6e9b3d80e652f18d7d73af61643d8154",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "string_reverse",
+            "offset": "0x231aad0",
+            "address": "0x7ff6876caad0",
+            "hashsim": "2a9abc820052f8897f7be53264bc5b16",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "string_sub",
+            "offset": "0x2319fb0",
+            "address": "0x7ff6876c9fb0",
+            "hashsim": "6e8b3de1e450e11d7d75ef07643d5044",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "string_upper",
+            "offset": "0x231ada0",
+            "address": "0x7ff6876cada0",
+            "hashsim": "6f89bd8f0252ad0d75f2ef0040bd8e97",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "string_split",
+            "offset": "0x2320180",
+            "address": "0x7ff6876d0180",
+            "hashsim": "6e0b39e3e654a99d7c77af2e223f9244",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "string_pack",
+            "offset": "0x2324be0",
+            "address": "0x7ff6876d4be0",
+            "hashsim": "2a1339a1e204a01d7c77ff0a40bd16c5",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "string_packsize",
+            "offset": "0x2325520",
+            "address": "0x7ff6876d5520",
+            "hashsim": "629a7dc54a55e50d74f7ef2851b75442",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "string_unpack",
+            "offset": "0x23258b0",
+            "address": "0x7ff6876d58b0",
+            "hashsim": "6e0b39e3e472b88d7c33af2660bd1244",
+            "cc": "__int64 __fastcall(__int64, double _XMM1_8)"
+        },
+        {
+            "name": "table_concat",
+            "offset": "0x2333460",
+            "address": "0x7ff6876e3460",
+            "hashsim": "2a9a29e14232e19d75f7af28603d0a76",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "table_foreach",
+            "offset": "0x2330160",
+            "address": "0x7ff6876e0160",
+            "hashsim": "6eca39e3c240a19d7c77af06523d9044",
+            "cc": "__int64 __fastcall(char *, __int64, __int64, __int128 *)"
+        },
+        {
+            "name": "table_foreachi",
+            "offset": "0x232f4a0",
+            "address": "0x7ff6876df4a0",
+            "hashsim": "6fcabdc1e422a11d7e77af48523d90d5",
+            "cc": "__int64 __fastcall(char *)"
+        },
+        {
+            "name": "table_getn",
+            "offset": "0x2331750",
+            "address": "0x7ff6876e1750",
+            "hashsim": "1981ede96223a01f5c32af20503c4155",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "table_maxn",
+            "offset": "0x23311c0",
+            "address": "0x7ff6876e11c0",
+            "hashsim": "66cb3be24a54a59d7c672d272a3f1024",
+            "cc": "__int64 __fastcall(__int64, __int64, __int64 _R8, __int64)"
+        },
+        {
+            "name": "table_insert",
+            "offset": "0x2331df0",
+            "address": "0x7ff6876e1df0",
+            "hashsim": "669ba9c54859e90f3cfaaf30743d5864",
+            "cc": "__int64 __fastcall(_QWORD *, __int64, __int64, __int64)"
+        },
+        {
+            "name": "table_remove",
+            "offset": "0x2331ff0",
+            "address": "0x7ff6876e1ff0",
+            "hashsim": "6788e9816013ec1d9c3eaf025035187c",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "table_sort",
+            "offset": "0x2335650",
+            "address": "0x7ff6876e5650",
+            "hashsim": "78eada57641ac95792b273ac0be7a57",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "table_pack",
+            "offset": "0x23337b0",
+            "address": "0x7ff6876e37b0",
+            "hashsim": "6e8b3de1c612f19d7c73af0c60bf8054",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "table_unpack",
+            "offset": "0x2333f30",
+            "address": "0x7ff6876e3f30",
+            "hashsim": "6f8a39c1e201a115df63ad0ac215885d",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "table_move",
+            "offset": "0x2332320",
+            "address": "0x7ff6876e2320",
+            "hashsim": "6e9a39e16a04e11d7c772f2a203d9245",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "table_create",
+            "offset": "0x2335760",
+            "address": "0x7ff6876e5760",
+            "hashsim": "6e1bbde1c642a19d7d638f2ec03f10d4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "table_find",
+            "offset": "0x2335e40",
+            "address": "0x7ff6876e5e40",
+            "hashsim": "668ab9e16a20a41d7c73a563723f1804",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "table_clear",
+            "offset": "0x2336260",
+            "address": "0x7ff6876e6260",
+            "hashsim": "4de8382d4566b05cf07ecf7258bf431e",
+            "cc": "__int64 __fastcall(__int64, __int64, __int64, __int64)"
+        },
+        {
+            "name": "table_freeze",
+            "offset": "0x23362b0",
+            "address": "0x7ff6876e62b0",
+            "hashsim": "668e3d8b2860ba9f7977a747441f3506",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "table_isfrozen",
+            "offset": "0x23363c0",
+            "address": "0x7ff6876e63c0",
+            "hashsim": "620299255604a1117d760d2870bc40a5",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "table_clone",
+            "offset": "0x2336420",
+            "address": "0x7ff6876e6420",
+            "hashsim": "6682ed8c6001b40f53b7af32d0bd4016",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "bit32_arshift",
+            "offset": "0x2338a70",
+            "address": "0x7ff6876e8a70",
+            "hashsim": "6a9b2dc07213b89f7d63af20e23c01f4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "bit32_band",
+            "offset": "0x23385e0",
+            "address": "0x7ff6876e85e0",
+            "hashsim": "212bc806f26a40514122d66342c0205",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "bit32_bnot",
+            "offset": "0x2338760",
+            "address": "0x7ff6876e8760",
+            "hashsim": "46706d85021fbc0d7c02ab72613c01f6",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "bit32_bor",
+            "offset": "0x2338660",
+            "address": "0x7ff6876e8660",
+            "hashsim": "2d822d8d7553fc8f38238e0257bec4d6",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "bit32_bxor",
+            "offset": "0x23386e0",
+            "address": "0x7ff6876e86e0",
+            "hashsim": "2f833d8d7553fc8f30328c2257bec4d6",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "bit32_btest",
+            "offset": "0x2338620",
+            "address": "0x7ff6876e8620",
+            "hashsim": "22033c406542e99550332f68613520c4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "bit32_extract",
+            "offset": "0x2338e50",
+            "address": "0x7ff6876e8e50",
+            "hashsim": "e69b3bad4c34fa9d3d76af4260240814",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "bit32_lrotate",
+            "offset": "0x2338c80",
+            "address": "0x7ff6876e8c80",
+            "hashsim": "e996d89223fec8ce546af32e07c0db6",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "bit32_lshift",
+            "offset": "0x2338800",
+            "address": "0x7ff6876e8800",
+            "hashsim": "e3badc03211a11f5512af28d03c1064",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "bit32_replace",
+            "offset": "0x2338f20",
+            "address": "0x7ff6876e8f20",
+            "hashsim": "2e9b6dc02a10a89f7d33ad2f423c0084",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "bit32_rrotate",
+            "offset": "0x2338d00",
+            "address": "0x7ff6876e8d00",
+            "hashsim": "6192d81021be88df546ad72a07c0cb4",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "bit32_rshift",
+            "offset": "0x2338930",
+            "address": "0x7ff6876e8930",
+            "hashsim": "6e9b2f803a53a89f7d22af28e03d0554",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "bit32_countlz",
+            "offset": "0x2339080",
+            "address": "0x7ff6876e9080",
+            "hashsim": "365b6de11237b89d7463af35613d0014",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "bit32_countrz",
+            "offset": "0x2339140",
+            "address": "0x7ff6876e9140",
+            "hashsim": "2306f856a13bc8d5d06af7634bc0d74",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "bit32_byteswap",
+            "offset": "0x23391f0",
+            "address": "0x7ff6876e91f0",
+            "hashsim": "7532d851a17b80d7c02ed72603c0136",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "os_clock",
+            "offset": "0x23392c0",
+            "address": "0x7ff6876e92c0",
+            "hashsim": "c660bde45305a59556ba2d37703d0006",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "os_date",
+            "offset": "0x233e2a0",
+            "address": "0x7ff6876ee2a0",
+            "hashsim": "6b8a39a14054e89d7d66af63403e1014",
+            "cc": "__int64 __fastcall(__int64 L)"
+        },
+        {
+            "name": "os_difftime",
+            "offset": "0x233eb80",
+            "address": "0x7ff6876eeb80",
+            "hashsim": "4e3a3fc06611a01f7f6a2d2bd2340804",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "os_time",
+            "offset": "0x233e910",
+            "address": "0x7ff6876ee910",
+            "hashsim": "2d48bda16f32ec25f8768f4220ad922f",
+            "cc": "__int64 __fastcall(__int64)"
+        },
+        {
+            "name": "pseudo2addr",
+            "offset": "0x22e9b70",
+            "address": "0x7ff687699b70",
+            "hashsim": "6949b98b4f43a59c7c638f0200bc0077",
+            "cc": "void *__fastcall(_QWORD *, int)"
+        }
+    ],
+    "addys": [
+        {
+            "name": "luaT_typenames",
+            "offset": "0x36f1260",
+            "address": "0x7ff688aa1260"
+        },
+        {
+            "name": "dummynode",
+            "offset": "0x36f0bf8",
+            "address": "0x7ff688aa0bf8"
+        }
+    ],
+    "offsets": [
+        {
+            "name": "L_TOP",
+            "offset": "0x10"
+        },
+        {
+            "name": "L_BASE",
+            "offset": "0x8"
+        },
+        {
+            "name": "L_GT",
+            "offset": "0x60"
+        }
+    ],
+    "enums": {
+        "LuauBytecodeType": {
+            "LBC_TYPE_NIL": 0,
+            "LBC_TYPE_BOOLEAN": 1,
+            "LBC_TYPE_NUMBER": 2,
+            "LBC_TYPE_USERDATA": 3,
+            "LBC_TYPE_VECTOR": 4,
+            "LBC_TYPE_STRING": 5,
+            "LBC_TYPE_BUFFER": 6,
+            "LBC_TYPE_USERDATA7": 7,
+            "LBC_TYPE_TABLE": 8,
+            "LBC_TYPE_THREAD": 9,
+            "LBC_TYPE_FUNCTION": 10
+        }
+    }
+}
