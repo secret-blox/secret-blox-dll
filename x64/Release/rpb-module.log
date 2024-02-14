@@ -1,0 +1,8 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(503,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  source.cpp
+  Generating code
+  774 of 6132 functions (12.6%) were compiled, the rest were copied from previous compilation.
+    3 functions were new in current compilation
+    125 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  rpb-module.vcxproj -> D:\etc\Sources\Project-Objective\Build\RobloxPlayerBeta\Module\build.dll
