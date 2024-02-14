@@ -26,10 +26,8 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     {
         case DLL_PROCESS_ATTACH:
         {
-            // Disables Direct Notification Calls For DLL_THREAD_ATTACH and DLL_THREAD_DETACH :spooky:
             DisableThreadLibraryCalls(hModule);
             
-            // Not to hard to understand what this does, creates a thread blah blah blah hacker shit
             if (auto mainThread = CreateThread(
                 nullptr, 
                 0, 
@@ -39,14 +37,13 @@ BOOL APIENTRY DllMain( HMODULE hModule,
                 nullptr
             ))
             {
-                CloseHandle(hModule); // Closes the handle if the thread returns a nullptr / or 0 in dottik terms
+                CloseHandle(hModule);
             }
         }
     }
     return TRUE;
 }
 
-// Return call back for our hook, "secretBlox", yes exporting will this but not to worry as we are white listed so we don't care if we show 
 extern "C" __declspec(dllexport) int secretBlox(int code, WPARAM wParam, LPARAM lParam) {
     return CallNextHookEx(NULL, code, wParam, lParam);
 }
