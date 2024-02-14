@@ -6,6 +6,7 @@
     - Namespace&Classes: `PascalCase`
 
 Dependencies Info: [luau, zstd, ...]
+
 Hold distingued .lib files for Debug and Release
 1) dependencies/Release, dependencies/Debug:
     - Hold static libraries devided per compilation profile.
