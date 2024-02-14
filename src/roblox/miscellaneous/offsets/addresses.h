@@ -116,12 +116,12 @@ struct lua_State;
 namespace module {
 	namespace addresses {
 		const uintptr_t nilObject = rebase(0x266843e7450);
-		const uintptr_t dummyNode = rebase(0x266843e6ee8);
-		const uintptr_t taskScheduler = rebase(0x26683725400);
+		const uintptr_t dummyNode = rebase(0x36f0bf8); //updated
+		const uintptr_t taskScheduler = rebase(0x2919670); //updated
 		const uintptr_t luauExecute = rebase(0x26683384780);
 		const uintptr_t fireProximityPrompt = rebase(0x00000000000);
 		const uintptr_t pushInstance = rebase(0x00000000000);
-		const uintptr_t stdOut = rebase(0x26682290270);
+		const uintptr_t stdOut = rebase(0x1238f80); // updated
 		const uintptr_t fireClickDetector = rebase(0x000000000000);
 		const uintptr_t getState = rebase(0x26681d6c690);
 		const uintptr_t fireTouchInterest = rebase(0x00000000000);
