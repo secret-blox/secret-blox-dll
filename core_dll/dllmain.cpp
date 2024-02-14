@@ -1,11 +1,17 @@
-#include "offsets/functions.h"
-#include <Windows.h>
+#include "framework.h"
 
-// Call Point to our starter thread, this will run once our thread has been created and point to this function :heheh:
+#include "sb_utils/mem.h"
+#include "sb_utils/rbx/api.h"
 
+/// <summary>
+/// entry.
+/// </summary>
 DWORD WINAPI startMain(LPVOID lpReserved) {
-    // r_print (0: Normal Print, 1: Information, 2: Warning, 3: Error)
-    rbxPrint("Error", "Now i just cant bring myself away");
+    // perform setups in order of priority
+    SB::Memory::setup();
+    SB::RBX::setup();
+
+    SB::RBX::printf(SB::RBX::MESSAGE_INFO, "test");
 
     return TRUE;
 }
@@ -24,22 +30,17 @@ BOOL APIENTRY DllMain( HMODULE hModule,
             DisableThreadLibraryCalls(hModule);
             
             // Not to hard to understand what this does, creates a thread blah blah blah hacker shit
-            auto mainThread = CreateThread(
+            if (auto mainThread = CreateThread(
                 nullptr, 
                 0, 
                 startMain, 
                 hModule, 
                 0, 
                 nullptr
-            );
-            
-            // Closes the handle if the thread returns a nullptr / or 0 in dottik terms
-
-           
-            if (mainThread) {
-                CloseHandle(hModule);
+            ))
+            {
+                CloseHandle(hModule); // Closes the handle if the thread returns a nullptr / or 0 in dottik terms
             }
-
         }
     }
     return TRUE;

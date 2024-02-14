@@ -4,6 +4,9 @@
 namespace SB::Offsets
 {
 	namespace RBX {
+		namespace Subs {
+			constexpr uintptr_t printf = 0x1238f80;
+		}
 		namespace Instance {
 			constexpr uintptr_t descBase = 0x0;
 			constexpr uintptr_t name = 0x48;
