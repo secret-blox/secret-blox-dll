@@ -1,7 +1,12 @@
 #include "framework.h"
 
+#include "sb_utils/utils.h"
 #include "sb_utils/mem.h"
 #include "sb_utils/rbx/api.h"
+#include "sb_utils/rbx/taskscheduler.h"
+#include "sb_utils/offsets.h"
+
+HMODULE dllModule = 0;
 
 /// <summary>
 /// entry.
@@ -11,8 +16,20 @@ DWORD WINAPI startMain(LPVOID lpReserved) {
     SB::Memory::setup();
     SB::RBX::setup();
 
-    SB::RBX::printf(SB::RBX::MESSAGE_INFO, "test");
+    // setup log file
+    auto dllDir = SB::Utils::getDllDir(dllModule);
+    std::ofstream log(dllDir / "log.txt");
+    
+    log << "base: " << std::hex << SB::Memory::base << std::endl;
 
+    const auto taskScheduler = SB::RBX::TaskScheduler::get();
+
+    log << "taskScheduler: " << std::hex << taskScheduler.baseAddress << std::endl;
+    
+    log << "jobsPtr: " << std::hex << taskScheduler.jobsStartAddress << std::endl;
+    log << "Registered jobs: " << std::dec << (taskScheduler.jobsEndAddress - taskScheduler.jobsStartAddress) / 8 << std::endl;
+
+    log.close();
     return TRUE;
 }
 
@@ -28,6 +45,7 @@ BOOL APIENTRY DllMain(HMODULE hModule,
     {
         DisableThreadLibraryCalls(hModule);
 
+        dllModule = hModule;
         if (auto mainThread = CreateThread(
             nullptr,
             0,

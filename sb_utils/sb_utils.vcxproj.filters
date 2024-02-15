@@ -27,6 +27,12 @@
     <ClInclude Include="include\sb_utils\mem.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="include\sb_utils\utils.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sb_utils\rbx\taskscheduler.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\sb_utils.cpp">
@@ -35,7 +41,13 @@
     <ClCompile Include="src\memory.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="include\sb_utils\rbx\api.cpp">
+    <ClCompile Include="src\rbx\api.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rbx\taskscheduler.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
   </ItemGroup>

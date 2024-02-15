@@ -1,16 +1,9 @@
-### Notes
+## TODO
 
-* Project namespace: `SB`
-* Naming convention: 
-    - Vars&Methods: `camelCase`
-    - Namespace&Classes: `PascalCase`
+sup gamers, please write below needed features and improvements you didn't have time to implement
 
-Dependencies Info: [luau, zstd, ...]
+### Better Logging Service (uniqua)
+> instead of using RBX::Printf we should use file operations to logs stuff, for this reason
+I suggest the use of a logging service that can be used to log stuff in many formats with a time prefix, such: [HH:MM:SS] [LOGTYPE] [MESSAGE]
 
-dependencies folder hold distingued .lib and .h files.
-1) dependencies/Release, dependencies/Debug:
-    - Hold static libraries devided per compilation profile.
-3) dependencies/Include
-    - include files devided per folder
-
-> have a nice coding 8)
+We also need to log exceptions in the log file, so we can debug the dlls and the game easier.
