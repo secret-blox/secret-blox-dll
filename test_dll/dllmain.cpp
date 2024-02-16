@@ -19,17 +19,29 @@ DWORD WINAPI startMain(LPVOID lpReserved) {
     // setup log file
     auto dllDir = SB::Utils::getDllDir(dllModule);
     std::ofstream log(dllDir / "log.txt");
-    
+
     log << "base: " << std::hex << SB::Memory::base << std::endl;
 
     const auto taskScheduler = SB::RBX::TaskScheduler::get();
 
     log << "taskScheduler: " << std::hex << taskScheduler.baseAddress << std::endl;
-    
-    log << "jobsPtr: " << std::hex << taskScheduler.jobsStartAddress << std::endl;
-    log << "Registered jobs: " << std::dec << (taskScheduler.jobsEndAddress - taskScheduler.jobsStartAddress) / 8 << std::endl;
+
+
+    const auto jobAddresses = taskScheduler.getAllJobs();
+
+    log << "Registered jobs: " << std::dec << jobAddresses.size() << std::endl;
+
+    for (const auto& jobAddress : jobAddresses) {
+        const char* jobName = taskScheduler.getJobName(jobAddress);
+        log << "Job: 0x" << std::hex << jobAddress << ", Name: " << jobName << std::endl;
+    }
+
+    const uintptr_t LuaGc = taskScheduler.getJobByName("LuaGc");
+
+    log << "Found LuaGc: 0x" << std::hex << LuaGc << std::endl;
 
     log.close();
+
     return TRUE;
 }
 
