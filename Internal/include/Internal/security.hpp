@@ -1,6 +1,6 @@
 #pragma once
 #include <cstdint>
-#include "random.h"
+#include "random.hpp"
 #pragma warning(disable: 4307)
 
 namespace SB::Security
