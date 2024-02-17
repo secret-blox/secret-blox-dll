@@ -1,4 +1,9 @@
-cmake_minimum_required(VERSION 3.28)
+﻿cmake_minimum_required (VERSION 3.8)
+
+if (POLICY CMP0141)
+  cmake_policy(SET CMP0141 NEW)
+  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
+endif()
 
 if(UNIX)
 	# cargo install xwin; xwin --accept-license --cache-dir ~/.xwin-cache splat --include-debug-libs --output ~/.xwin-cache/splat
@@ -50,22 +55,24 @@ if(UNIX)
 	set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif(UNIX)
 
-project(
-	internal
-	VERSION 0.0.0
-	LANGUAGES CXX
+project (
+  "secret-blox-dll"
+  VERSION 0.0.0
+  LANGUAGES CXX
 )
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-file(
-	GLOB_RECURSE
-	SOURCES
-	CONFIGURE_DEPENDS
-	"${PROJECT_SOURCE_DIR}/src/*.cpp"
-	"${PROJECT_SOURCE_DIR}/src/*.hpp"
-)
+# Find all source files in src & include directories
+file(GLOB_RECURSE SRC_FILES "Rbx/src/*.cpp" "Internal/src/*.cpp")
+file(GLOB_RECURSE HEADER_FILES "Rbx/include/*.h" "Rbx/include/*.hpp" "Internal/include/*.h" "Internal/include/*.hpp")
 
-add_library(${PROJECT_NAME} SHARED ${SOURCES})
+# Internal DLL
+add_library(InternalDll SHARED ${SRC_FILES} ${HEADER_FILES})
+
+target_include_directories(InternalDll
+    PUBLIC Rbx/include
+    PUBLIC Internal/include
+)
