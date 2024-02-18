@@ -5,7 +5,6 @@
 
 namespace SB::Security
 {
-	// Xor :3
 	template <uint32_t size, uint32_t counter>
 	struct ObfuscatedString {
 		static constexpr std::array<uint8_t, size> XOR = uniformDistribution<uint8_t, size, counter>(0, 255);
