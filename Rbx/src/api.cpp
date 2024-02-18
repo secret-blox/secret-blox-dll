@@ -2,7 +2,7 @@
 #include "Internal/memory.hpp"
 #include "offsets.hpp"
 
-void SB::RBX::setup()
+void SB::Rbx::setup()
 {
 	printf = (RBXPrintf*)SB_OFFSET(SB::Offsets::Rbx::Subs::printf);
 	getTaskScheduler = (RBXGetTaskScheduler*)SB_OFFSET(SB::Offsets::Rbx::Subs::getTaskScheduler);

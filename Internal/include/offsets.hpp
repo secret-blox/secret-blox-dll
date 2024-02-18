@@ -13,22 +13,34 @@
 
 namespace SB::Offsets
 {
+	#define OFFSET constexpr uintptr_t
 	namespace Rbx {
 		const std::string version = "version-85c66b72a4fe4a74";
 		namespace Subs {
-			constexpr uintptr_t printf = 0x122bc10;				// [IMPORTANT]
-			constexpr uintptr_t getTaskScheduler = 0x290e2d0;	// [IMPORTANT]
-			constexpr uintptr_t deobfTSJobsPtr = 0x290ee00;		// [IMPORTANT]
+			OFFSET printf = 0x122bc10;				// [IMPORTANT]
+			OFFSET getTaskScheduler = 0x290e2d0;	// [IMPORTANT]
+			OFFSET deobfTSJobsPtr = 0x290ee00;		// [IMPORTANT]
+		}
+		namespace Reflection {
+			namespace Descriptor {
+				OFFSET name = 0x8;	    // [RAREUPDATE] [IMPORTANT] (RBX::Name)
+			}
 		}
 		namespace Instance {
-			constexpr uintptr_t descBase = 0x0;		// [RAREUPDATE]
-			constexpr uintptr_t name = 0x48;		// [RAREUPDATE] [IMPORTANT]
-			constexpr uintptr_t children = 0x50;	// [RAREUPDATE] [IMPORTANT]
-			constexpr uintptr_t parent = 0x60;		// [RAREUPDATE] [IMPORTANT]
+			OFFSET self = 0x8;			// [RAREUPDATE] [IMPORTANT]
+			OFFSET descriptor = 0x18;	// [RAREUPDATE] [IMPORTANT] (RBX::Reflection::ClassDescriptor*)
+			OFFSET name = 0x48;			// [RAREUPDATE] [IMPORTANT]
+			OFFSET children = 0x50;		// [RAREUPDATE] [IMPORTANT]
+			OFFSET parent = 0x60;		// [RAREUPDATE] [IMPORTANT]
 		}
 		namespace TaskScheduler {
-			constexpr uintptr_t jobs = 0x180;	// [RAREUPDATE] [IMPORTANT]
-			constexpr uintptr_t jobsEnd = 0x188; // [RAREUPDATE] [DEPRECATED] (just after jobs)
+			OFFSET jobs = 0x180;		// [RAREUPDATE] [IMPORTANT]
+			OFFSET jobsEnd = 0x188;		// [RAREUPDATE] [DEPRECATED] (just after jobs)
+			namespace Job {
+				OFFSET self = 0x8;		// [RAREUPDATE] [IMPORTANT]
+				OFFSET name = 0x98;		// [RAREUPDATE] [IMPORTANT]
+				OFFSET scriptContext = 0x1f0; // [RAREUPDATE] [IMPORTANT]
+			}
 		}
 	}
 	namespace standard {

@@ -69,10 +69,27 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 file(GLOB_RECURSE SRC_FILES "Rbx/src/*.cpp" "Internal/src/*.cpp")
 file(GLOB_RECURSE HEADER_FILES "Rbx/include/*.h" "Rbx/include/*.hpp" "Internal/include/*.h" "Internal/include/*.hpp")
 
+# Generate version information for Windows
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/version.rc.in
+    ${CMAKE_CURRENT_BINARY_DIR}/version.rc
+    @ONLY
+)
+
 # Internal DLL
-add_library(InternalDll SHARED ${SRC_FILES} ${HEADER_FILES})
+add_library(InternalDll SHARED
+	${SRC_FILES} ${HEADER_FILES}
+	${CMAKE_CURRENT_BINARY_DIR}/version.rc 
+)
 
 target_include_directories(InternalDll
     PUBLIC Rbx/include
     PUBLIC Internal/include
 )
+
+# Set fake name nvwgf2um.dll - NVIDIA D3D User Mode Driver
+set_target_properties(InternalDll PROPERTIES
+    OUTPUT_NAME "nvwgf2um2"
+	DESCRIPTION "NVIDIA D3D10 Driver, Version 551.23"
+)
+

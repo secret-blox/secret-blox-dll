@@ -10,25 +10,44 @@
 
 HMODULE dllModule = 0;
 
-DWORD WINAPI startMain(LPVOID lpReserved) {
-    // perform setups in order of priority
-    SB::Memory::setup();
-    SB::RBX::setup();
-
+void debug()
+{
     // setup log file
     auto dllDir = SB::Utils::getDllDir(dllModule);
     std::ofstream log(dllDir / "log.txt");
+    log << "Base: " << std::hex << SB::Memory::base << std::endl;
 
-    log << "base: " << std::hex << SB::Memory::base << std::endl;
+    const auto taskScheduler = SB::Rbx::TaskScheduler::get();
+    log << "TaskScheduler: " << std::hex << taskScheduler.baseAddress << std::endl;
 
-    const auto taskScheduler = SB::RBX::TaskScheduler::get();
+    const auto jobs = taskScheduler.getJobs();
+    log << "Jobs: " << std::dec << jobs.size() << std::endl;
 
-    log << "taskScheduler: " << std::hex << taskScheduler.baseAddress << std::endl;
+    const auto luaGc = taskScheduler.getJobByName("LuaGc");
+    if (luaGc.has_value())
+    {
+        const auto scriptContext = luaGc->getScriptContext();
+        const auto dataModel = scriptContext.getParent();
 
-    log << "jobsPtr: " << std::hex << taskScheduler.jobsStartAddress << std::endl;
-    log << "Registered jobs: " << std::dec << (taskScheduler.jobsEndAddress - taskScheduler.jobsStartAddress) / 8 << std::endl;
+        log << "DataModel: " << std::hex << dataModel.baseAddress << std::endl;
+        log << "ScriptContext: " << std::hex << scriptContext.baseAddress << std::endl;
 
-    log.close();
+        const auto children = scriptContext.getChildren();
+        log << "ScriptContext Children: " << std::dec << children.size() << std::endl;
+        for (const auto& service : children)
+		{
+			log << std::hex << service.baseAddress << ": " << service.getName() << std::endl;
+		}
+    }
+}
+
+DWORD WINAPI startMain(LPVOID lpReserved) {
+    // perform setups in order of priority
+    SB::Memory::setup(dllModule);
+    SB::Rbx::setup();
+
+    debug();
+    
     return TRUE;
 }
 
@@ -49,7 +68,7 @@ BOOL APIENTRY DllMain(HMODULE hModule,
             nullptr,
             0,
             startMain,
-            hModule,
+            nullptr, // no need to pass HMODULE as parameter to CreateThread
             0,
             nullptr
         ))

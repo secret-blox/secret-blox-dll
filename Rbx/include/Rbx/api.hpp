@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 
-namespace SB::RBX
+namespace SB::Rbx
 {
 	typedef enum {
 		MESSAGE_OUTPUT,
