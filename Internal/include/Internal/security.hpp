@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <string>
 #include "random.hpp"
 #pragma warning(disable: 4307)
 
@@ -25,7 +26,8 @@ namespace SB::Security
 			return encrypted.data();
 		}
 
-		__forceinline std::string decrypt() noexcept {
+		// not needed as const char* to std::string is well handled
+		__forceinline std::string decryptStr() noexcept {
 			for (uint32_t x = 0; x < size; x++)
 				encrypted[x] ^= XOR[x];
 
@@ -34,4 +36,4 @@ namespace SB::Security
 	};
 }
 
-#define obfuscate_str(s) (SB::Security::ObfuscatedString<sizeof(s), __COUNTER__>(s, std::make_index_sequence<sizeof(s)>()).decrypt())
+#define OBFSTR(s) (SB::Security::ObfuscatedString<sizeof(s), __COUNTER__>(s, std::make_index_sequence<sizeof(s)>()).decrypt())

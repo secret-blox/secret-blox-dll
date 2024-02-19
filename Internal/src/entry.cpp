@@ -2,6 +2,7 @@
 
 #include "Internal/utils.hpp"
 #include "Internal/memory.hpp"
+#include "Internal/logger.hpp"
 
 #include "Rbx/api.hpp"
 #include "Rbx/taskscheduler.hpp"
@@ -12,16 +13,13 @@ HMODULE dllModule = 0;
 
 void debug()
 {
-    // setup log file
-    auto dllDir = SB::Utils::getDllDir(dllModule);
-    std::ofstream log(dllDir / "log.txt");
-    log << "Base: " << std::hex << SB::Memory::base << std::endl;
+    SB::Logger::printf("Internal Base: %p\n", SB::Memory::base);
 
     const auto taskScheduler = SB::Rbx::TaskScheduler::get();
-    log << "TaskScheduler: " << std::hex << taskScheduler.baseAddress << std::endl;
+    SB::Logger::printf("TaskScheduler: %p\n", taskScheduler.baseAddress);
 
     const auto jobs = taskScheduler.getJobs();
-    log << "Jobs: " << std::dec << jobs.size() << std::endl;
+    SB::Logger::printf("Jobs: %d\n", jobs.size());
 
     const auto luaGc = taskScheduler.getJobByName("LuaGc");
     if (luaGc.has_value())
@@ -29,22 +27,21 @@ void debug()
         const auto scriptContext = luaGc->getScriptContext();
         const auto dataModel = scriptContext.getParent();
 
-        log << "DataModel: " << std::hex << dataModel.baseAddress << std::endl;
-        log << "ScriptContext: " << std::hex << scriptContext.baseAddress << std::endl;
+        SB::Logger::printf("LuaGc: %p\n", luaGc->baseAddress);
+        SB::Logger::printf("DataModel: %p\n", dataModel.baseAddress);
+        SB::Logger::printf("ScriptContext: %p\n", scriptContext.baseAddress);
 
         const auto children = scriptContext.getChildren();
-        log << "ScriptContext Children: " << std::dec << children.size() << std::endl;
-        for (const auto& service : children)
-		{
-			log << std::hex << service.baseAddress << ": " << service.getName() << std::endl;
-		}
+        SB::Logger::printf("ScriptContext Children: %d\n", children.size());
     }
 }
 
 DWORD WINAPI startMain(LPVOID lpReserved) {
     // perform setups in order of priority
+    SB::Logger::setup(SB::Utils::getDllDir(dllModule));
     SB::Memory::setup(dllModule);
     SB::Rbx::setup();
+    SB::Logger::printf("Internal: Loaded\n");
 
     debug();
     
@@ -75,7 +72,11 @@ BOOL APIENTRY DllMain(HMODULE hModule,
         {
             CloseHandle(hModule);
         }
+        break;
     }
+    case DLL_PROCESS_DETACH:
+		SB::Memory::unload();
+		break;
     }
     return TRUE;
 }
