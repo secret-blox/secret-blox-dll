@@ -1,9 +1,9 @@
 #include <windows.h>
 #include <winternl.h>
 
+#include "Internal/exchandler.hpp"
 #include "Internal/memory.hpp"
 #include "Internal/logger.hpp"
-#include "Internal/exchandler.hpp"
 
 uintptr_t SB::Memory::base = 0;
 HMODULE SB::Memory::hModule = 0;
@@ -70,7 +70,10 @@ void SB::Memory::setExceptionFilter(LPTOP_LEVEL_EXCEPTION_FILTER filter)
 {
     auto oldFilter = SetUnhandledExceptionFilter(filter);
     if (oldFilter && !originalFilter)
+    {
+        SB::Logger::printf("Memory: Original exception filter found at 0x%p\n", oldFilter);
 		originalFilter = oldFilter;
+    }
 }
 
 void SB::Memory::setup(HMODULE hModule)
@@ -78,7 +81,7 @@ void SB::Memory::setup(HMODULE hModule)
     SB::Memory::hModule = hModule;
 
     // security
-    // uniqua: for now I don't see the point to unlink the module from the PEB
+    // uniqua: I don't see the point to unlink the module from the PEB, but still good resource
 	// unlinkModuleFromPEB(); // dll unload will crash as the dll will act to be already unloaded
     
     // TODO: register an instrumentation callback to handle exceptions dispatched to the process and log them and close the process before the game logs them
@@ -91,5 +94,8 @@ void SB::Memory::setup(HMODULE hModule)
 void SB::Memory::unload()
 {
     if (originalFilter)
+    {
         setExceptionFilter(originalFilter);
+        SB::Logger::printf("Memory: Exception filter restored\n");
+    }
 }

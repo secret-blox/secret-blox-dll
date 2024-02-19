@@ -76,6 +76,7 @@ BOOL APIENTRY DllMain(HMODULE hModule,
     }
     case DLL_PROCESS_DETACH:
 		SB::Memory::unload();
+        SB::Logger::unload(); // unload logger for last
 		break;
     }
     return TRUE;

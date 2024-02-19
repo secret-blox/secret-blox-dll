@@ -13,6 +13,7 @@ void SB::Logger::setup(std::filesystem::path dllDir)
 
 void SB::Logger::unload()
 {
+    printf("Logger: Unloaded\n");
 	logFile.close();
 }
 
@@ -38,4 +39,5 @@ void SB::Logger::printf(const char* fmt, ...)
     std::time_t nowTimeT = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
     std::tm* tm = std::localtime(&nowTimeT);
     logFile << "[" << std::put_time(tm, "%Y-%m-%d %H:%M:%S") << "] " << result;
+    logFile.flush();
 }

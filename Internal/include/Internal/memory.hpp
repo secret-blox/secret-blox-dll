@@ -1,7 +1,13 @@
 #pragma once
+#pragma comment(lib, "Kernel32.lib")
 
 #include <windows.h>
 #include <stdint.h>
+
+extern "C" WINBASEAPI
+LPTOP_LEVEL_EXCEPTION_FILTER WINAPI SetUnhandledExceptionFilter(
+	_In_opt_ LPTOP_LEVEL_EXCEPTION_FILTER lpTopLevelExceptionFilter
+);
 
 #define SB_OFFSET(x) (SB::Memory::base + x)
 
