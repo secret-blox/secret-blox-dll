@@ -5,6 +5,7 @@
 
 namespace SB::Logger {
 	extern std::ofstream logFile;
+	extern std::filesystem::path dllDir;
 	void setup(std::filesystem::path dllDir);
 	void unload();
 

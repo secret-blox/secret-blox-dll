@@ -1,8 +1,8 @@
 ﻿#include "framework.hpp"
 
 #include "Internal/utils.hpp"
-#include "Internal/memory.hpp"
 #include "Internal/logger.hpp"
+#include "Internal/memory.hpp"
 
 #include "Rbx/api.hpp"
 #include "Rbx/taskscheduler.hpp"
@@ -36,12 +36,36 @@ void debug()
     }
 }
 
+bool checkOffsetsVersion()
+{
+    const auto rbxModule = reinterpret_cast<HMODULE>(SB::Memory::base);
+    if (SB::Utils::getDllDir(rbxModule).filename() != SB::Offsets::Rbx::version)
+    {
+		SB::Logger::printf("Invalid Roblox module\n");
+		return false;
+	}
+    return true;
+}
+
 DWORD WINAPI startMain(LPVOID lpReserved) {
-    // perform setups in order of priority
+    // perform core setups in order of priority
     SB::Logger::setup(SB::Utils::getDllDir(dllModule));
     SB::Memory::setup(dllModule);
     SB::Rbx::setup();
-    SB::Logger::printf("Internal: Loaded\n");
+    // SB::Websocket::setup();
+    // perform offsets version check before running important setups
+    if (!checkOffsetsVersion())
+    {
+        // TODO: communicate with ui
+        SB::Logger::printf("Invalid offsets version, update offsets!\n");
+        return FALSE;
+    }
+    // TODO: perform important setups in order of priority
+    // SB::Execution::setup();
+    SB::Logger::printf("Internal: Loaded\n"); 
+
+    // TODO: check if websocket setupped correctly
+    // TODO: check if execution setupped correctly
 
     debug();
     

@@ -6,8 +6,10 @@
 #include <chrono>
 
 std::ofstream SB::Logger::logFile;
+std::filesystem::path SB::Logger::dllDir;
 void SB::Logger::setup(std::filesystem::path dllDir)
 {
+    SB::Logger::dllDir = dllDir;
 	logFile.open(dllDir / OBFSTR("log.txt"));
 }
 
