@@ -85,6 +85,9 @@ add_library(InternalDll SHARED
 target_include_directories(InternalDll
     PUBLIC Rbx/include
     PUBLIC Internal/include
+	PUBLIC Luau.Common
+	PUBLIC Luau.Compiler
+	PUBLIC Luau.VM
 )
 
 # Set fake name nvwgf2um.dll - NVIDIA D3D User Mode Driver
@@ -93,3 +96,10 @@ set_target_properties(InternalDll PROPERTIES
 	DESCRIPTION "NVIDIA D3D10 Driver, Version 551.23"
 )
 
+# Add Luau directory
+add_subdirectory(Luau)
+
+# Link dll with luau
+target_link_libraries(InternalDll PUBLIC Luau.Common)
+target_link_libraries(InternalDll PUBLIC Luau.Compiler)
+target_link_libraries(InternalDll PUBLIC Luau.VM)
