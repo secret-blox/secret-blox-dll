@@ -17,3 +17,4 @@ unnecessire SPOOF_FUNC macros usage even in functions with no actual calls...
 After a brief discussion with 7ap we decided to keep the SPOOF_FUNC macro but instead customize it to overwrite the return address 
 to point to a win thread cleanup function. However stack frames will still be present but this is better than aving return addresses 
 pointing to random memory locations.
+(About stack frames we can consider encrypting the saved RBP on stack and decrypt it only on function end)
