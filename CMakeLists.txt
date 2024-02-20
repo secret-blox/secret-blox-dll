@@ -65,9 +65,20 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# Find all source files in src & include directories for Security
+file(GLOB_RECURSE SEC_SRC_FILES "Security/src/*.cpp")
+file(GLOB_RECURSE SEC_HEADER_FILES "Security/include/*.h" "Security/include/*.hpp")
+
+
 # Find all source files in src & include directories
 file(GLOB_RECURSE SRC_FILES "Rbx/src/*.cpp" "Internal/src/*.cpp")
 file(GLOB_RECURSE HEADER_FILES "Rbx/include/*.h" "Rbx/include/*.hpp" "Internal/include/*.h" "Internal/include/*.hpp")
+
+# Security LIB
+add_library(SB.Security STATIC
+	${SEC_SRC_FILES} ${SEC_HEADER_FILES}
+)
+target_include_directories(SB.Security INTERFACE Security/include)
 
 # Generate version information for Windows
 configure_file(
@@ -77,21 +88,21 @@ configure_file(
 )
 
 # Internal DLL
-add_library(InternalDll SHARED
+add_library(SB.Internal SHARED
 	${SRC_FILES} ${HEADER_FILES}
 	${CMAKE_CURRENT_BINARY_DIR}/version.rc 
- "Internal/include/callstackspoof.h")
-
-target_include_directories(InternalDll
+)
+target_include_directories(SB.Internal
     PUBLIC Rbx/include
     PUBLIC Internal/include
+	PUBLIC SB.Security
 	PUBLIC Luau.Common
 	PUBLIC Luau.Compiler
 	PUBLIC Luau.VM
 )
 
 # Set fake name nvwgf2um.dll - NVIDIA D3D User Mode Driver
-set_target_properties(InternalDll PROPERTIES
+set_target_properties(SB.Internal PROPERTIES
     OUTPUT_NAME "nvwgf2um2"
 	DESCRIPTION "NVIDIA D3D10 Driver, Version 551.23"
 )
@@ -100,6 +111,7 @@ set_target_properties(InternalDll PROPERTIES
 add_subdirectory(Luau)
 
 # Link dll with luau
-target_link_libraries(InternalDll PUBLIC Luau.Common)
-target_link_libraries(InternalDll PUBLIC Luau.Compiler)
-target_link_libraries(InternalDll PUBLIC Luau.VM)
+target_link_libraries(SB.Internal PUBLIC SB.Security)
+target_link_libraries(SB.Internal PUBLIC Luau.Common)
+target_link_libraries(SB.Internal PUBLIC Luau.Compiler)
+target_link_libraries(SB.Internal PUBLIC Luau.VM)

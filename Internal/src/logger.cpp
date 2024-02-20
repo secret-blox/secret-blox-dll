@@ -1,8 +1,8 @@
 #include "Internal/logger.hpp"
-#include "Internal/security.hpp"
+#include "Security/security.hpp"
 
-#include "xor.hpp"
-#include "callstackspoof.h"
+#include "Security/xor.hpp"
+#include "Security/callstackspoof.h"
 
 #include <cstdarg>
 #include <format>

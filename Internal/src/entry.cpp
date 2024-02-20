@@ -7,8 +7,8 @@
 #include "Rbx/api.hpp"
 #include "Rbx/taskscheduler.hpp"
 
-#include "callstackspoof.h"
-#include "xor.hpp"
+#include "Security/callstackspoof.h"
+#include "Security/xor.hpp"
 
 #include "offsets.hpp"
 

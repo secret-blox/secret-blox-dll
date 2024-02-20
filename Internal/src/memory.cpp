@@ -5,8 +5,8 @@
 #include "Internal/memory.hpp"
 #include "Internal/logger.hpp"
 
-#include "callstackspoof.h"
-#include "xor.hpp"
+#include "Security/callstackspoof.h"
+#include "Security/xor.hpp"
 
 uintptr_t SB::Memory::base = 0;
 HMODULE SB::Memory::hModule = 0;
@@ -49,7 +49,6 @@ inline PLDR_MODULE getLoadOrderModuleList()
 
 void SB::Memory::unlinkModuleFromPEB()
 {
-    SPOOF_FUNC;
     PLDR_MODULE StartEntry = getLoadOrderModuleList();
     PLDR_MODULE CurrentEntry = (PLDR_MODULE)StartEntry->InLoadOrderModuleList.Flink;
 

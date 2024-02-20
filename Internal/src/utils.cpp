@@ -1,5 +1,5 @@
 #include "Internal/utils.hpp"
-#include "callstackspoof.h"
+#include "Security/callstackspoof.h"
 
 std::filesystem::path SB::Utils::getDllDir(HMODULE hModule)
 {
