@@ -3,6 +3,9 @@
 #include "Internal/logger.hpp"
 #include "Internal/exchandler.hpp"
 
+#include "callstackspoof.h"
+#include "xor.hpp"
+
 // resource: https://github.com/tapika/stacktrace/blob/develop/src/exception_handler.cpp
 #define STACKTRACE_EXCEPTION_STRING(Code) { Code, #Code },
 const std::map<unsigned int, const char*> exceptionCodes =
@@ -32,11 +35,13 @@ const std::map<unsigned int, const char*> exceptionCodes =
 
 LONG __stdcall SB::Memory::defaultExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
 {
+    SPOOF_FUNC;
     unsigned int code = exceptionInfo->ExceptionRecord->ExceptionCode;
-    const char* str = "Unknown exception code";
+    const char* str = xorstr_("Unknown exception code");
     if (exceptionCodes.find(code) != exceptionCodes.end())
         str = exceptionCodes.at(code);
-
+    
+    // TODO: Added Xor
     SB::Logger::printf(
         "CRASH DETECTED"
         "\n\nException caught: %s\n" \

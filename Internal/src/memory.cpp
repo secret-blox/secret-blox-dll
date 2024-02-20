@@ -5,6 +5,9 @@
 #include "Internal/memory.hpp"
 #include "Internal/logger.hpp"
 
+#include "callstackspoof.h"
+#include "xor.hpp"
+
 uintptr_t SB::Memory::base = 0;
 HMODULE SB::Memory::hModule = 0;
 
@@ -46,6 +49,7 @@ inline PLDR_MODULE getLoadOrderModuleList()
 
 void SB::Memory::unlinkModuleFromPEB()
 {
+    SPOOF_FUNC;
     PLDR_MODULE StartEntry = getLoadOrderModuleList();
     PLDR_MODULE CurrentEntry = (PLDR_MODULE)StartEntry->InLoadOrderModuleList.Flink;
 
@@ -68,16 +72,18 @@ void SB::Memory::unlinkModuleFromPEB()
 LPTOP_LEVEL_EXCEPTION_FILTER SB::Memory::originalFilter = nullptr;
 void SB::Memory::setExceptionFilter(LPTOP_LEVEL_EXCEPTION_FILTER filter)
 {
+    SPOOF_FUNC;
     auto oldFilter = SetUnhandledExceptionFilter(filter);
     if (oldFilter && !originalFilter)
     {
-        SB::Logger::printf("Memory: Original exception filter found at 0x%p\n", oldFilter);
+        SB::Logger::printf(xorstr_("Memory: Original exception filter found at 0x%p\n"), oldFilter);
 		originalFilter = oldFilter;
     }
 }
 
 void SB::Memory::setup(HMODULE hModule)
 {
+    SPOOF_FUNC;
     SB::Memory::hModule = hModule;
 
     // security
@@ -93,9 +99,10 @@ void SB::Memory::setup(HMODULE hModule)
 
 void SB::Memory::unload()
 {
+    SPOOF_FUNC;
     if (originalFilter)
     {
         setExceptionFilter(originalFilter);
-        SB::Logger::printf("Memory: Exception filter restored\n");
+        SB::Logger::printf(xorstr_("Memory: Exception filter restored\n"));
     }
 }

@@ -80,7 +80,7 @@ configure_file(
 add_library(InternalDll SHARED
 	${SRC_FILES} ${HEADER_FILES}
 	${CMAKE_CURRENT_BINARY_DIR}/version.rc 
-)
+ "Internal/include/callstackspoof.h")
 
 target_include_directories(InternalDll
     PUBLIC Rbx/include

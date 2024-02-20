@@ -1,6 +1,9 @@
 #include "Internal/logger.hpp"
 #include "Internal/security.hpp"
 
+#include "xor.hpp"
+#include "callstackspoof.h"
+
 #include <cstdarg>
 #include <format>
 #include <chrono>
@@ -9,18 +12,22 @@ std::ofstream SB::Logger::logFile;
 std::filesystem::path SB::Logger::dllDir;
 void SB::Logger::setup(std::filesystem::path dllDir)
 {
+    SPOOF_FUNC;
     SB::Logger::dllDir = dllDir;
 	logFile.open(dllDir / OBFSTR("log.txt"));
 }
 
 void SB::Logger::unload()
 {
-    printf("Logger: Unloaded\n");
+    SPOOF_FUNC;
+    printf(xorstr_("Logger: Unloaded\n"));
+   
 	logFile.close();
 }
 
 void SB::Logger::printf(const char* fmt, ...)
 {
+    SPOOF_FUNC;
     if (!logFile.is_open())
 		return;
     // open args
@@ -40,6 +47,6 @@ void SB::Logger::printf(const char* fmt, ...)
     // write to file with time prefix
     std::time_t nowTimeT = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
     std::tm* tm = std::localtime(&nowTimeT);
-    logFile << "[" << std::put_time(tm, "%Y-%m-%d %H:%M:%S") << "] " << result;
+    logFile << xorstr_("[") << std::put_time(tm, xorstr_("%Y-%m-%d %H:%M:%S")) << xorstr_("] ") << result;
     logFile.flush();
 }
