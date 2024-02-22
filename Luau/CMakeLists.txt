@@ -97,8 +97,6 @@ if(LUAU_EXTERN_C)
     # note that we enable LUA_USE_LONGJMP=1 as well; otherwise functions like luaL_error will throw C++ exceptions, which can't be done from extern "C" functions
     target_compile_definitions(Luau.VM PUBLIC LUA_USE_LONGJMP=1)
     target_compile_definitions(Luau.VM PUBLIC LUA_API=extern\"C\")
-    target_compile_definitions(Luau.Compiler PUBLIC LUACODE_API=extern\"C\")
-    target_compile_definitions(Luau.CodeGen PUBLIC LUACODEGEN_API=extern\"C\")
 endif()
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" AND MSVC_VERSION GREATER_EQUAL 1924)
@@ -110,20 +108,6 @@ endif()
 if (NOT MSVC)
     # disable support for math_errno which allows compilers to lower sqrt() into a single CPU instruction
     target_compile_options(Luau.VM PRIVATE -fno-math-errno)
-endif()
-
-# embed .natvis inside the library debug information
-if(MSVC)
-    target_link_options(Luau.Ast INTERFACE /NATVIS:${CMAKE_CURRENT_SOURCE_DIR}/tools/natvis/Ast.natvis)
-    target_link_options(Luau.VM INTERFACE /NATVIS:${CMAKE_CURRENT_SOURCE_DIR}/tools/natvis/VM.natvis)
-endif()
-
-# make .natvis visible inside the solution
-if(MSVC_IDE)
-    target_sources(Luau.Ast PRIVATE tools/natvis/Ast.natvis)
-    target_sources(Luau.Analysis PRIVATE tools/natvis/Analysis.natvis)
-    target_sources(Luau.CodeGen PRIVATE tools/natvis/CodeGen.natvis)
-    target_sources(Luau.VM PRIVATE tools/natvis/VM.natvis)
 endif()
 
 # validate dependencies for internal libraries
