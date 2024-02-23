@@ -110,7 +110,7 @@ set_target_properties(SB.Internal PROPERTIES
 # Add Luau directory
 add_subdirectory(Luau)
 
-# Link dll with luau
+# Link dll with libraries
 target_link_libraries(SB.Internal PUBLIC SB.Security)
 target_link_libraries(SB.Internal PUBLIC Luau.Common)
 target_link_libraries(SB.Internal PUBLIC Luau.Compiler)
