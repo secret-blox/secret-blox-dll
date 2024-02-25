@@ -6,10 +6,6 @@ endif()
 
 cmake_minimum_required(VERSION 3.0)
 
-option(LUAU_BUILD_CLI "Build CLI" OFF)
-option(LUAU_BUILD_TESTS "Build tests" OFF)
-option(LUAU_BUILD_WEB "Build Web module" OFF)
-option(LUAU_WERROR "Warnings as errors" OFF)
 option(LUAU_STATIC_CRT "Link with the static CRT (/MT)" OFF)
 option(LUAU_EXTERN_C "Use extern C for all APIs" ON)
 
