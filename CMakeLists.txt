@@ -55,28 +55,35 @@ if(UNIX)
 	set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif(UNIX)
 
-project (
-  "secret-blox-dll"
-  VERSION 0.0.0
-  LANGUAGES CXX
-)
-
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set(CMAKE_ASM_NASM_LINK_EXECUTABLE "ld <CMAKE_ASM_NASM_LINK_FLAGS> <LINK_FLAGS> <OBJECTS>  -o <TARGET> <LINK_LIBRARIES>")
+set(CMAKE_ASM_NASM_SOURCE_FILE_EXTENSIONS ${CMAKE_ASM_NASM_SOURCE_FILE_EXTENSIONS} s S)
+
+project (
+  "secret-blox-dll"
+  VERSION 0.0.0
+  LANGUAGES CXX ASM_MASM
+)
 
 # Find all source files in src & include directories for Security
 file(GLOB_RECURSE SEC_SRC_FILES "Security/src/*.cpp")
 file(GLOB_RECURSE SEC_HEADER_FILES "Security/include/*.h" "Security/include/*.hpp")
 
-
 # Find all source files in src & include directories
 file(GLOB_RECURSE SRC_FILES "Rbx/src/*.cpp" "Internal/src/*.cpp")
 file(GLOB_RECURSE HEADER_FILES "Rbx/include/*.h" "Rbx/include/*.hpp" "Internal/include/*.h" "Internal/include/*.hpp")
 
+file(GLOB_RECURSE ASM_FILES "Asm/*.asm")
+
 # Security LIB
 add_library(SB.Security STATIC
 	${SEC_SRC_FILES} ${SEC_HEADER_FILES}
+)
+add_library(SB.Asm STATIC
+	${ASM_FILES}
 )
 target_include_directories(SB.Security INTERFACE Security/include)
 
@@ -93,8 +100,8 @@ add_library(SB.Internal SHARED
 	${CMAKE_CURRENT_BINARY_DIR}/version.rc 
 )
 target_include_directories(SB.Internal
-    PUBLIC Rbx/include
     PUBLIC Internal/include
+    PUBLIC Rbx/include
 	PUBLIC SB.Security
 	PUBLIC Luau.Common
 	PUBLIC Luau.Compiler
@@ -104,13 +111,14 @@ target_include_directories(SB.Internal
 # Set fake name nvwgf2um.dll - NVIDIA D3D User Mode Driver
 set_target_properties(SB.Internal PROPERTIES
     OUTPUT_NAME "nvwgf2um2"
-	DESCRIPTION "NVIDIA D3D10 Driver, Version 551.23"
 )
+set(CMAKE_ASM_NASM_OBJECT_FORMAT win64)
 
 # Add Luau directory
 add_subdirectory(Luau)
 
 # Link dll with libraries
+target_link_libraries(SB.Internal PUBLIC SB.Asm)
 target_link_libraries(SB.Internal PUBLIC SB.Security)
 target_link_libraries(SB.Internal PUBLIC Luau.Common)
 target_link_libraries(SB.Internal PUBLIC Luau.Compiler)

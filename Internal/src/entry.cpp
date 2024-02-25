@@ -3,6 +3,7 @@
 #include "Internal/utils.hpp"
 #include "Internal/logger.hpp"
 #include "Internal/memory.hpp"
+#include "Internal/execution.hpp"
 
 #include "Rbx/api.hpp"
 #include "Rbx/taskscheduler.hpp"
@@ -38,6 +39,8 @@ void debug()
         const auto children = scriptContext.getChildren();
         SB::Logger::printf(xorstr_("ScriptContext Children: %d\n"), children.size());
     }
+    else
+        SB::Logger::printf(xorstr_("LuaGc not found\n"));
 }
 
 bool checkOffsetsVersion()
@@ -45,10 +48,7 @@ bool checkOffsetsVersion()
     SPOOF_FUNC;
     const auto rbxModule = reinterpret_cast<HMODULE>(SB::Memory::base);
     if (SB::Utils::getDllDir(rbxModule).filename() != SB::Offsets::Rbx::version)
-    {
-		SB::Logger::printf(xorstr_("Invalid Roblox module\n"));
 		return false;
-	}
     return true;
 }
 
@@ -108,9 +108,7 @@ BOOL APIENTRY DllMain(HMODULE hModule,
         break;
     }
     case DLL_PROCESS_DETACH:
-        SPOOF_FUNC;
 		SB::Memory::unload();
-        
         SB::Logger::unload(); // unload logger for last
 		break;
     }
