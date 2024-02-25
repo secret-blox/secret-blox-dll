@@ -15,11 +15,12 @@ namespace SB::Offsets
 {
 	#define OFFSET constexpr uintptr_t
 	namespace Rbx {
-		const std::string version = "version-85c66b72a4fe4a74";
+		const std::string version = "version-70a2467227df4077";
 		namespace Subs {
-			OFFSET printf = 0x122bc10;				// [IMPORTANT]
-			OFFSET getTaskScheduler = 0x290e2d0;	// [IMPORTANT]
-			OFFSET deobfTSJobsPtr = 0x290ee00;		// [IMPORTANT]
+			OFFSET printf = 0x11c3170;				// [IMPORTANT?]
+			OFFSET getTaskScheduler = 0x28a1900;	// [IMPORTANT]
+			OFFSET deobfTSJobsPtr = 0x28a2430;		// [IMPORTANT]
+			OFFSET pseudo2addr = 0x233d2c0;			// [IMPORTANT]
 		}
 		namespace Reflection {
 			namespace Descriptor {
