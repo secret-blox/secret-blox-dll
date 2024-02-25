@@ -7,6 +7,7 @@
 
 #include "Rbx/api.hpp"
 #include "Rbx/taskscheduler.hpp"
+#include "Rbx/scriptcontext.hpp"
 
 #include "Security/callstackspoof.h"
 #include "Security/xor.hpp"
@@ -29,15 +30,18 @@ void debug()
     const auto luaGc = taskScheduler.getJobByName("LuaGc");
     if (luaGc.has_value())
     {
-        const auto scriptContext = luaGc->getScriptContext();
-        const auto dataModel = scriptContext.getParent();
+        const auto scriptContextInst = luaGc->getScriptContext();
+        const auto dataModel = scriptContextInst.getParent();
 
         SB::Logger::printf(xorstr_("LuaGc: %p\n"), luaGc->baseAddress);
         SB::Logger::printf(xorstr_("DataModel: %p\n"), dataModel.baseAddress);
-        SB::Logger::printf(xorstr_("ScriptContext: %p\n"), scriptContext.baseAddress);
+        SB::Logger::printf(xorstr_("ScriptContext: %p\n"), scriptContextInst.baseAddress);
 
-        const auto children = scriptContext.getChildren();
+        const auto children = scriptContextInst.getChildren();
         SB::Logger::printf(xorstr_("ScriptContext Children: %d\n"), children.size());
+
+        const SB::Rbx::ScriptContext scriptContext = { scriptContextInst.baseAddress };
+        scriptContext.debugGetLuaState();
     }
     else
         SB::Logger::printf(xorstr_("LuaGc not found\n"));
