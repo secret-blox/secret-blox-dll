@@ -17,7 +17,7 @@ typedef union GCObject GCObject;
 */
 // clang-format off
 #define CommonHeader \
-     uint8_t tt; uint8_t marked; uint8_t memcat
+     LUAVM_SHUFFLE3(LUAVM_SEMICOLON_SEP, uint8_t tt, uint8_t marked, uint8_t memcat)
 // clang-format on
 
 /*
@@ -247,8 +247,8 @@ typedef struct TString
 
     TString* next; // next string in the hash table bucket
 
-    unsigned int hash;
-    unsigned int len;
+    unsigned int hash; // NOTE: this is vmvalued encrypted aka ptr encrypted
+    unsigned int len; // NOTE: this is vmvalued encrypted aka ptr encrypted
 
     char data[1]; // string data is allocated right after the header
 } TString;
@@ -265,7 +265,7 @@ typedef struct Udata
 
     int len;
 
-    struct Table* metatable;
+    struct Table* metatable; // NOTE: this is vmvalued encrypted aka ptr encrypted
 
     union
     {
@@ -274,6 +274,7 @@ typedef struct Udata
     };
 } Udata;
 
+/* I suggest you looking into this making sure there is now encryptions found or shuffles found */
 typedef struct Buffer
 {
     CommonHeader;
@@ -295,39 +296,40 @@ typedef struct Proto
 {
     CommonHeader;
 
-
+    LUAVM_SHUFFLE5(LUAVM_SEMICOLON_SEP,
     uint8_t nups; // number of upvalues
     uint8_t numparams;
     uint8_t is_vararg;
     uint8_t maxstacksize;
-    uint8_t flags;
+    uint8_t flags);
 
-
+    // NOTE: all these are part of a encryption family called pMember1Enc (all 4 of these have the same encryption)
+    LUAVM_SHUFFLE4(LUAVM_SEMICOLON_SEP,
     TValue* k;              // constants used by the function
     Instruction* code;      // function bytecode
     struct Proto** p;       // functions defined inside the function
-    const Instruction* codeentry;
+    const Instruction* codeentry);
 
     void* execdata;
     uintptr_t exectarget;
 
-
+    // NOTE: all these are part of a encryption family called pMember2Enc (all 5 of these have the same encryption)
+    LUAVM_SHUFFLE5(LUAVM_SEMICOLON_SEP,
     uint8_t* lineinfo;      // for each instruction, line number as a delta from baseline
     int* abslineinfo;       // baseline line info, one entry for each 1<<linegaplog2 instructions; allocated after lineinfo
     struct LocVar* locvars; // information about local variables
     TString** upvalues;     // upvalue names
-    TString* source;
+    TString* source);
 
-    TString* debugname;
-    uint8_t* debuginsn; // a copy of code[] array with just opcodes
+    TString* debugname; // NOTE: this is vmvalued encrypted aka ptr encrypted
+    uint8_t* debuginsn; // a copy of code[] array with just opcodes | NOTE: this is vmvalued encrypted aka ptr encrypted
 
-    uint8_t* typeinfo;
+    uint8_t* typeinfo; // NOTE: this is vmvalued encrypted aka ptr encrypted
 
     void* userdata;
-
     GCObject* gclist;
 
-
+    LUAVM_SHUFFLE9(LUAVM_SEMICOLON_SEP,
     int sizecode;
     int sizep;
     int sizelocvars;
@@ -336,7 +338,7 @@ typedef struct Proto
     int sizelineinfo;
     int linegaplog2;
     int linedefined;
-    int bytecodeid;
+    int bytecodeid);
 } Proto;
 // clang-format on
 
@@ -397,15 +399,16 @@ typedef struct Closure
     {
         struct
         {
-            lua_CFunction f;
-            lua_Continuation cont;
-            const char* debugname;
+            /* all three are different besides p and f being the same */
+            lua_CFunction f; // NOTE: this is vmvalued encrypted aka ptr encrypted (same as p)
+            lua_Continuation cont; // NOTE: this is vmvalued encrypted aka ptr encrypted
+            const char* debugname; // NOTE: this is vmvalued encrypted aka ptr encrypted
             TValue upvals[1];
         } c;
 
         struct
         {
-            struct Proto* p;
+            struct Proto* p; // NOTE: this is vmvalued encrypted aka ptr encrypted (same as f)
             TValue uprefs[1];
         } l;
     };
@@ -459,12 +462,12 @@ typedef struct Table
 {
     CommonHeader;
 
-
+    LUAVM_SHUFFLE5(LUAVM_SEMICOLON_SEP,
     uint8_t tmcache;    // 1<<p means tagmethod(p) is not present
     uint8_t readonly;   // sandboxing feature to prohibit writes to table
     uint8_t safeenv;    // environment doesn't share globals with other scripts
     uint8_t lsizenode;  // log2 of size of `node' array
-    uint8_t nodemask8; // (1<<lsizenode)-1, truncated to 8 bits
+    uint8_t nodemask8); // (1<<lsizenode)-1, truncated to 8 bits
 
     int sizearray; // size of `array' array
     union
@@ -473,11 +476,12 @@ typedef struct Table
         int aboundary; // negated 'boundary' of `array' array; iff aboundary < 0
     };
 
-
+    /* these 4 are part of the same encryption group called tMemberEnc (they have the possibility to change outside of the group) */
+    LUAVM_SHUFFLE4(LUAVM_SEMICOLON_SEP,
     struct Table* metatable;
     TValue* array;  // array part
     LuaNode* node;
-    GCObject* gclist;
+    GCObject* gclist);
 } Table;
 // clang-format on
 
@@ -489,6 +493,7 @@ typedef struct Table
 #define twoto(x) ((int)(1 << (x)))
 #define sizenode(t) (twoto((t)->lsizenode))
 
+/* this is what you would change to make it robloxes luaO_nilobject */
 #define luaO_nilobject (&luaO_nilobject_)
 
 LUAI_DATA const TValue luaO_nilobject_;

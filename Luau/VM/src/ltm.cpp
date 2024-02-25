@@ -16,35 +16,37 @@ const char* const luaT_typenames[] = {
     "nil",
     "boolean",
 
-    
+    LUAVM_SHUFFLE3(LUAVM_COMMA_SEP,
     "userdata",
     "number",
-    "vector",
+    "vector"),
 
     "string",
 
-    
+    LUAVM_SHUFFLE4(LUAVM_COMMA_SEP,
     "table",
     "function",
     "userdata",
-    "thread",
+    "thread"),
+
+
     "buffer",
 };
 
 const char* const luaT_eventname[] = {
     // ORDER TM
-    
+    LUAVM_SHUFFLE7(LUAVM_COMMA_SEP,
     "__index",
     "__newindex",
     "__mode",
     "__namecall",
     "__call",
     "__iter",
-    "__len",
+    "__len"),
 
     "__eq",
 
-    
+    LUAVM_SHUFFLE8(LUAVM_COMMA_SEP,
     "__add",
     "__sub",
     "__mul",
@@ -52,14 +54,14 @@ const char* const luaT_eventname[] = {
     "__idiv",
     "__mod",
     "__pow",
-    "__unm",
+    "__unm"),
 
-    
+    LUAVM_SHUFFLE5(LUAVM_COMMA_SEP,
     "__lt",
     "__le",
     "__concat",
     "__type",
-    "__metatable",
+    "__metatable"),
 };
 // clang-format on
 

@@ -18,10 +18,10 @@
 // clang-format off
 typedef struct stringtable
 {
-
+    LUAVM_SHUFFLE3(LUAVM_SEMICOLON_SEP,
     TString** hash;
     uint32_t nuse; // number of elements
-    int size;
+    int size);
 } stringtable;
 // clang-format on
 
@@ -56,11 +56,11 @@ typedef struct stringtable
 // clang-format off
 typedef struct CallInfo
 {
-
+    LUAVM_SHUFFLE4(LUAVM_SEMICOLON_SEP,
     StkId base;    // base for this function
     StkId func;    // function index in the stack
     StkId top;     // top for this function
-    const Instruction* savedpc;
+    const Instruction* savedpc);
 
     int nresults;       // expected number of results from this function
     unsigned int flags; // call frame flags, see LUA_CALLINFO_*
@@ -173,17 +173,17 @@ typedef struct global_State
     uint8_t currentwhite;
     uint8_t gcstate; // state of garbage collector
 
-
+    LUAVM_SHUFFLE3(LUAVM_SEMICOLON_SEP,
     GCObject* gray;      // list of gray objects
     GCObject* grayagain; // list of objects to be traversed atomically
-    GCObject* weak;     // list of weak tables (to be cleared)
+    GCObject* weak);     // list of weak tables (to be cleared)
 
-
+    LUAVM_SHUFFLE5(LUAVM_SEMICOLON_SEP,
     size_t GCthreshold;                       // when totalbytes > GCthreshold, run GC step
     size_t totalbytes;                        // number of bytes currently allocated
     int gcgoal;                               // see LUAI_GCGOAL
     int gcstepmul;                            // see LUAI_GCSTEPMUL
-    int gcstepsize;                          // see LUAI_GCSTEPSIZE
+    int gcstepsize);                          // see LUAI_GCSTEPSIZE
 
     struct lua_Page* freepages[LUA_SIZECLASSES]; // free page linked list for each size class for non-collectable objects
     struct lua_Page* freegcopages[LUA_SIZECLASSES]; // free page linked list for each size class for collectable objects
@@ -192,12 +192,13 @@ typedef struct global_State
 
     size_t memcatbytes[LUA_MEMORY_CATEGORIES]; // total amount of memory used by each memory category
 
-
+    /* ttname and tmname are part of the same encryption family meaning they have the same encryption */
+    LUAVM_SHUFFLE5(LUAVM_SEMICOLON_SEP,
     struct lua_State* mainthread;
     UpVal uvhead;                                    // head of double-linked list of all open upvalues
     struct Table* mt[LUA_T_COUNT];                   // metatables for basic types
     TString* ttname[LUA_T_COUNT];       // names for basic types
-    TString* tmname[TM_N];             // array with tag-method names
+    TString* tmname[TM_N]);             // array with tag-method names
 
     TValue pseudotemp; // storage for temporary values used in pseudo2addr
 
@@ -239,20 +240,20 @@ struct lua_State
     bool isactive;   // thread is currently executing, stack may be mutated without barriers
     bool singlestep; // call debugstep hook after each instruction
 
-
+    LUAVM_SHUFFLE6(LUAVM_SEMICOLON_SEP,
     StkId top;                                        // first free slot in the stack
     StkId base;                                       // base of current function
-    global_State* global;
+    global_State* global; // NOTE: this is vmvalued encrypted aka ptr encrypted (typically the same as stacksize)
     CallInfo* ci;                                     // call info for current function
     StkId stack_last;                                 // last free slot in the stack
-    StkId stack;                                     // stack base
+    StkId stack);                                     // stack base
 
 
     CallInfo* end_ci;                          // points after end of ci array
     CallInfo* base_ci;                        // array of CallInfo's
 
 
-    int stacksize;
+    int stacksize; // NOTE: this is vmvalued encrypted aka ptr encrypted (typically the same as global state)
     int size_ci;                              // size of array `base_ci'
 
 
@@ -261,10 +262,10 @@ struct lua_State
 
     int cachedslot;    // when table operations or INDEX/NEWINDEX is invoked from Luau, what is the expected slot for lookup?
 
-
+    LUAVM_SHUFFLE3(LUAVM_SEMICOLON_SEP,
     Table* gt;           // table of globals
     UpVal* openupval;    // list of open upvalues in this stack
-    GCObject* gclist;
+    GCObject* gclist);
 
     TString* namecall; // when invoked from Luau using NAMECALL, what method do we need to invoke?
 

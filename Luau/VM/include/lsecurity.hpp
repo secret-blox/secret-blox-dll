@@ -7,6 +7,8 @@
 */
 
 // just for reference
+#define LUAVM_COMMA_SEP ,
+#define LUAVM_SEMICOLON_SEP ;
 #define LUAVM_SHUFFLE2(sep,a0,a1) a1 sep a0
 #define LUAVM_SHUFFLE3(sep,a0,a1,a2) a1 sep a2 sep a0
 #define LUAVM_SHUFFLE4(sep,a0,a1,a2,a3) a3 sep a1 sep a0 sep a2

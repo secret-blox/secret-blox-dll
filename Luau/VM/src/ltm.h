@@ -11,18 +11,18 @@
 // clang-format off
 typedef enum
 {
-    
+    LUAVM_SHUFFLE7(LUAVM_COMMA_SEP,
     TM_INDEX,
     TM_NEWINDEX,
     TM_MODE,
     TM_NAMECALL,
     TM_CALL,
     TM_ITER,
-    TM_LEN,
+    TM_LEN),
 
     TM_EQ, // last tag method with `fast' access
 
-    
+    LUAVM_SHUFFLE8(LUAVM_COMMA_SEP,
     TM_ADD,
     TM_SUB,
     TM_MUL,
@@ -30,14 +30,14 @@ typedef enum
     TM_IDIV,
     TM_MOD,
     TM_POW,
-    TM_UNM,
+    TM_UNM),
 
-    
+    LUAVM_SHUFFLE5(LUAVM_COMMA_SEP,
     TM_LT,
     TM_LE,
     TM_CONCAT,
     TM_TYPE,
-    TM_METATABLE,
+    TM_METATABLE),
 
     TM_N // number of elements in the enum
 } TMS;
