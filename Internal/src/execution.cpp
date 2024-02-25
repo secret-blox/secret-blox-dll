@@ -1,7 +1,8 @@
 #include "Internal/execution.hpp"
-#include "Internal/detour.hpp"
 
 lua_State* SB::Execution::mainState = nullptr;
+
+/*
 uintptr_t __fastcall pseudo2addrHook(lua_State* L, int idx)
 {
     // unhook function
@@ -12,6 +13,7 @@ uintptr_t __fastcall pseudo2addrHook(lua_State* L, int idx)
     // return normal pseudo2addr
     return 0; // TODO
 }
+*/
 
 void SB::Execution::setup()
 {

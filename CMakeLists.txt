@@ -65,7 +65,7 @@ set(CMAKE_ASM_NASM_SOURCE_FILE_EXTENSIONS ${CMAKE_ASM_NASM_SOURCE_FILE_EXTENSION
 project (
   "secret-blox-dll"
   VERSION 0.0.0
-  LANGUAGES CXX ASM_MASM
+  LANGUAGES CXX
 )
 
 # Find all source files in src & include directories for Security
@@ -76,14 +76,9 @@ file(GLOB_RECURSE SEC_HEADER_FILES "Security/include/*.h" "Security/include/*.hp
 file(GLOB_RECURSE SRC_FILES "Rbx/src/*.cpp" "Internal/src/*.cpp")
 file(GLOB_RECURSE HEADER_FILES "Rbx/include/*.h" "Rbx/include/*.hpp" "Internal/include/*.h" "Internal/include/*.hpp")
 
-file(GLOB_RECURSE ASM_FILES "Asm/*.asm")
-
 # Security LIB
 add_library(SB.Security STATIC
 	${SEC_SRC_FILES} ${SEC_HEADER_FILES}
-)
-add_library(SB.Asm STATIC
-	${ASM_FILES}
 )
 target_include_directories(SB.Security INTERFACE Security/include)
 
@@ -118,7 +113,6 @@ set(CMAKE_ASM_NASM_OBJECT_FORMAT win64)
 add_subdirectory(Luau)
 
 # Link dll with libraries
-target_link_libraries(SB.Internal PUBLIC SB.Asm)
 target_link_libraries(SB.Internal PUBLIC SB.Security)
 target_link_libraries(SB.Internal PUBLIC Luau.Common)
 target_link_libraries(SB.Internal PUBLIC Luau.Compiler)
