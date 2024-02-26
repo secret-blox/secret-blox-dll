@@ -49,8 +49,7 @@ DWORD WINAPI startMain(LPVOID lpReserved) {
     // TODO: perform important setups in order of priority
     // SB::Execution::setup();
     SB::Logger::printf(XORSTR("Internal: Loaded\n"));
-
-    // TODO: check if websocket setupped correctly
+    
     // TODO: check if execution setupped correctly
     
     

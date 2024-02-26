@@ -46,6 +46,9 @@ bool SB::Test::run()
     // verify state & tvalue integrity by grabbing globaltable
     const auto gt2 = luaA_toobject(RL, LUA_GLOBALSINDEX);
     SB_ASSERT((uintptr_t)gt2->value.gc == (uintptr_t)gt);
+
+    // TODO: verify getfield
+    // TODO: verify new_thread & identity
     
     return true;
 }
