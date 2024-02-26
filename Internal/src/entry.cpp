@@ -57,8 +57,7 @@ void debug()
         */
         /*
         SB::Logger::printf(
-            xorstr_("original deobf globalState %p, macro deobf globalState %p\n"),
-            (uintptr_t)L + *(uintptr_t *)((uintptr_t)L + 32),
+            xorstr_("globalState %p\n"),
             (uintptr_t)(global_State*)L->global
         );
         */
