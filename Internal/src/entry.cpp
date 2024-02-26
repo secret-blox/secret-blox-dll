@@ -12,6 +12,7 @@
 #include "Security/callstackspoof.h"
 #include "Security/xor.hpp"
 
+#include "lstate.h"
 #include "offsets.hpp"
 
 HMODULE dllModule = 0;
@@ -42,16 +43,24 @@ void debug()
 
         const SB::Rbx::ScriptContext scriptContext = { scriptContextInst.baseAddress };
         //scriptContext.debugGetLuaState();
-        const auto luaState = scriptContext.getLuaState();
-        if (!luaState)
+        const auto L = scriptContext.getLuaState();
+        if (!L)
             return;
-        SB::Logger::printf(xorstr_("lua_State: %p\n"), luaState);
+        SB::Logger::printf(xorstr_("lua_State: %p\n"), L);
+        // DEBUG PURPOSE CODE
         // try printing a simple tvalue number
         /*
         lua_pushnumber(luaState, 123);
         using luau_warnCC = int64_t __fastcall(lua_State*);
         auto luau_warn = reinterpret_cast<luau_warnCC*>(SB::Memory::base + 0xF2A1A0);
         luau_warn(luaState);
+        */
+        /*
+        SB::Logger::printf(
+            xorstr_("original deobf globalState %p, macro deobf globalState %p\n"),
+            (uintptr_t)L + *(uintptr_t *)((uintptr_t)L + 32),
+            (uintptr_t)(global_State*)L->global
+        );
         */
     }
     else
