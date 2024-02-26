@@ -61,3 +61,28 @@ DEFINE_VMVALUE(XOR,
 {
     return (T)((uintptr_t)this->storage ^ (uintptr_t)this);
 });
+
+// new implementation of their obfuscation
+// ex: l_global = L + *(_QWORD *)(L + 32);
+// pseudo c: l_global = L + *(uintptr_t*)(L->global);
+
+#define DEFINE_VMVALUE_BASE_SUB(name, fieldName) \
+    template <typename T, typename C> class RBX_VMVALUE_BASE_SUB_##name \
+    { \
+    public: \
+        operator const T() const \
+        { \
+            constexpr uintptr_t OFFSET = offsetof(C, fieldName); \
+            return (T)((uintptr_t)this->storage + ((uintptr_t)this - OFFSET)); \
+        } \
+        const T operator->() { \
+            return operator const T(); \
+        } \
+        void operator=(const T& value) \
+        { \
+            constexpr uintptr_t OFFSET = offsetof(C, fieldName); \
+            storage = (T)((uintptr_t)value - ((uintptr_t)this - OFFSET)); \
+        } \
+    protected: \
+        T storage; \
+    }

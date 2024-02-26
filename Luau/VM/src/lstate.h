@@ -229,6 +229,8 @@ typedef struct global_State
 /*
 ** `per thread' state
 */
+DEFINE_VMVALUE_BASE_SUB(GLOBAL, global);
+typedef RBX_VMVALUE_BASE_SUB_GLOBAL<global_State*, lua_State> LGlobalType;
 // clang-format off
 struct lua_State
 {
@@ -243,7 +245,7 @@ struct lua_State
     LUAVM_SHUFFLE6(LUAVM_SEMICOLON_SEP,
     StkId top;                                        // first free slot in the stack
     StkId base;                                       // base of current function
-    global_State* global; // NOTE: this is vmvalued encrypted aka ptr encrypted (typically the same as stacksize)
+    LGlobalType global;                                // NOTE: this is vmvalued encrypted aka ptr encrypted (typically the same as stacksize)
     CallInfo* ci;                                     // call info for current function
     StkId stack_last;                                 // last free slot in the stack
     StkId stack);                                     // stack base
