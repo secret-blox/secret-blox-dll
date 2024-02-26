@@ -4,10 +4,9 @@
 #include "Internal/logger.hpp"
 #include "Internal/memory.hpp"
 #include "Internal/execution.hpp"
+#include "Internal/test.hpp"
 
 #include "Rbx/api.hpp"
-#include "Rbx/taskscheduler.hpp"
-#include "Rbx/scriptcontext.hpp"
 
 #include "Security/callstackspoof.h"
 #include "Security/xor.hpp"
@@ -16,56 +15,6 @@
 #include "offsets.hpp"
 
 HMODULE dllModule = 0;
-
-void debug()
-{
-    SPOOF_FUNC;
-    SB::Logger::printf(xorstr_("Internal Base: %p\n"), SB::Memory::base);
-
-    const auto taskScheduler = SB::Rbx::TaskScheduler::get();
-    SB::Logger::printf(xorstr_("TaskScheduler: %p\n"), taskScheduler.baseAddress);
-
-    const auto jobs = taskScheduler.getJobs();
-    SB::Logger::printf(xorstr_("Jobs: %d\n"), jobs.size());
-
-    const auto luaGc = taskScheduler.getJobByName("LuaGc");
-    if (luaGc.has_value())
-    {
-        const auto scriptContextInst = luaGc->getScriptContext();
-        const auto dataModel = scriptContextInst.getParent();
-
-        SB::Logger::printf(xorstr_("LuaGc: %p\n"), luaGc->baseAddress);
-        SB::Logger::printf(xorstr_("DataModel: %p\n"), dataModel.baseAddress);
-        SB::Logger::printf(xorstr_("ScriptContext: %p\n"), scriptContextInst.baseAddress);
-
-        const auto children = scriptContextInst.getChildren();
-        SB::Logger::printf(xorstr_("ScriptContext Children: %d\n"), children.size());
-
-        const SB::Rbx::ScriptContext scriptContext = { scriptContextInst.baseAddress };
-        //scriptContext.debugGetLuaState();
-        const auto L = scriptContext.getLuaState();
-        if (!L)
-            return;
-        SB::Logger::printf(xorstr_("lua_State: %p\n"), L);
-        // DEBUG PURPOSE CODE
-        // try printing a simple tvalue number
-        /*
-        lua_pushnumber(luaState, 123);
-        using luau_warnCC = int64_t __fastcall(lua_State*);
-        auto luau_warn = reinterpret_cast<luau_warnCC*>(SB::Memory::base + 0xF2A1A0);
-        luau_warn(luaState);
-        */
-        /*
-        SB::Logger::printf(
-            xorstr_("globalState %p\n"),
-            (uintptr_t)(global_State*)L->global
-        );
-        */
-    }
-    else
-        SB::Logger::printf(xorstr_("LuaGc not found\n"));
-}
-
 bool checkOffsetsVersion()
 {
     SPOOF_FUNC;
@@ -86,16 +35,20 @@ DWORD WINAPI startMain(LPVOID lpReserved) {
     if (!checkOffsetsVersion())
     {
         // TODO: communicate with ui
-        SB::Logger::printf(xorstr_("Invalid offsets version, update offsets!\n"));
+        SB::Logger::printf(XORSTR("Invalid offsets version, update offsets!\n"));
         return FALSE;
     }
-    #ifdef DEBUG_MODE
-    debug();
+    #ifdef UNIT_TEST
+    if(!SB::Test::run())
+    {
+        SB::Logger::printf(XORSTR("Unit test failed\n"));
+        return FALSE;
+    }
     #endif
 
     // TODO: perform important setups in order of priority
     // SB::Execution::setup();
-    SB::Logger::printf(xorstr_("Internal: Loaded\n"));
+    SB::Logger::printf(XORSTR("Internal: Loaded\n"));
 
     // TODO: check if websocket setupped correctly
     // TODO: check if execution setupped correctly

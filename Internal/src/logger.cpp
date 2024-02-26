@@ -20,7 +20,7 @@ void SB::Logger::setup(std::filesystem::path dllDir)
 void SB::Logger::unload()
 {
     SPOOF_FUNC;
-    printf(xorstr_("Logger: Unloaded\n"));
+    printf(XORSTR("Logger: Unloaded\n"));
    
 	logFile.close();
 }
@@ -47,6 +47,6 @@ void SB::Logger::printf(const char* fmt, ...)
     // write to file with time prefix
     std::time_t nowTimeT = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
     std::tm* tm = std::localtime(&nowTimeT);
-    logFile << xorstr_("[") << std::put_time(tm, xorstr_("%Y-%m-%d %H:%M:%S")) << xorstr_("] ") << result;
+    logFile << XORSTR("[") << std::put_time(tm, XORSTR("%Y-%m-%d %H:%M:%S")) << XORSTR("] ") << result;
     logFile.flush();
 }

@@ -35,13 +35,13 @@ const std::map<unsigned int, const char*> exceptionCodes =
 LONG __stdcall SB::Memory::defaultExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
 {
     unsigned int code = exceptionInfo->ExceptionRecord->ExceptionCode;
-    const char* str = xorstr_("Unknown exception code");
+    const char* str = XORSTR("Unknown exception code");
     if (exceptionCodes.find(code) != exceptionCodes.end())
         str = exceptionCodes.at(code);
     
     // TODO: Added Xor
     SB::Logger::printf(
-        xorstr_("CRASH DETECTED"
+        XORSTR("CRASH DETECTED"
         "\n\nException caught: %s\n" \
         "Exception code: 0x%x\n" \
         "Exception address: 0x%p\n" \

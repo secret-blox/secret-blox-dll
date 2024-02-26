@@ -75,7 +75,7 @@ void SB::Memory::setExceptionFilter(LPTOP_LEVEL_EXCEPTION_FILTER filter)
     auto oldFilter = SetUnhandledExceptionFilter(filter);
     if (oldFilter && !originalFilter)
     {
-        SB::Logger::printf(xorstr_("Memory: Original exception filter found at 0x%p\n"), oldFilter);
+        SB::Logger::printf(XORSTR("Memory: Original exception filter found at 0x%p\n"), oldFilter);
 		originalFilter = oldFilter;
     }
 }
@@ -102,6 +102,6 @@ void SB::Memory::unload()
     if (originalFilter)
     {
         setExceptionFilter(originalFilter);
-        SB::Logger::printf(xorstr_("Memory: Exception filter restored\n"));
+        SB::Logger::printf(XORSTR("Memory: Exception filter restored\n"));
     }
 }

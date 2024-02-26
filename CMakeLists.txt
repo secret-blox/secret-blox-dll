@@ -1,9 +1,9 @@
 ﻿cmake_minimum_required (VERSION 3.8)
 
-option(DEBUG_MODE "Enable debug mode" ON)
+option(UNIT_TEST "Perform unit testing" ON)
 
-if(DEBUG_MODE)
-    add_definitions(-DDEBUG_MODE)
+if(UNIT_TEST)
+    add_definitions(-DUNIT_TEST)
 endif()
 
 if (POLICY CMP0141)
