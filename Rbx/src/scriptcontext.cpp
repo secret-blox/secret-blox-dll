@@ -1,3 +1,4 @@
+#include <cmath>
 #include <memory>
 
 #include "Rbx/scriptcontext.hpp"
@@ -32,10 +33,10 @@ lua_State *SB::Rbx::ScriptContext::getLuaState() const
     );
     // check if state is valid
     std::unique_ptr heap = std::make_unique<char[]>(0x100);
-    const auto diff = reinterpret_cast<uintptr_t>(heap.get()) - reinterpret_cast<uintptr_t>(state);
-    if (diff >= 0x63EF0000)
+    const size_t diff = reinterpret_cast<uintptr_t>(heap.get()) - reinterpret_cast<uintptr_t>(state);
+    if (std::abs(static_cast<long long>(diff)) >= 0x63EF0000)
     {
-        SB::Logger::printf("lua_State out of heap boundaries: %p\n", state);
+        SB::Logger::printf("lua_State out of heap boundaries: %p, diff: %llx\n", state, diff);
         return nullptr;
     }
     else if (state->tt != LUA_TTHREAD)

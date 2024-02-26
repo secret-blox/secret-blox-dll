@@ -43,15 +43,15 @@ void debug()
         const SB::Rbx::ScriptContext scriptContext = { scriptContextInst.baseAddress };
         //scriptContext.debugGetLuaState();
         const auto luaState = scriptContext.getLuaState();
+        if (!luaState)
+            return;
         SB::Logger::printf(xorstr_("lua_State: %p\n"), luaState);
-
         // try printing a simple tvalue number
         /*
         lua_pushnumber(luaState, 123);
         using luau_warnCC = int64_t __fastcall(lua_State*);
         auto luau_warn = reinterpret_cast<luau_warnCC*>(SB::Memory::base + 0xF2A1A0);
-        auto res = luau_warn(luaState);
-        SB::Logger::printf(xorstr_("luau_warn: %d\n"), res);
+        luau_warn(luaState);
         */
     }
     else
@@ -81,14 +81,17 @@ DWORD WINAPI startMain(LPVOID lpReserved) {
         SB::Logger::printf(xorstr_("Invalid offsets version, update offsets!\n"));
         return FALSE;
     }
+    #ifdef DEBUG_MODE
+    debug();
+    #endif
+
     // TODO: perform important setups in order of priority
     // SB::Execution::setup();
     SB::Logger::printf(xorstr_("Internal: Loaded\n"));
 
     // TODO: check if websocket setupped correctly
     // TODO: check if execution setupped correctly
-
-    debug();
+    
     
     return TRUE;
 }
