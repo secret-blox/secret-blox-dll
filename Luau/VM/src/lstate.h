@@ -19,8 +19,8 @@
 typedef struct stringtable
 {
     LUAVM_SHUFFLE3(LUAVM_SEMICOLON_SEP,
-    TString** hash;
-    uint32_t nuse; // number of elements
+    TString** hash,
+    uint32_t nuse, // number of elements
     int size);
 } stringtable;
 // clang-format on
@@ -57,9 +57,9 @@ typedef struct stringtable
 typedef struct CallInfo
 {
     LUAVM_SHUFFLE4(LUAVM_SEMICOLON_SEP,
-    StkId base;    // base for this function
-    StkId func;    // function index in the stack
-    StkId top;     // top for this function
+    StkId base,    // base for this function
+    StkId func,    // function index in the stack
+    StkId top,     // top for this function
     const Instruction* savedpc);
 
     int nresults;       // expected number of results from this function
@@ -174,15 +174,15 @@ typedef struct global_State
     uint8_t gcstate; // state of garbage collector
 
     LUAVM_SHUFFLE3(LUAVM_SEMICOLON_SEP,
-    GCObject* gray;      // list of gray objects
-    GCObject* grayagain; // list of objects to be traversed atomically
+    GCObject* gray,      // list of gray objects
+    GCObject* grayagain, // list of objects to be traversed atomically
     GCObject* weak);     // list of weak tables (to be cleared)
 
     LUAVM_SHUFFLE5(LUAVM_SEMICOLON_SEP,
-    size_t GCthreshold;                       // when totalbytes > GCthreshold, run GC step
-    size_t totalbytes;                        // number of bytes currently allocated
-    int gcgoal;                               // see LUAI_GCGOAL
-    int gcstepmul;                            // see LUAI_GCSTEPMUL
+    size_t GCthreshold,                       // when totalbytes > GCthreshold, run GC step
+    size_t totalbytes,                        // number of bytes currently allocated
+    int gcgoal,                               // see LUAI_GCGOAL
+    int gcstepmul,                            // see LUAI_GCSTEPMUL
     int gcstepsize);                          // see LUAI_GCSTEPSIZE
 
     struct lua_Page* freepages[LUA_SIZECLASSES]; // free page linked list for each size class for non-collectable objects
@@ -194,10 +194,10 @@ typedef struct global_State
 
     /* ttname and tmname are part of the same encryption family meaning they have the same encryption */
     LUAVM_SHUFFLE5(LUAVM_SEMICOLON_SEP,
-    struct lua_State* mainthread;
-    UpVal uvhead;                                    // head of double-linked list of all open upvalues
-    struct Table* mt[LUA_T_COUNT];                   // metatables for basic types
-    TString* ttname[LUA_T_COUNT];       // names for basic types
+    struct lua_State* mainthread,
+    UpVal uvhead,                                    // head of double-linked list of all open upvalues
+    struct Table* mt[LUA_T_COUNT],                   // metatables for basic types
+    TString* ttname[LUA_T_COUNT],       // names for basic types
     TString* tmname[TM_N]);             // array with tag-method names
 
     TValue pseudotemp; // storage for temporary values used in pseudo2addr
@@ -243,11 +243,11 @@ struct lua_State
     bool singlestep; // call debugstep hook after each instruction
 
     LUAVM_SHUFFLE6(LUAVM_SEMICOLON_SEP,
-    StkId top;                                        // first free slot in the stack
-    StkId base;                                       // base of current function
-    LGlobalType global;                                // NOTE: this is vmvalued encrypted aka ptr encrypted (typically the same as stacksize)
-    CallInfo* ci;                                     // call info for current function
-    StkId stack_last;                                 // last free slot in the stack
+    StkId top,                                        // first free slot in the stack
+    StkId base,                                       // base of current function
+    LGlobalType global,                                // NOTE: this is vmvalued encrypted aka ptr encrypted (typically the same as stacksize)
+    CallInfo* ci,                                     // call info for current function
+    StkId stack_last,                                 // last free slot in the stack
     StkId stack);                                     // stack base
 
 
@@ -265,8 +265,8 @@ struct lua_State
     int cachedslot;    // when table operations or INDEX/NEWINDEX is invoked from Luau, what is the expected slot for lookup?
 
     LUAVM_SHUFFLE3(LUAVM_SEMICOLON_SEP,
-    Table* gt;           // table of globals
-    UpVal* openupval;    // list of open upvalues in this stack
+    Table* gt,           // table of globals
+    UpVal* openupval,    // list of open upvalues in this stack
     GCObject* gclist);
 
     TString* namecall; // when invoked from Luau using NAMECALL, what method do we need to invoke?

@@ -297,17 +297,17 @@ typedef struct Proto
     CommonHeader;
 
     LUAVM_SHUFFLE5(LUAVM_SEMICOLON_SEP,
-    uint8_t nups; // number of upvalues
-    uint8_t numparams;
-    uint8_t is_vararg;
-    uint8_t maxstacksize;
+    uint8_t nups, // number of upvalues
+    uint8_t numparams,
+    uint8_t is_vararg,
+    uint8_t maxstacksize,
     uint8_t flags);
 
     // NOTE: all these are part of a encryption family called pMember1Enc (all 4 of these have the same encryption)
     LUAVM_SHUFFLE4(LUAVM_SEMICOLON_SEP,
-    TValue* k;              // constants used by the function
-    Instruction* code;      // function bytecode
-    struct Proto** p;       // functions defined inside the function
+    TValue* k,              // constants used by the function
+    Instruction* code,      // function bytecode
+    struct Proto** p,       // functions defined inside the function
     const Instruction* codeentry);
 
     void* execdata;
@@ -315,10 +315,10 @@ typedef struct Proto
 
     // NOTE: all these are part of a encryption family called pMember2Enc (all 5 of these have the same encryption)
     LUAVM_SHUFFLE5(LUAVM_SEMICOLON_SEP,
-    uint8_t* lineinfo;      // for each instruction, line number as a delta from baseline
-    int* abslineinfo;       // baseline line info, one entry for each 1<<linegaplog2 instructions; allocated after lineinfo
-    struct LocVar* locvars; // information about local variables
-    TString** upvalues;     // upvalue names
+    uint8_t* lineinfo,      // for each instruction, line number as a delta from baseline
+    int* abslineinfo,       // baseline line info, one entry for each 1<<linegaplog2 instructions; allocated after lineinfo
+    struct LocVar* locvars, // information about local variables
+    TString** upvalues,     // upvalue names
     TString* source);
 
     TString* debugname; // NOTE: this is vmvalued encrypted aka ptr encrypted
@@ -330,14 +330,14 @@ typedef struct Proto
     GCObject* gclist;
 
     LUAVM_SHUFFLE9(LUAVM_SEMICOLON_SEP,
-    int sizecode;
-    int sizep;
-    int sizelocvars;
-    int sizeupvalues;
-    int sizek;
-    int sizelineinfo;
-    int linegaplog2;
-    int linedefined;
+    int sizecode,
+    int sizep,
+    int sizelocvars,
+    int sizeupvalues,
+    int sizek,
+    int sizelineinfo,
+    int linegaplog2,
+    int linedefined,
     int bytecodeid);
 } Proto;
 // clang-format on
@@ -463,10 +463,10 @@ typedef struct Table
     CommonHeader;
 
     LUAVM_SHUFFLE5(LUAVM_SEMICOLON_SEP,
-    uint8_t tmcache;    // 1<<p means tagmethod(p) is not present
-    uint8_t readonly;   // sandboxing feature to prohibit writes to table
-    uint8_t safeenv;    // environment doesn't share globals with other scripts
-    uint8_t lsizenode;  // log2 of size of `node' array
+    uint8_t tmcache,    // 1<<p means tagmethod(p) is not present
+    uint8_t readonly,   // sandboxing feature to prohibit writes to table
+    uint8_t safeenv,    // environment doesn't share globals with other scripts
+    uint8_t lsizenode,  // log2 of size of `node' array
     uint8_t nodemask8); // (1<<lsizenode)-1, truncated to 8 bits
 
     int sizearray; // size of `array' array
@@ -478,9 +478,9 @@ typedef struct Table
 
     /* these 4 are part of the same encryption group called tMemberEnc (they have the possibility to change outside of the group) */
     LUAVM_SHUFFLE4(LUAVM_SEMICOLON_SEP,
-    struct Table* metatable;
-    TValue* array;  // array part
-    LuaNode* node;
+    struct Table* metatable,
+    TValue* array,  // array part
+    LuaNode* node,
     GCObject* gclist);
 } Table;
 // clang-format on
