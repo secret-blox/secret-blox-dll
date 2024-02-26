@@ -44,6 +44,15 @@ void debug()
         //scriptContext.debugGetLuaState();
         const auto luaState = scriptContext.getLuaState();
         SB::Logger::printf(xorstr_("lua_State: %p\n"), luaState);
+
+        // try printing a simple tvalue number
+        /*
+        lua_pushnumber(luaState, 123);
+        using luau_warnCC = int64_t __fastcall(lua_State*);
+        auto luau_warn = reinterpret_cast<luau_warnCC*>(SB::Memory::base + 0xF2A1A0);
+        auto res = luau_warn(luaState);
+        SB::Logger::printf(xorstr_("luau_warn: %d\n"), res);
+        */
     }
     else
         SB::Logger::printf(xorstr_("LuaGc not found\n"));
