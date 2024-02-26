@@ -5,6 +5,16 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
+# Check for Debug build type
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+    message(FATAL_ERROR "!!! DEBUG BUILD IS NOT ALLOWED !!!")
+endif()
+
+# Check for 32-bit architecture
+if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+    message(FATAL_ERROR "!!! 32-BIT ARCHITECTURE IS NOT ALLOWED !!!")
+endif()
+
 if(UNIX)
 	# cargo install xwin; xwin --accept-license --cache-dir ~/.xwin-cache splat --include-debug-libs --output ~/.xwin-cache/splat
 
