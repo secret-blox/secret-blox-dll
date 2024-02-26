@@ -41,7 +41,9 @@ void debug()
         SB::Logger::printf(xorstr_("ScriptContext Children: %d\n"), children.size());
 
         const SB::Rbx::ScriptContext scriptContext = { scriptContextInst.baseAddress };
-        scriptContext.debugGetLuaState();
+        //scriptContext.debugGetLuaState();
+        const auto luaState = scriptContext.getLuaState();
+        SB::Logger::printf(xorstr_("lua_State: %p\n"), luaState);
     }
     else
         SB::Logger::printf(xorstr_("LuaGc not found\n"));

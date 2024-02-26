@@ -100,7 +100,7 @@ target_include_directories(SB.Internal
 	PUBLIC SB.Security
 	PUBLIC Luau.Common
 	PUBLIC Luau.Compiler
-	PUBLIC Luau.VM
+	PUBLIC Luau/Vm/src
 )
 
 # Set fake name nvwgf2um.dll - NVIDIA D3D User Mode Driver
