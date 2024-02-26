@@ -229,8 +229,7 @@ typedef struct global_State
 /*
 ** `per thread' state
 */
-DEFINE_VMVALUE_BASE_SUB(GLOBAL, global);
-typedef RBX_VMVALUE_BASE_SUB_GLOBAL<global_State*, lua_State> LGlobalType;
+typedef RBX_VMVALUE_ADD<global_State*> LGlobalType;
 // clang-format off
 struct lua_State
 {
