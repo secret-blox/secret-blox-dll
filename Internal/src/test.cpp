@@ -83,7 +83,7 @@ bool SB::Test::run()
     
     // TODO: fix crash caused by some misconfiguration vmvalues/shuffles
     RbxBytecodeEncoder encoder;
-    auto code = XORSTR("local a = 1 + 2;\nprint(a);");
+    auto code = XORSTR("print(1 + 1);");
     std::string Bytecode = Luau::compile(code, {}, {}, &encoder);
     luau_load(RL, "=game", Bytecode.c_str(), Bytecode.size(), 0);
     lua_CFunction spawnF = spawnClosure.c.f;

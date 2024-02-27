@@ -16,7 +16,7 @@ inline LuaNode* rluaH_dummynode = nullptr;
 #define LUAVM_SEMICOLON_SEP ;
 #define LUAVM_SHUFFLE2(sep,a0,a1) a1 sep a0
 #define LUAVM_SHUFFLE3(sep,a0,a1,a2) a1 sep a2 sep a0
-#define LUAVM_SHUFFLE4(sep,a0,a1,a2,a3) a3 sep a1 sep a0 sep a2
+#define LUAVM_SHUFFLE4(sep,a0,a1,a2,a3) a0 sep a1 sep a3 sep a2
 #define LUAVM_SHUFFLE5(sep,a0,a1,a2,a3,a4) a0 sep a1 sep a3 sep a2 sep a4
 #define LUAVM_SHUFFLE6(sep,a0,a1,a2,a3,a4,a5) a0 sep a3 sep a5 sep a2 sep a1 sep a4
 #define LUAVM_SHUFFLE7(sep,a0,a1,a2,a3,a4,a5,a6) a1 sep a2 sep a3 sep a0 sep a4 sep a5 sep a6
