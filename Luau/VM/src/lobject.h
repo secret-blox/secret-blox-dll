@@ -2,6 +2,7 @@
 // This code is based on Lua 5.x implementation licensed under MIT License; see lua_LICENSE.txt for details
 #pragma once
 
+#include "lsecurity.hpp"
 #include "lua.h"
 #include "lcommon.h"
 
@@ -247,8 +248,8 @@ typedef struct TString
 
     TString* next; // next string in the hash table bucket
 
-    unsigned int hash; // NOTE: this is vmvalued encrypted aka ptr encrypted
-    unsigned int len; // NOTE: this is vmvalued encrypted aka ptr encrypted
+    RBX_VMVALUE_SUB_P_X<unsigned int> hash; // NOTE: this is vmvalued encrypted aka ptr encrypted
+    RBX_VMVALUE_SUB_X_P<unsigned int> len; // NOTE: this is vmvalued encrypted aka ptr encrypted
 
     char data[1]; // string data is allocated right after the header
 } TString;
