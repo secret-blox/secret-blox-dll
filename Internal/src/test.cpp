@@ -47,8 +47,21 @@ bool SB::Test::run()
     const auto gt2 = luaA_toobject(RL, LUA_GLOBALSINDEX);
     SB_ASSERT((uintptr_t)gt2->value.gc == (uintptr_t)gt);
 
-    // TODO: verify table struct
-    
+    /*
+    lua_pushstring(RL, "epicstring");
+    using luau_warnCC = int64_t __fastcall(lua_State*);
+    auto warnCC = reinterpret_cast<luau_warnCC*>SB_OFFSET(0xf2a1a0);
+    warnCC(RL);
+    */
+
+    // verify table struct
+    lua_rawgetfield(RL, LUA_GLOBALSINDEX, "_VERSION");
+    auto version = luaA_toobject(RL, -1);
+    SB_ASSERT(version->tt == LUA_TSTRING);
+    // version->value.gc->ts.data;
+    SB_ASSERT(strcmp(version->value.gc->ts.data, "Luau") == 0);
+    lua_pop(RL, 1);
+
     // TODO: verify getfield
     // TODO: verify new_thread & identity
     

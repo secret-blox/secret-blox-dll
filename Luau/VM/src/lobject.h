@@ -479,10 +479,10 @@ typedef struct Table
 
     /* these 4 are part of the same encryption group called tMemberEnc (they have the possibility to change outside of the group) */
     LUAVM_SHUFFLE4(LUAVM_SEMICOLON_SEP,
-    struct Table* metatable,
-    TValue* array,  // array part
-    LuaNode* node,
-    GCObject* gclist);
+    RBX_VMVALUE_SUB_X_P<struct Table*> metatable,
+    RBX_VMVALUE_SUB_X_P<TValue*> array,  // array part
+    RBX_VMVALUE_SUB_X_P<LuaNode*> node,
+    RBX_VMVALUE_SUB_X_P<GCObject*> gclist);
 } Table;
 // clang-format on
 

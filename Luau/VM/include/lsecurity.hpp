@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #pragma warning(disable: 4003) // not enough actual parameters for macro 'identifier' warning
+#pragma warning(disable: 4172) // returning address of local variable or temporary
 
 /*
 // BACKUP
@@ -33,6 +34,10 @@ inline LuaNode* rluaH_dummynode = nullptr;
         operator const T() const deobfBlock \
         const T operator->() { \
             return operator const T(); \
+        } \
+        T* operator&() { \
+            T value = operator const T(); \
+            return &value; \
         } \
         void operator=(const T& value) obfBlock \
     protected: \
