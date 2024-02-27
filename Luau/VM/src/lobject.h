@@ -401,9 +401,9 @@ typedef struct Closure
         struct
         {
             /* all three are different besides p and f being the same */
-            lua_CFunction f; // NOTE: this is vmvalued encrypted aka ptr encrypted (same as p)
+            RBX_VMVALUE_SUB_X_P<lua_CFunction> f; // NOTE: this is vmvalued encrypted aka ptr encrypted (same as p)
             lua_Continuation cont; // NOTE: this is vmvalued encrypted aka ptr encrypted
-            const char* debugname; // NOTE: this is vmvalued encrypted aka ptr encrypted
+            RBX_VMVALUE_ADD<const char*> debugname; // NOTE: this is vmvalued encrypted aka ptr encrypted
             TValue upvals[1];
         } c;
 

@@ -12,6 +12,8 @@
 
 #define SB_ASSERT(expr) if (!(expr)) { SB::Logger::printf("Assertion failed, %s, at line %d. \n", #expr, __LINE__); return false; }
 
+using luaCFunCC = int64_t __fastcall(lua_State*);
+
 bool SB::Test::run()
 {
     SB::Logger::printf(XORSTR("Internal Base: %p\n"), SB::Memory::base);
@@ -49,20 +51,33 @@ bool SB::Test::run()
 
     /*
     lua_pushstring(RL, "epicstring");
-    using luau_warnCC = int64_t __fastcall(lua_State*);
-    auto warnCC = reinterpret_cast<luau_warnCC*>SB_OFFSET(0xf2a1a0);
+    auto warnCC = reinterpret_cast<luaCFunCC*>SB_OFFSET(0xf2a1a0);
     warnCC(RL);
     */
 
-    // verify table struct
+    // verify table struct & tstring
     lua_rawgetfield(RL, LUA_GLOBALSINDEX, "_VERSION");
-    auto version = luaA_toobject(RL, -1);
-    SB_ASSERT(version->tt == LUA_TSTRING);
-    // version->value.gc->ts.data;
-    SB_ASSERT(strcmp(version->value.gc->ts.data, "Luau") == 0);
+    auto version = *luaA_toobject(RL, -1);
     lua_pop(RL, 1);
+    SB_ASSERT(version.tt == LUA_TSTRING);
+    // version->value.gc->ts.data;
+    SB_ASSERT(strcmp(version.value.gc->ts.data, "Luau") == 0);
 
-    // TODO: verify getfield
+    // verify closure struct
+    lua_rawgetfield(RL, LUA_GLOBALSINDEX, "warn");
+    auto warn = *luaA_toobject(RL, -1);
+    lua_pop(RL, 1);
+    SB_ASSERT(warn.tt == LUA_TFUNCTION);
+    auto& warnClosure = warn.value.gc->cl;
+    SB_ASSERT(warnClosure.isC == 1);
+    SB_ASSERT(warnClosure.nupvalues == 0);
+    SB_ASSERT(strcmp((const char*)warnClosure.c.debugname, "warn") == 0);
+    SB::Logger::printf(
+        XORSTR("warnClosure offset: %p\n"), 
+        (uintptr_t)((lua_CFunction)warnClosure.c.f) - SB::Memory::base
+    );
+    
+
     // TODO: verify new_thread & identity
     
     return true;
