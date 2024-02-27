@@ -14,6 +14,8 @@
 #include <stdlib.h>
 
 // const TValue luaO_nilobject_ = {{NULL}, {0}, LUA_TNIL};
+TValue* rluaO_nilobject = nullptr;
+LuaNode* rluaH_dummynode = nullptr;
 
 int luaO_log2(unsigned int x)
 {

@@ -47,14 +47,43 @@ LONG __stdcall SB::Memory::defaultExceptionFilter(EXCEPTION_POINTERS* exceptionI
         "Exception address: 0x%p\n" \
         "\nStack trace:\n" \
         "RIP: 0x%p\n" \
-        "RSP: 0x%p\n"),
+        "RSP: 0x%p\n"
+        "RBP: 0x%p\n"
+        "RDX: 0x%p\n"
+        "RCX: 0x%p\n"
+        "RBX: 0x%p\n"
+        "RDI: 0x%p\n"
+        "RSI: 0x%p\n"
+        "R8: 0x%p\n"
+        "R9: 0x%p\n"
+        "R10: 0x%p\n"
+        "R11: 0x%p\n"
+        "R12: 0x%p\n"
+        "R13: 0x%p\n"
+        "R14: 0x%p\n"
+        "R15: 0x%p\n"
+        ),
         // head
         str,
         code,
         exceptionInfo->ExceptionRecord->ExceptionAddress,
         // stack trace
         exceptionInfo->ContextRecord->Rip,
-        exceptionInfo->ContextRecord->Rsp
+        exceptionInfo->ContextRecord->Rsp,
+        exceptionInfo->ContextRecord->Rbp,
+        exceptionInfo->ContextRecord->Rdx,
+        exceptionInfo->ContextRecord->Rcx,
+        exceptionInfo->ContextRecord->Rbx,
+        exceptionInfo->ContextRecord->Rdi,
+        exceptionInfo->ContextRecord->Rsi,
+        exceptionInfo->ContextRecord->R8,
+        exceptionInfo->ContextRecord->R9,
+        exceptionInfo->ContextRecord->R10,
+        exceptionInfo->ContextRecord->R11,
+        exceptionInfo->ContextRecord->R12,
+        exceptionInfo->ContextRecord->R13,
+        exceptionInfo->ContextRecord->R14,
+        exceptionInfo->ContextRecord->R15
     );
 
     ExitProcess(0);

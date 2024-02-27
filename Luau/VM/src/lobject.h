@@ -323,7 +323,7 @@ typedef struct Proto
     RBX_VMVALUE_SUB_P_X<TString*> source);
 
     RBX_VMVALUE_XOR<TString*> debugname; // NOTE: this is vmvalued encrypted aka ptr encrypted
-    uint8_t* debuginsn; // a copy of code[] array with just opcodes | NOTE: this is vmvalued encrypted aka ptr encrypted
+    RBX_VMVALUE_ADD<uint8_t*> debuginsn; // a copy of code[] array with just opcodes | NOTE: this is vmvalued encrypted aka ptr encrypted
 
     RBX_VMVALUE_ADD<uint8_t*> typeinfo; // NOTE: this is vmvalued encrypted aka ptr encrypted
 
@@ -494,10 +494,10 @@ typedef struct Table
 #define twoto(x) ((int)(1 << (x)))
 #define sizenode(t) (twoto((t)->lsizenode))
 
-inline TValue* rluaO_nilobject = nullptr;
+extern TValue* rluaO_nilobject;
 #define luaO_nilobject rluaO_nilobject
 
-inline LuaNode* rluaH_dummynode = nullptr;
+extern LuaNode* rluaH_dummynode;
 #define dummynode rluaH_dummynode
 
 // #define luaO_nilobject (&luaO_nilobject_)

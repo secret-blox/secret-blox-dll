@@ -197,8 +197,8 @@ typedef struct global_State
     struct lua_State* mainthread,
     UpVal uvhead,                                    // head of double-linked list of all open upvalues
     struct Table* mt[LUA_T_COUNT],                   // metatables for basic types
-    TString* ttname[LUA_T_COUNT],       // names for basic types
-    TString* tmname[TM_N]);             // array with tag-method names
+    RBX_VMVALUE_XOR<TString*> ttname[LUA_T_COUNT],       // names for basic types
+    RBX_VMVALUE_XOR<TString*> tmname[TM_N]);             // array with tag-method names
 
     TValue pseudotemp; // storage for temporary values used in pseudo2addr
 
@@ -229,7 +229,6 @@ typedef struct global_State
 /*
 ** `per thread' state
 */
-typedef RBX_VMVALUE_ADD<global_State*> LGlobalType;
 // clang-format off
 struct lua_State
 {
@@ -244,7 +243,7 @@ struct lua_State
     LUAVM_SHUFFLE6(LUAVM_SEMICOLON_SEP,
     StkId top,                                        // first free slot in the stack
     StkId base,                                       // base of current function
-    LGlobalType global,                                // NOTE: this is vmvalued encrypted aka ptr encrypted (typically the same as stacksize)
+    RBX_VMVALUE_ADD<global_State*> global,                                // NOTE: this is vmvalued encrypted aka ptr encrypted (typically the same as stacksize)
     CallInfo* ci,                                     // call info for current function
     StkId stack_last,                                 // last free slot in the stack
     StkId stack);                                     // stack base
@@ -254,7 +253,7 @@ struct lua_State
     CallInfo* base_ci;                        // array of CallInfo's
 
 
-    int stacksize; // NOTE: this is vmvalued encrypted aka ptr encrypted (typically the same as global state)
+    RBX_VMVALUE_ADD<int> stacksize; // NOTE: this is vmvalued encrypted aka ptr encrypted (typically the same as global state)
     int size_ci;                              // size of array `base_ci'
 
 

@@ -2,6 +2,7 @@
 #include "Rbx/scriptcontext.hpp"
 #include "Rbx/taskscheduler.hpp"
 
+#include "Internal/execution.hpp"
 #include "Internal/logger.hpp"
 #include "Internal/memory.hpp"
 #include "Security/xor.hpp"
@@ -48,6 +49,7 @@ bool SB::Test::run()
     // verify state & tvalue integrity by grabbing globaltable
     const auto gt2 = luaA_toobject(RL, LUA_GLOBALSINDEX);
     SB_ASSERT((uintptr_t)gt2->value.gc == (uintptr_t)gt);
+    SB::Logger::printf(XORSTR("Start Top: %d\n"), lua_gettop(RL));
 
     /*
     lua_pushstring(RL, "epicstring");
@@ -64,21 +66,30 @@ bool SB::Test::run()
     SB_ASSERT(strcmp(version.value.gc->ts.data, "Luau") == 0);
 
     // verify closure struct
-    lua_rawgetfield(RL, LUA_GLOBALSINDEX, "warn");
-    auto warn = *luaA_toobject(RL, -1);
-    lua_pop(RL, 1);
-    SB_ASSERT(warn.tt == LUA_TFUNCTION);
-    auto& warnClosure = warn.value.gc->cl;
-    SB_ASSERT(warnClosure.isC == 1);
-    SB_ASSERT(warnClosure.nupvalues == 0);
-    SB_ASSERT(strcmp((const char*)warnClosure.c.debugname, "warn") == 0);
+    auto taskTT = lua_rawgetfield(RL, LUA_GLOBALSINDEX, "task");
+    SB_ASSERT(taskTT == LUA_TTABLE);
+    lua_rawgetfield(RL, -1, "spawn");
+    auto spawn = *luaA_toobject(RL, -1);
+    lua_pop(RL, 2);
+    SB_ASSERT(spawn.tt == LUA_TFUNCTION);
+    auto& spawnClosure = spawn.value.gc->cl;
+    SB_ASSERT(spawnClosure.isC == 1);
+    SB_ASSERT(spawnClosure.nupvalues == 0);
+    SB_ASSERT(strcmp((const char*)spawnClosure.c.debugname, "spawn") == 0);
     SB::Logger::printf(
-        XORSTR("warnClosure offset: %p\n"), 
-        (uintptr_t)((lua_CFunction)warnClosure.c.f) - SB::Memory::base
+        XORSTR("spawnClosure offset: %p\n"), 
+        (uintptr_t)((lua_CFunction)spawnClosure.c.f) - SB::Memory::base
     );
     
+    // TODO: fix crash caused by some misconfiguration vmvalues/shuffles
+    RbxBytecodeEncoder encoder;
+    auto code = XORSTR("local a = 1 + 2;\nprint(a);");
+    std::string Bytecode = Luau::compile(code, {}, {}, &encoder);
+    luau_load(RL, "=game", Bytecode.c_str(), Bytecode.size(), 0);
+    lua_CFunction spawnF = spawnClosure.c.f;
+    spawnF(RL);
+    lua_pop(RL, 1);
 
-    // TODO: verify new_thread & identity
-    
+    SB::Logger::printf(XORSTR("End Top: %d\n"), lua_gettop(RL));
     return true;
 }
