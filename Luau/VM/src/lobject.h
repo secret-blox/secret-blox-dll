@@ -306,26 +306,26 @@ typedef struct Proto
 
     // NOTE: all these are part of a encryption family called pMember1Enc (all 4 of these have the same encryption)
     LUAVM_SHUFFLE4(LUAVM_SEMICOLON_SEP,
-    TValue* k,              // constants used by the function
-    Instruction* code,      // function bytecode
-    struct Proto** p,       // functions defined inside the function
-    const Instruction* codeentry);
+    RBX_VMVALUE_XOR<TValue*> k,              // constants used by the function
+    RBX_VMVALUE_XOR<Instruction*> code,      // function bytecode
+    RBX_VMVALUE_XOR<struct Proto**> p,       // functions defined inside the function
+    RBX_VMVALUE_XOR<const Instruction*> codeentry);
 
     void* execdata;
     uintptr_t exectarget;
 
     // NOTE: all these are part of a encryption family called pMember2Enc (all 5 of these have the same encryption)
     LUAVM_SHUFFLE5(LUAVM_SEMICOLON_SEP,
-    uint8_t* lineinfo,      // for each instruction, line number as a delta from baseline
-    int* abslineinfo,       // baseline line info, one entry for each 1<<linegaplog2 instructions; allocated after lineinfo
-    struct LocVar* locvars, // information about local variables
-    TString** upvalues,     // upvalue names
-    TString* source);
+    RBX_VMVALUE_SUB_P_X<uint8_t*> lineinfo,      // for each instruction, line number as a delta from baseline
+    RBX_VMVALUE_SUB_P_X<int*> abslineinfo,       // baseline line info, one entry for each 1<<linegaplog2 instructions; allocated after lineinfo
+    RBX_VMVALUE_SUB_P_X<struct LocVar*> locvars, // information about local variables
+    RBX_VMVALUE_SUB_P_X<TString**> upvalues,     // upvalue names
+    RBX_VMVALUE_SUB_P_X<TString*> source);
 
-    TString* debugname; // NOTE: this is vmvalued encrypted aka ptr encrypted
+    RBX_VMVALUE_XOR<TString*> debugname; // NOTE: this is vmvalued encrypted aka ptr encrypted
     uint8_t* debuginsn; // a copy of code[] array with just opcodes | NOTE: this is vmvalued encrypted aka ptr encrypted
 
-    uint8_t* typeinfo; // NOTE: this is vmvalued encrypted aka ptr encrypted
+    RBX_VMVALUE_ADD<uint8_t*> typeinfo; // NOTE: this is vmvalued encrypted aka ptr encrypted
 
     void* userdata;
     GCObject* gclist;
@@ -409,7 +409,7 @@ typedef struct Closure
 
         struct
         {
-            struct Proto* p; // NOTE: this is vmvalued encrypted aka ptr encrypted (same as f)
+            RBX_VMVALUE_SUB_X_P<Proto*> p; // NOTE: this is vmvalued encrypted aka ptr encrypted (same as f)
             TValue uprefs[1];
         } l;
     };
