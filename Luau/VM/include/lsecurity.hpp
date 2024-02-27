@@ -2,6 +2,15 @@
 #include <cstdint>
 #pragma warning(disable: 4003) // not enough actual parameters for macro 'identifier' warning
 
+/*
+// BACKUP
+inline TValue* rluaO_nilobject = nullptr;
+#define luaO_nilobject rluaO_nilobject
+
+inline LuaNode* rluaH_dummynode = nullptr;
+#define dummynode rluaH_dummynode
+*/
+
 #define LUAVM_COMMA_SEP ,
 #define LUAVM_SEMICOLON_SEP ;
 #define LUAVM_SHUFFLE2(sep,a0,a1) a1 sep a0

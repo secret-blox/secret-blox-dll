@@ -292,11 +292,11 @@ static void dumpstring(FILE* f, TString* ts)
 
 static void dumptable(FILE* f, Table* h)
 {
-    size_t size = sizeof(Table) + (h->node == &luaH_dummynode ? 0 : sizenode(h) * sizeof(LuaNode)) + h->sizearray * sizeof(TValue);
+    size_t size = sizeof(Table) + (h->node == dummynode ? 0 : sizenode(h) * sizeof(LuaNode)) + h->sizearray * sizeof(TValue);
 
     fprintf(f, "{\"type\":\"table\",\"cat\":%d,\"size\":%d", h->memcat, int(size));
 
-    if (h->node != &luaH_dummynode)
+    if (h->node != dummynode)
     {
         fprintf(f, ",\"pairs\":[");
 
@@ -655,12 +655,12 @@ static void enumstring(EnumContext* ctx, TString* ts)
 
 static void enumtable(EnumContext* ctx, Table* h)
 {
-    size_t size = sizeof(Table) + (h->node == &luaH_dummynode ? 0 : sizenode(h) * sizeof(LuaNode)) + h->sizearray * sizeof(TValue);
+    size_t size = sizeof(Table) + (h->node == dummynode ? 0 : sizenode(h) * sizeof(LuaNode)) + h->sizearray * sizeof(TValue);
 
     // Provide a name for a special registry table
     enumnode(ctx, obj2gco(h), size, h == hvalue(registry(ctx->L)) ? "registry" : NULL);
 
-    if (h->node != &luaH_dummynode)
+    if (h->node != dummynode)
     {
         bool weakkey = false;
         bool weakvalue = false;
@@ -755,7 +755,7 @@ static void enumudata(EnumContext* ctx, Udata* u)
 
     if (Table* h = u->metatable)
     {
-        if (h->node != &luaH_dummynode)
+        if (h->node != dummynode)
         {
             for (int i = 0; i < sizenode(h); ++i)
             {

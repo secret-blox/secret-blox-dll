@@ -14,6 +14,10 @@
 namespace SB::Offsets
 {
 	#define OFFSET constexpr uintptr_t
+	namespace Luau {
+		OFFSET Hdummynode = 0x36774e8;				// [IMPORTANT]
+		OFFSET Hnilobject = 0x3677780;				// [IMPORTANT]
+	}
 	namespace Rbx {
 		const std::string version = "version-70a2467227df4077";
 		namespace Subs {

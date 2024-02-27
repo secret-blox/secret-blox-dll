@@ -50,8 +50,6 @@ const LuaNode luaH_dummynode = {
     {{NULL}, {0}, LUA_TNIL, 0} // key
 };
 
-#define dummynode (&luaH_dummynode)
-
 // hash is always reduced mod 2^k
 #define hashpow2(t, n) (gnode(t, lmod((n), sizenode(t))))
 

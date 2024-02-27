@@ -493,10 +493,14 @@ typedef struct Table
 #define twoto(x) ((int)(1 << (x)))
 #define sizenode(t) (twoto((t)->lsizenode))
 
-/* this is what you would change to make it robloxes luaO_nilobject */
-#define luaO_nilobject (&luaO_nilobject_)
+inline TValue* rluaO_nilobject = nullptr;
+#define luaO_nilobject rluaO_nilobject
 
-LUAI_DATA const TValue luaO_nilobject_;
+inline LuaNode* rluaH_dummynode = nullptr;
+#define dummynode rluaH_dummynode
+
+// #define luaO_nilobject (&luaO_nilobject_)
+// LUAI_DATA const TValue luaO_nilobject_;
 
 #define ceillog2(x) (luaO_log2((x)-1) + 1)
 

@@ -47,6 +47,8 @@ bool SB::Test::run()
     const auto gt2 = luaA_toobject(RL, LUA_GLOBALSINDEX);
     SB_ASSERT((uintptr_t)gt2->value.gc == (uintptr_t)gt);
 
+    // TODO: verify table struct
+    
     // TODO: verify getfield
     // TODO: verify new_thread & identity
     
