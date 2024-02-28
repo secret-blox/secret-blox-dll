@@ -11,8 +11,11 @@
 #include "offsets.hpp"
 
 ScriptsQueue SB::Execution::scriptsQueue;
+
 lua_State* SB::Execution::rState = nullptr;
 lua_State* SB::Execution::eState = nullptr;
+int SB::Execution::eStateRef = 0;
+
 lua_CFunc* SB::Execution::taskDefer = nullptr;
 lua_CFunc* SB::Execution::coCreate = nullptr;
 

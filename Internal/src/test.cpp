@@ -96,9 +96,11 @@ bool SB::Test::run()
     // create eState
     auto thread = SB::Execution::createThread(RL);
     SB::Execution::eState = thread;
+    SB::Execution::eStateRef = lua_ref(RL, -1); // create ref to eState
     lua_pop(thread, 1);
     SB::Execution::setIdentity(thread, SB::Execution::_8_Replicator);
     SB::Logger::printf(XORSTR("eState: %p\n"), (uintptr_t)thread);
+    SB::Logger::printf(XORSTR("eStateRef: %d\n"), SB::Execution::eStateRef);
     
     auto code = SB_SCRIPT_TEST;
     SB::Execution::execute(thread, code);
