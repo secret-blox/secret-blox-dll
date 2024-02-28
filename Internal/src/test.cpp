@@ -10,6 +10,7 @@
 #include "lua.h"
 #include "lapi.h"
 #include "lstate.h"
+#include "lualib.h"
 
 #include "sb_scripts.hpp"
 
@@ -95,10 +96,12 @@ bool SB::Test::run()
     SB::Logger::printf(XORSTR("coCreate: %p\n"), (uintptr_t)SB::Execution::coCreate - SB::Memory::base);
 
     auto thread = SB::Execution::createThread(RL);
+    luaL_sandboxthread(thread);
     SB::Execution::eState = thread;
-    SB::Execution::eStateRef = lua_ref(RL, -1); // create ref to eState
+    SB::Execution::eStateRef = lua_ref(thread, -1); // create ref to eState
     lua_pop(thread, 1);
     SB::Execution::setIdentity(thread, SB::Execution::_8_Replicator);
+    SB::Execution::ready = true;
     SB::Logger::printf(XORSTR("eState: %p\n"), (uintptr_t)thread);
     SB::Logger::printf(XORSTR("eStateRef: %d\n"), SB::Execution::eStateRef);
     

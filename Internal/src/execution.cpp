@@ -2,6 +2,9 @@
 #include "Internal/logger.hpp"
 #include "Internal/utils.hpp"
 
+#include "Rbx/taskscheduler.hpp"
+#include "Rbx/scriptcontext.hpp"
+
 #include "Security/xor.hpp"
 
 #include "lualib.h"
@@ -23,9 +26,23 @@ lua_CFunc* SB::Execution::coCreate = nullptr;
 void SB::Execution::setup()
 {
     // already setup
-    if (rState && eState)
+    if (ready)
         return;
-    // TODO
+
+    const auto taskScheduler = SB::Rbx::TaskScheduler::get();
+    const auto luaGc = taskScheduler.getJobByName("LuaGc");
+    Rbx::ScriptContext scriptContext = luaGc->getScriptContext();
+    Execution::rState = scriptContext.getLuaState();
+    SB::Execution::coCreate = SB::Execution::getLibraryFunc(rState, "coroutine", "create");
+    SB::Execution::taskDefer = SB::Execution::getLibraryFunc(rState, "task", "defer");
+
+    Execution::eState = SB::Execution::createThread(rState);
+    Execution::eStateRef = lua_ref(eState, -1); // create ref to eState
+    lua_pop(eState, 1);
+    luaL_sandboxthread(eState);
+    loadLibraries(eState);
+    setIdentity(eState, SB::Execution::_8_Replicator);
+    ready = true;
 }
 
 void SB::Execution::unload()
@@ -115,7 +132,7 @@ bool SB::Execution::execute(lua_State *L, std::string code)
 
     auto thread = createThread(L);
     lua_pop(thread, 1);
-    //luaL_sandboxthread(thread); // crash on gc
+    luaL_sandboxthread(thread); // crash on gc
 
     std::string compCode = "script=Instance.new(\"LocalScript\");\t" + code;
     std::string bytecode = Luau::compile(compCode, {}, {}, &encoder);
