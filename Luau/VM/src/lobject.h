@@ -266,7 +266,7 @@ typedef struct Udata
 
     int len;
 
-    struct Table* metatable; // NOTE: this is vmvalued encrypted aka ptr encrypted
+    RBX_VMVALUE_SUB_X_P<struct Table*> metatable; // NOTE: this is vmvalued encrypted aka ptr encrypted
 
     union
     {
@@ -477,9 +477,10 @@ typedef struct Table
         int aboundary; // negated 'boundary' of `array' array; iff aboundary < 0
     };
 
-    /* these 4 are part of the same encryption group called tMemberEnc (they have the possibility to change outside of the group) */
     LUAVM_SHUFFLE4(LUAVM_SEMICOLON_SEP,
+    /* Table->metatable is usually the same of Udata->metatable  */
     RBX_VMVALUE_SUB_X_P<struct Table*> metatable,
+    /* these 3 are part of the same encryption group called tMemberEnc (they have the possibility to change outside of the group) */
     RBX_VMVALUE_SUB_X_P<TValue*> array,  // array part
     RBX_VMVALUE_SUB_X_P<LuaNode*> node,
     RBX_VMVALUE_SUB_X_P<GCObject*> gclist);
