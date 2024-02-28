@@ -38,6 +38,7 @@ DWORD WINAPI startMain(LPVOID lpReserved) {
         SB::Logger::printf(XORSTR("Invalid offsets version, update offsets!\n"));
         return FALSE;
     }
+    
     #ifdef UNIT_TEST
     if(!SB::Test::run())
     {

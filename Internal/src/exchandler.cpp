@@ -1,9 +1,13 @@
 #include <map>
+#include <windows.h>
+#include <dbghelp.h>
 
 #include "Internal/logger.hpp"
 #include "Internal/exchandler.hpp"
 
 #include "Security/xor.hpp"
+
+#pragma comment(lib, "dbghelp.lib")
 
 // resource: https://github.com/tapika/stacktrace/blob/develop/src/exception_handler.cpp
 #define STACKTRACE_EXCEPTION_STRING(Code) { Code, #Code },
@@ -32,25 +36,82 @@ const std::map<unsigned int, const char*> exceptionCodes =
         STACKTRACE_EXCEPTION_STRING(EXCEPTION_INVALID_HANDLE)
 };
 
+#define MAX_STACK_FRAMES 10
+void printStacks(CONTEXT context)
+{
+    BOOL                result;
+    HANDLE              process;
+    HANDLE              thread;
+    STACKFRAME64        stack;
+    ULONG               frame;
+    DWORD64             displacement;
+
+    process                = GetCurrentProcess();
+    thread                 = GetCurrentThread();
+    displacement           = 0;
+
+    // Initialize stack
+    memset( &stack, 0, sizeof( STACKFRAME64 ) );
+    stack.AddrPC.Offset    = context.Rip;
+    stack.AddrPC.Mode      = AddrModeFlat;
+    stack.AddrStack.Offset = context.Rsp;
+    stack.AddrStack.Mode   = AddrModeFlat;
+    stack.AddrFrame.Offset = context.Rbp;
+    stack.AddrFrame.Mode   = AddrModeFlat;
+
+    
+    for( frame = 0; frame < MAX_STACK_FRAMES; frame++ )
+    {
+        result = StackWalk64
+        (
+            IMAGE_FILE_MACHINE_AMD64,
+            process,
+            thread,
+            &stack,
+            &context,
+            NULL,
+            SymFunctionTableAccess64,
+            SymGetModuleBase64,
+            NULL
+        );
+        if (!result)
+            break;
+
+        // If the return address is zero, we're done
+        if (stack.AddrReturn.Offset == 0) {
+            break;
+        }
+
+        SB::Logger::printf
+        (
+            XORSTR("\n\nFrame %lu:\n"
+            "    Symbol name:    ???\n"
+            "    PC address:     0x%08LX\n"
+            "    Stack address:  0x%08LX\n"
+            "    Frame address:  0x%08LX\n"
+            "\n"),
+            frame,
+            ( ULONG64 )stack.AddrPC.Offset,
+            ( ULONG64 )stack.AddrStack.Offset,
+            ( ULONG64 )stack.AddrFrame.Offset
+        );
+    }
+}
+
 LONG __stdcall SB::Memory::defaultExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
 {
+    // TODO: freeze all threads
+
     unsigned int code = exceptionInfo->ExceptionRecord->ExceptionCode;
     const char* str = XORSTR("Unknown exception code");
     if (exceptionCodes.find(code) != exceptionCodes.end())
         str = exceptionCodes.at(code);
-
-    uintptr_t retAddr = 0;
-    // todo use DbgHelp.h to traverse stack backs
-    #define STACK_SIZE 0
-    if (STACK_SIZE)
-        retAddr = *reinterpret_cast<uintptr_t*>(exceptionInfo->ContextRecord->Rsp + STACK_SIZE);
 
     SB::Logger::printf(
         XORSTR("CRASH DETECTED"
         "\n\nException caught: %s\n" \
         "Exception code: 0x%x\n" \
         "Exception address: 0x%p\n" \
-        "Return address: 0x%p\n" \
         "\nContext:\n" \
         "RIP: 0x%p\n" \
         "RSP: 0x%p\n"
@@ -73,7 +134,6 @@ LONG __stdcall SB::Memory::defaultExceptionFilter(EXCEPTION_POINTERS* exceptionI
         str,
         code,
         exceptionInfo->ExceptionRecord->ExceptionAddress,
-        retAddr,
         // context
         exceptionInfo->ContextRecord->Rip,
         exceptionInfo->ContextRecord->Rsp,
@@ -92,6 +152,8 @@ LONG __stdcall SB::Memory::defaultExceptionFilter(EXCEPTION_POINTERS* exceptionI
         exceptionInfo->ContextRecord->R14,
         exceptionInfo->ContextRecord->R15
     );
+
+    printStacks(*exceptionInfo->ContextRecord);
 
     ExitProcess(0);
 
