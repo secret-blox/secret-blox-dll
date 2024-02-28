@@ -11,6 +11,8 @@
 #include "lapi.h"
 #include "lstate.h"
 
+#include "sb_scripts.hpp"
+
 #define SB_ASSERT(expr) if (!(expr)) { SB::Logger::printf("Assertion failed, %s, at line %d. \n", #expr, __LINE__); return false; }
 
 bool SB::Test::run()
@@ -91,22 +93,14 @@ bool SB::Test::run()
     SB::Execution::taskDefer = SB::Execution::getLibraryFunc(RL, "task", "defer");
     SB_ASSERT(SB::Execution::taskDefer != nullptr);
     SB::Logger::printf(XORSTR("coCreate: %p\n"), (uintptr_t)SB::Execution::coCreate - SB::Memory::base);
-    // push fake object on RL stack
-    RL->top->tt = LUA_TFUNCTION;
-    RL->top++;
-    SB::Execution::coCreate(RL);
-    auto threadTV = *luaA_toobject(RL, -1);
-    auto thread = reinterpret_cast<lua_State*>(threadTV.value.gc);
-    lua_pop(RL, 2);
-    lua_pop(thread, 1);
-    SB_ASSERT(threadTV.tt == LUA_TTHREAD);
-    SB::Execution::setIdentity(thread, SB::Execution::_8_Replicator);
+    // create eState
+    auto thread = SB::Execution::createThread(RL);
     SB::Execution::eState = thread;
-    SB::Logger::printf(XORSTR("eState: %p\n"), thread);
+    lua_pop(thread, 1);
+    SB::Execution::setIdentity(thread, SB::Execution::_8_Replicator);
+    SB::Logger::printf(XORSTR("eState: %p\n"), (uintptr_t)thread);
     
-    // TODO: look at capabilites of thread
-    // TODO: fix crash after gc on called closure, probably caused by some misconfiguration vmvalues/shuffles
-    auto code = XORSTR("printidentity();print(game);script=Instance.new(\"LocalScript\");\t");
+    auto code = SB_SCRIPT_TEST;
     SB::Execution::execute(thread, code);
 
     SB::Logger::printf(XORSTR("End Top: %d\n"), lua_gettop(RL));

@@ -133,3 +133,26 @@ target_link_libraries(SB.Internal PUBLIC SB.Security)
 target_link_libraries(SB.Internal PUBLIC Luau.Common)
 target_link_libraries(SB.Internal PUBLIC Luau.Compiler)
 target_link_libraries(SB.Internal PUBLIC Luau.VM)
+
+
+# Define the directory containing Lua scripts
+set(LUA_SCRIPTS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Scripts)
+
+# Get a list of Lua script files in the directory
+file(GLOB LUA_SCRIPT_FILES ${LUA_SCRIPTS_DIR}/*.lua)
+
+# Generate a C++ header file containing the Lua scripts
+set(GENERATED_HEADER_SCRIPTS ${CMAKE_CURRENT_BINARY_DIR}/sb_scripts.hpp)
+file(WRITE ${GENERATED_HEADER_SCRIPTS} "// Auto-generated header file\n\n")
+
+foreach(SCRIPT_FILE ${LUA_SCRIPT_FILES})
+    file(READ ${SCRIPT_FILE} SCRIPT_CONTENTS HEX)
+    string(REGEX REPLACE "([0-9a-f][0-9a-f])" "0x\\1, " SCRIPT_CONTENTS "${SCRIPT_CONTENTS}")
+    file(RELATIVE_PATH SCRIPT_NAME ${LUA_SCRIPTS_DIR} ${SCRIPT_FILE})
+    string(REPLACE "/" "_" SCRIPT_NAME ${SCRIPT_NAME})
+    string(REGEX REPLACE "\\.lua$" "" SCRIPT_NAME ${SCRIPT_NAME})
+	string(TOUPPER ${SCRIPT_NAME} SCRIPT_NAME)
+    file(APPEND ${GENERATED_HEADER_SCRIPTS} "static const char SB_SCRIPT_${SCRIPT_NAME}[] = {${SCRIPT_CONTENTS}};\n\n")
+endforeach()
+
+include_directories(${CMAKE_CURRENT_BINARY_DIR})

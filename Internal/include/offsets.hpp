@@ -19,8 +19,7 @@ namespace SB::Offsets
 		OFFSET Hnilobject = 0x3677780;				// [IMPORTANT]
 		namespace Userdata {
 			OFFSET identity = 0x30;					// [RAREUPDATE] [IMPORTANT]
-			OFFSET capFlags = 0x40;					// [RAREUPDATE] [IMPORTANT]
-			OFFSET capFlags2 = 0x48;				// [RAREUPDATE] [IMPORTANT]
+			OFFSET capFlags = 0x48;					// [RAREUPDATE] [IMPORTANT]
 		}
 	};
 	namespace Rbx {
