@@ -31,17 +31,27 @@ void SB::Execution::setup()
 
     const auto taskScheduler = SB::Rbx::TaskScheduler::get();
     const auto luaGc = taskScheduler.getJobByName("LuaGc");
+    if (!luaGc.has_value())
+    {
+        SB::Logger::printf(XORSTR("Failed to get LuaGc job\n"));
+        return;
+    }
+
     Rbx::ScriptContext scriptContext = luaGc->getScriptContext();
     Execution::rState = scriptContext.getLuaState();
     SB::Execution::coCreate = SB::Execution::getLibraryFunc(rState, "coroutine", "create");
     SB::Execution::taskDefer = SB::Execution::getLibraryFunc(rState, "task", "defer");
-
-    Execution::eState = SB::Execution::createThread(rState);
+    if (!coCreate || !taskDefer)
+    {
+        SB::Logger::printf(XORSTR("Failed to get coroutine.create/task.defer\n"));
+        return;
+    }
+    Execution::eState = createThread(rState);
     Execution::eStateRef = lua_ref(eState, -1); // create ref to eState
     lua_pop(eState, 1);
     luaL_sandboxthread(eState);
     loadLibraries(eState);
-    setIdentity(eState, SB::Execution::_8_Replicator);
+    setIdentity(eState, _8_Replicator);
     ready = true;
 }
 
