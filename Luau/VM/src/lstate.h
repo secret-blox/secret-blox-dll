@@ -197,8 +197,8 @@ typedef struct global_State
     struct lua_State* mainthread,
     UpVal uvhead,                                    // head of double-linked list of all open upvalues
     struct Table* mt[LUA_T_COUNT],                   // metatables for basic types
-    RBX_VMVALUE_SUB_P_X<TString*> ttname[LUA_T_COUNT],       // names for basic types
-    RBX_VMVALUE_SUB_P_X<TString*> tmname[TM_N]);             // array with tag-method names
+    VMVALUE_SUB_P_X<TString*> ttname[LUA_T_COUNT],       // names for basic types
+    VMVALUE_SUB_P_X<TString*> tmname[TM_N]);             // array with tag-method names
 
     TValue pseudotemp; // storage for temporary values used in pseudo2addr
 
@@ -243,7 +243,7 @@ struct lua_State
     LUAVM_SHUFFLE6(LUAVM_SEMICOLON_SEP,
     StkId top,                                        // first free slot in the stack
     StkId base,                                       // base of current function
-    RBX_VMVALUE_ADD<global_State*> global,                                // NOTE: this is vmvalued encrypted aka ptr encrypted (typically the same as stacksize)
+    VMVALUE_ADD<global_State*> global,                                // NOTE: this is vmvalued encrypted aka ptr encrypted (typically the same as stacksize)
     CallInfo* ci,                                     // call info for current function
     StkId stack_last,                                 // last free slot in the stack
     StkId stack);                                     // stack base
@@ -253,7 +253,7 @@ struct lua_State
     CallInfo* base_ci;                        // array of CallInfo's
 
 
-    RBX_VMVALUE_ADD<int> stacksize; // NOTE: this is vmvalued encrypted aka ptr encrypted (typically the same as global state)
+    VMVALUE_ADD<int> stacksize;               // NOTE: this is vmvalued encrypted aka ptr encrypted (typically the same as global state)
     int size_ci;                              // size of array `base_ci'
 
 

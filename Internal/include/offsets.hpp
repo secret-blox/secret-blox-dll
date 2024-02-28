@@ -17,7 +17,12 @@ namespace SB::Offsets
 	namespace Luau {
 		OFFSET Hdummynode = 0x36774e8;				// [IMPORTANT]
 		OFFSET Hnilobject = 0x3677780;				// [IMPORTANT]
-	}
+		namespace Userdata {
+			OFFSET identity = 0x30;					// [RAREUPDATE] [IMPORTANT]
+			OFFSET capFlags = 0x40;					// [RAREUPDATE] [IMPORTANT]
+			OFFSET capFlags2 = 0x48;				// [RAREUPDATE] [IMPORTANT]
+		}
+	};
 	namespace Rbx {
 		const std::string version = "version-70a2467227df4077";
 		namespace Subs {

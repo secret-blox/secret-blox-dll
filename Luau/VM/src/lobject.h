@@ -248,8 +248,8 @@ typedef struct TString
 
     TString* next; // next string in the hash table bucket
 
-    RBX_VMVALUE_SUB_P_X<unsigned int> hash; // NOTE: this is vmvalued encrypted aka ptr encrypted
-    RBX_VMVALUE_SUB_X_P<unsigned int> len; // NOTE: this is vmvalued encrypted aka ptr encrypted
+    VMVALUE_SUB_P_X<unsigned int> hash; // NOTE: this is vmvalued encrypted aka ptr encrypted
+    VMVALUE_SUB_X_P<unsigned int> len; // NOTE: this is vmvalued encrypted aka ptr encrypted
 
     char data[1]; // string data is allocated right after the header
 } TString;
@@ -266,7 +266,7 @@ typedef struct Udata
 
     int len;
 
-    RBX_VMVALUE_SUB_X_P<struct Table*> metatable; // NOTE: this is vmvalued encrypted aka ptr encrypted
+    VMVALUE_SUB_X_P<struct Table*> metatable; // NOTE: this is vmvalued encrypted aka ptr encrypted
 
     union
     {
@@ -304,28 +304,29 @@ typedef struct Proto
     uint8_t maxstacksize,
     uint8_t flags);
 
-    // NOTE: all these are part of a encryption family called pMember1Enc (all 4 of these have the same encryption)
+    // NOTE: all these are part of a encryption family called pMember1Enc (all 3 of these have the same encryption)
+    // NOTE: codeentry may be added to the family
     LUAVM_SHUFFLE4(LUAVM_SEMICOLON_SEP,
-    RBX_VMVALUE_XOR<TValue*> k,              // constants used by the function
-    RBX_VMVALUE_XOR<Instruction*> code,      // function bytecode
-    RBX_VMVALUE_XOR<struct Proto**> p,       // functions defined inside the function
-    RBX_VMVALUE_XOR<const Instruction*> codeentry);
+    VMVALUE_XOR<TValue*> k,              // constants used by the function
+    VMVALUE_XOR<Instruction*> code,      // function bytecode
+    VMVALUE_XOR<struct Proto**> p,       // functions defined inside the function
+    const Instruction* codeentry);
 
     void* execdata;
     uintptr_t exectarget;
 
     // NOTE: all these are part of a encryption family called pMember2Enc (all 5 of these have the same encryption)
     LUAVM_SHUFFLE5(LUAVM_SEMICOLON_SEP,
-    RBX_VMVALUE_SUB_P_X<uint8_t*> lineinfo,      // for each instruction, line number as a delta from baseline
-    RBX_VMVALUE_SUB_P_X<int*> abslineinfo,       // baseline line info, one entry for each 1<<linegaplog2 instructions; allocated after lineinfo
-    RBX_VMVALUE_SUB_P_X<struct LocVar*> locvars, // information about local variables
-    RBX_VMVALUE_SUB_P_X<TString**> upvalues,     // upvalue names
-    RBX_VMVALUE_SUB_P_X<TString*> source);
+    VMVALUE_SUB_P_X<uint8_t*> lineinfo,      // for each instruction, line number as a delta from baseline
+    VMVALUE_SUB_P_X<int*> abslineinfo,       // baseline line info, one entry for each 1<<linegaplog2 instructions; allocated after lineinfo
+    VMVALUE_SUB_P_X<struct LocVar*> locvars, // information about local variables
+    VMVALUE_SUB_P_X<TString**> upvalues,     // upvalue names
+    VMVALUE_SUB_P_X<TString*> source);
 
-    RBX_VMVALUE_XOR<TString*> debugname; // NOTE: this is vmvalued encrypted aka ptr encrypted
-    RBX_VMVALUE_ADD<uint8_t*> debuginsn; // a copy of code[] array with just opcodes | NOTE: this is vmvalued encrypted aka ptr encrypted
+    VMVALUE_XOR<TString*> debugname; // NOTE: this is vmvalued encrypted aka ptr encrypted
+    VMVALUE_ADD<uint8_t*> debuginsn; // a copy of code[] array with just opcodes | NOTE: this is vmvalued encrypted aka ptr encrypted
 
-    RBX_VMVALUE_ADD<uint8_t*> typeinfo; // NOTE: this is vmvalued encrypted aka ptr encrypted
+    VMVALUE_ADD<uint8_t*> typeinfo; // NOTE: this is vmvalued encrypted aka ptr encrypted
 
     void* userdata;
     GCObject* gclist;
@@ -401,15 +402,15 @@ typedef struct Closure
         struct
         {
             /* all three are different besides p and f being the same */
-            RBX_VMVALUE_SUB_X_P<lua_CFunction> f; // NOTE: this is vmvalued encrypted aka ptr encrypted (same as p)
-            lua_Continuation cont; // NOTE: this is vmvalued encrypted aka ptr encrypted
-            RBX_VMVALUE_ADD<const char*> debugname; // NOTE: this is vmvalued encrypted aka ptr encrypted
+            VMVALUE_SUB_X_P<lua_CFunction> f; // NOTE: this is vmvalued encrypted aka ptr encrypted (same as p)
+            VMVALUE_XOR<lua_Continuation> cont; // NOTE: this is vmvalued encrypted aka ptr encrypted
+            VMVALUE_ADD<const char*> debugname; // NOTE: this is vmvalued encrypted aka ptr encrypted
             TValue upvals[1];
         } c;
 
         struct
         {
-            RBX_VMVALUE_SUB_X_P<Proto*> p; // NOTE: this is vmvalued encrypted aka ptr encrypted (same as f)
+            VMVALUE_SUB_X_P<Proto*> p; // NOTE: this is vmvalued encrypted aka ptr encrypted (same as f)
             TValue uprefs[1];
         } l;
     };
@@ -479,11 +480,11 @@ typedef struct Table
 
     LUAVM_SHUFFLE4(LUAVM_SEMICOLON_SEP,
     /* Table->metatable is usually the same of Udata->metatable  */
-    RBX_VMVALUE_SUB_X_P<struct Table*> metatable,
-    /* these 3 are part of the same encryption group called tMemberEnc (they have the possibility to change outside of the group) */
-    RBX_VMVALUE_SUB_X_P<TValue*> array,  // array part
-    RBX_VMVALUE_SUB_X_P<LuaNode*> node,
-    RBX_VMVALUE_SUB_X_P<GCObject*> gclist);
+    /* these 4 are part of the same encryption group called tMemberEnc (they have the possibility to change outside of the group) */
+    VMVALUE_SUB_X_P<struct Table*> metatable,
+    VMVALUE_SUB_X_P<TValue*> array,  // array part
+    VMVALUE_SUB_X_P<LuaNode*> node,
+    GCObject* gclist);
 } Table;
 // clang-format on
 

@@ -13,8 +13,6 @@
 
 #define SB_ASSERT(expr) if (!(expr)) { SB::Logger::printf("Assertion failed, %s, at line %d. \n", #expr, __LINE__); return false; }
 
-using luaCFunCC = int64_t __fastcall(lua_State*);
-
 bool SB::Test::run()
 {
     SB::Logger::printf(XORSTR("Internal Base: %p\n"), SB::Memory::base);
@@ -51,11 +49,15 @@ bool SB::Test::run()
     SB_ASSERT((uintptr_t)gt2->value.gc == (uintptr_t)gt);
     SB::Logger::printf(XORSTR("Start Top: %d\n"), lua_gettop(RL));
 
+    // SETUP EXECUTION
+    SB::Execution::rState = RL;
+
     /*
     lua_pushstring(RL, "epicstring");
     auto warnCC = reinterpret_cast<luaCFunCC*>SB_OFFSET(0xf2a1a0);
     warnCC(RL);
     */
+   // TODO: verify TString before performing operations on tables
 
     // verify table struct & tstring
     lua_rawgetfield(RL, LUA_GLOBALSINDEX, "_VERSION");
@@ -65,31 +67,49 @@ bool SB::Test::run()
     // version->value.gc->ts.data;
     SB_ASSERT(strcmp(version.value.gc->ts.data, "Luau") == 0);
 
-    // verify closure struct
-    auto taskTT = lua_rawgetfield(RL, LUA_GLOBALSINDEX, "task");
-    SB_ASSERT(taskTT == LUA_TTABLE);
-    lua_rawgetfield(RL, -1, "spawn");
-    auto spawn = *luaA_toobject(RL, -1);
-    lua_pop(RL, 2);
-    SB_ASSERT(spawn.tt == LUA_TFUNCTION);
-    auto& spawnClosure = spawn.value.gc->cl;
-    SB_ASSERT(spawnClosure.isC == 1);
-    SB_ASSERT(spawnClosure.nupvalues == 0);
-    SB_ASSERT(strcmp((const char*)spawnClosure.c.debugname, "spawn") == 0);
-    SB::Logger::printf(
-        XORSTR("spawnClosure offset: %p\n"), 
-        (uintptr_t)((lua_CFunction)spawnClosure.c.f) - SB::Memory::base
-    );
-    
-    // TODO: fix crash caused by some misconfiguration vmvalues/shuffles
-    RbxBytecodeEncoder encoder;
-    auto code = XORSTR("print(1 + 1);");
-    std::string Bytecode = Luau::compile(code, {}, {}, &encoder);
-    luau_load(RL, "=game", Bytecode.c_str(), Bytecode.size(), 0);
-    lua_CFunction spawnF = spawnClosure.c.f;
-    spawnF(RL);
+     // check table metatable by looking at game metatable
+    lua_rawgetfield(RL, LUA_GLOBALSINDEX, "game");
+    auto game = *luaA_toobject(RL, -1);
+    SB_ASSERT(game.tt == LUA_TUSERDATA);
+    SB_ASSERT(game.value.gc->u.metatable != nullptr);
+    SB_ASSERT(game.value.gc->u.metatable->tt == LUA_TTABLE);
     lua_pop(RL, 1);
 
+    // verify closure struct
+    lua_rawgetfield(RL, LUA_GLOBALSINDEX, "warn");
+    auto warnTV = *luaA_toobject(RL, -1);
+    lua_pop(RL, 1);
+    SB_ASSERT(warnTV.tt == LUA_TFUNCTION);
+    auto& warnClosure = warnTV.value.gc->cl;
+    SB_ASSERT(warnClosure.isC == 1);
+    SB_ASSERT(warnClosure.nupvalues == 0);
+    SB_ASSERT(strcmp((const char*)warnClosure.c.debugname, "warn") == 0);
+
+    // SETUP EXECUTION 2
+    SB::Execution::coCreate = SB::Execution::getLibraryFunc(RL, "coroutine", "create");
+    SB_ASSERT(SB::Execution::coCreate != nullptr);
+    SB::Execution::taskDefer = SB::Execution::getLibraryFunc(RL, "task", "defer");
+    SB_ASSERT(SB::Execution::taskDefer != nullptr);
+    SB::Logger::printf(XORSTR("coCreate: %p\n"), (uintptr_t)SB::Execution::coCreate - SB::Memory::base);
+    // push fake object on RL stack
+    RL->top->tt = LUA_TFUNCTION;
+    RL->top++;
+    SB::Execution::coCreate(RL);
+    auto threadTV = *luaA_toobject(RL, -1);
+    auto thread = reinterpret_cast<lua_State*>(threadTV.value.gc);
+    lua_pop(RL, 2);
+    lua_pop(thread, 1);
+    SB_ASSERT(threadTV.tt == LUA_TTHREAD);
+    SB::Execution::setIdentity(thread, SB::Execution::_8_Replicator);
+    SB::Execution::eState = thread;
+    SB::Logger::printf(XORSTR("eState: %p\n"), thread);
+    
+    // TODO: look at capabilites of thread
+    // TODO: fix crash after gc on called closure, probably caused by some misconfiguration vmvalues/shuffles
+    auto code = XORSTR("printidentity();script=Instance.new(\"LocalScript\");\t");
+    SB::Execution::execute(thread, code);
+
     SB::Logger::printf(XORSTR("End Top: %d\n"), lua_gettop(RL));
+    SB::Logger::printf(XORSTR("End Top2: %d\n"), lua_gettop(thread));
     return true;
 }

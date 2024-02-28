@@ -23,11 +23,13 @@ void SB::Rbx::ScriptContext::debugGetLuaState() const
 
 lua_State *SB::Rbx::ScriptContext::getLuaState() const
 {
+    #define STATE_INDEX 1
+    #define STATE_ITEM_SIZE 0x140
     if (!baseAddress)
         return nullptr;
     // TODO: avoid hardcoding offsets once we can consider the method stable
     uintptr_t statesArray = baseAddress + 0x110;
-    uintptr_t obfState = statesArray + 0x140 + 32 + 0x88; // remove 0x140 if you want a lower identity state
+    uintptr_t obfState = statesArray + (STATE_ITEM_SIZE * STATE_INDEX) + 32 + 0x88; // remove 0x140 if you want a lower identity state
     auto state = reinterpret_cast<lua_State*>(
         __PAIR64__(*reinterpret_cast<uint32_t*>(obfState + 4) + (int)obfState, (int)obfState + *reinterpret_cast<uint32_t*>(obfState))
     );

@@ -47,7 +47,7 @@ DWORD WINAPI startMain(LPVOID lpReserved) {
     #endif
 
     // TODO: perform important setups in order of priority
-    // SB::Execution::setup();
+    SB::Execution::setup();
     SB::Logger::printf(XORSTR("Internal: Loaded\n"));
     
     // TODO: check if execution setupped correctly
