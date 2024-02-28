@@ -43,11 +43,13 @@ namespace SB::Execution {
 
     extern ScriptsQueue scriptsQueue;
 
+    extern bool ready;
     extern lua_State* rState; // raw state
     extern lua_State* eState; // execution state
     extern int eStateRef; // execution state id reference
     extern lua_CFunc* taskDefer;
     extern lua_CFunc* coCreate;
+
     void setup();
     void unload();
 

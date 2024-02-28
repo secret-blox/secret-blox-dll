@@ -93,7 +93,7 @@ bool SB::Test::run()
     SB::Execution::taskDefer = SB::Execution::getLibraryFunc(RL, "task", "defer");
     SB_ASSERT(SB::Execution::taskDefer != nullptr);
     SB::Logger::printf(XORSTR("coCreate: %p\n"), (uintptr_t)SB::Execution::coCreate - SB::Memory::base);
-    // create eState
+
     auto thread = SB::Execution::createThread(RL);
     SB::Execution::eState = thread;
     SB::Execution::eStateRef = lua_ref(RL, -1); // create ref to eState

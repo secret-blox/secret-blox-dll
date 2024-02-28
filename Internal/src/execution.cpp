@@ -12,6 +12,7 @@
 
 ScriptsQueue SB::Execution::scriptsQueue;
 
+bool SB::Execution::ready = false;
 lua_State* SB::Execution::rState = nullptr;
 lua_State* SB::Execution::eState = nullptr;
 int SB::Execution::eStateRef = 0;
@@ -29,6 +30,11 @@ void SB::Execution::setup()
 
 void SB::Execution::unload()
 {
+}
+
+void SB::Execution::loadLibraries(lua_State* L)
+{
+    // TODO
 }
 
 lua_CFunc* SB::Execution::getLibraryFunc(lua_State *L, const char *libName, const char *funcName)
