@@ -35,10 +35,6 @@ inline LuaNode* rluaH_dummynode = nullptr;
         const T operator->() { \
             return operator const T(); \
         } \
-        T* operator&() { \
-            T value = operator const T(); \
-            return &value; \
-        } \
         void operator=(const T& value) obfBlock \
     protected: \
         T storage; \

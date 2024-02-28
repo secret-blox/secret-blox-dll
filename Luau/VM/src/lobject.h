@@ -326,7 +326,7 @@ typedef struct Proto
     VMVALUE_XOR<TString*> debugname; // NOTE: this is vmvalued encrypted aka ptr encrypted
     VMVALUE_ADD<uint8_t*> debuginsn; // a copy of code[] array with just opcodes | NOTE: this is vmvalued encrypted aka ptr encrypted
 
-    VMVALUE_ADD<uint8_t*> typeinfo; // NOTE: this is vmvalued encrypted aka ptr encrypted
+    VMVALUE_SUB_X_P<uint8_t*> typeinfo; // NOTE: this is vmvalued encrypted aka ptr encrypted
 
     void* userdata;
     GCObject* gclist;

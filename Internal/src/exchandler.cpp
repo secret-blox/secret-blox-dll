@@ -39,11 +39,18 @@ LONG __stdcall SB::Memory::defaultExceptionFilter(EXCEPTION_POINTERS* exceptionI
     if (exceptionCodes.find(code) != exceptionCodes.end())
         str = exceptionCodes.at(code);
 
+    uintptr_t retAddr = 0;
+    // todo use DbgHelp.h to traverse stack backs
+    #define STACK_SIZE 0
+    if (STACK_SIZE)
+        retAddr = *reinterpret_cast<uintptr_t*>(exceptionInfo->ContextRecord->Rsp + STACK_SIZE);
+
     SB::Logger::printf(
         XORSTR("CRASH DETECTED"
         "\n\nException caught: %s\n" \
         "Exception code: 0x%x\n" \
         "Exception address: 0x%p\n" \
+        "Return address: 0x%p\n" \
         "\nContext:\n" \
         "RIP: 0x%p\n" \
         "RSP: 0x%p\n"
@@ -66,7 +73,8 @@ LONG __stdcall SB::Memory::defaultExceptionFilter(EXCEPTION_POINTERS* exceptionI
         str,
         code,
         exceptionInfo->ExceptionRecord->ExceptionAddress,
-        // stack trace
+        retAddr,
+        // context
         exceptionInfo->ContextRecord->Rip,
         exceptionInfo->ContextRecord->Rsp,
         exceptionInfo->ContextRecord->Rbp,

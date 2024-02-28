@@ -106,7 +106,7 @@ bool SB::Test::run()
     
     // TODO: look at capabilites of thread
     // TODO: fix crash after gc on called closure, probably caused by some misconfiguration vmvalues/shuffles
-    auto code = XORSTR("printidentity();script=Instance.new(\"LocalScript\");\t");
+    auto code = XORSTR("printidentity();print(game);script=Instance.new(\"LocalScript\");\t");
     SB::Execution::execute(thread, code);
 
     SB::Logger::printf(XORSTR("End Top: %d\n"), lua_gettop(RL));
