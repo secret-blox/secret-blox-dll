@@ -38,14 +38,13 @@ LONG __stdcall SB::Memory::defaultExceptionFilter(EXCEPTION_POINTERS* exceptionI
     const char* str = XORSTR("Unknown exception code");
     if (exceptionCodes.find(code) != exceptionCodes.end())
         str = exceptionCodes.at(code);
-    
-    // TODO: Added Xor
+
     SB::Logger::printf(
         XORSTR("CRASH DETECTED"
         "\n\nException caught: %s\n" \
         "Exception code: 0x%x\n" \
         "Exception address: 0x%p\n" \
-        "\nStack trace:\n" \
+        "\nContext:\n" \
         "RIP: 0x%p\n" \
         "RSP: 0x%p\n"
         "RBP: 0x%p\n"
