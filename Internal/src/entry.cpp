@@ -6,6 +6,7 @@
 #include "Internal/execution.hpp"
 #include "Internal/test.hpp"
 #include "Internal/scheduler.hpp"
+#include "Internal/websocket.hpp"
 
 #include "Rbx/rapi.hpp"
 
@@ -32,7 +33,7 @@ DWORD WINAPI startMain(LPVOID lpReserved) {
     SB::Memory::setup(dllModule);
     SB::Rbx::setup();
     SB::Logger::printf(XORSTR("Internal Base: %p\n"), SB::Memory::base);
-    // SB::Websocket::setup();
+    SB::Websocket::setup();
     
     // perform offsets version check before running important setups
     if (!checkOffsetsVersion())
@@ -92,6 +93,7 @@ BOOL APIENTRY DllMain(HMODULE hModule,
     case DLL_PROCESS_DETACH:
         SB::Scheduler::unload();
 		SB::Memory::unload();
+        SB::Websocket::unload();
         SB::Logger::unload(); // unload logger for last
 		break;
     }
