@@ -33,6 +33,7 @@ DWORD WINAPI startMain(LPVOID lpReserved) {
     SB::Rbx::setup();
     SB::Logger::printf(XORSTR("Internal Base: %p\n"), SB::Memory::base);
     // SB::Websocket::setup();
+    
     // perform offsets version check before running important setups
     if (!checkOffsetsVersion())
     {
@@ -51,13 +52,10 @@ DWORD WINAPI startMain(LPVOID lpReserved) {
     SB::Logger::printf(XORSTR("UNIT TEST PASSED\n"));
     #endif
 
-    // TODO: perform important setups in order of priority
+    // perform important setups in order of priority
     SB::Scheduler::setup();
-    //SB::Execution::setup();
+    SB::Execution::setup();
     SB::Logger::printf(XORSTR("Internal: Loaded\n"));
-    
-    // TODO: check if execution setupped correctly
-    
     
     return TRUE;
 }
