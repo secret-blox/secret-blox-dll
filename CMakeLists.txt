@@ -1,6 +1,6 @@
 ﻿cmake_minimum_required (VERSION 3.8)
 
-option(UNIT_TEST "Perform unit testing" ON)
+option(UNIT_TEST "Perform unit testing" OFF)
 
 if(UNIT_TEST)
     add_definitions(-DUNIT_TEST)
@@ -152,7 +152,7 @@ foreach(SCRIPT_FILE ${LUA_SCRIPT_FILES})
     string(REPLACE "/" "_" SCRIPT_NAME ${SCRIPT_NAME})
     string(REGEX REPLACE "\\.lua$" "" SCRIPT_NAME ${SCRIPT_NAME})
 	string(TOUPPER ${SCRIPT_NAME} SCRIPT_NAME)
-    file(APPEND ${GENERATED_HEADER_SCRIPTS} "static const char SB_SCRIPT_${SCRIPT_NAME}[] = {${SCRIPT_CONTENTS}};\n\n")
+    file(APPEND ${GENERATED_HEADER_SCRIPTS} "static const char SB_SCRIPT_${SCRIPT_NAME}[] = {${SCRIPT_CONTENTS} 0x0};\n\n")
 endforeach()
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})

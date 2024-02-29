@@ -2,6 +2,7 @@
 #include "Rbx/scriptcontext.hpp"
 #include "Rbx/taskscheduler.hpp"
 
+#include "Internal/scheduler.hpp"
 #include "Internal/execution.hpp"
 #include "Internal/logger.hpp"
 #include "Internal/memory.hpp"
@@ -18,8 +19,6 @@
 
 bool SB::Test::run()
 {
-    SB::Logger::printf(XORSTR("Internal Base: %p\n"), SB::Memory::base);
-
     // exception handler will caugh this in case of failure
     const auto taskScheduler = SB::Rbx::TaskScheduler::get();
     SB::Logger::printf(XORSTR("TaskScheduler: %p\n"), taskScheduler.baseAddress);
@@ -106,7 +105,7 @@ bool SB::Test::run()
     SB::Logger::printf(XORSTR("eStateRef: %d\n"), SB::Execution::eStateRef);
     
     auto code = SB_SCRIPT_TEST;
-    SB::Execution::execute(thread, code);
+    SB::Scheduler::queueScript(code);
 
     SB::Logger::printf(XORSTR("End Top: %d\n"), lua_gettop(RL));
     SB::Logger::printf(XORSTR("End Top2: %d\n"), lua_gettop(thread));

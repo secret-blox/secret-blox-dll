@@ -5,6 +5,7 @@
 #include "Internal/memory.hpp"
 #include "Internal/execution.hpp"
 #include "Internal/test.hpp"
+#include "Internal/scheduler.hpp"
 
 #include "Rbx/rapi.hpp"
 
@@ -30,6 +31,7 @@ DWORD WINAPI startMain(LPVOID lpReserved) {
     SB::Logger::setup(SB::Utils::getDllDir(dllModule));
     SB::Memory::setup(dllModule);
     SB::Rbx::setup();
+    SB::Logger::printf(XORSTR("Internal Base: %p\n"), SB::Memory::base);
     // SB::Websocket::setup();
     // perform offsets version check before running important setups
     if (!checkOffsetsVersion())
@@ -40,15 +42,18 @@ DWORD WINAPI startMain(LPVOID lpReserved) {
     }
     
     #ifdef UNIT_TEST
+    SB::Logger::printf(XORSTR("UNIT TEST\n"));
     if(!SB::Test::run())
     {
         SB::Logger::printf(XORSTR("Unit test failed\n"));
         return FALSE;
     }
+    SB::Logger::printf(XORSTR("UNIT TEST PASSED\n"));
     #endif
 
     // TODO: perform important setups in order of priority
-    SB::Execution::setup();
+    SB::Scheduler::setup();
+    //SB::Execution::setup();
     SB::Logger::printf(XORSTR("Internal: Loaded\n"));
     
     // TODO: check if execution setupped correctly
@@ -87,6 +92,7 @@ BOOL APIENTRY DllMain(HMODULE hModule,
         break;
     }
     case DLL_PROCESS_DETACH:
+        SB::Scheduler::unload();
 		SB::Memory::unload();
         SB::Logger::unload(); // unload logger for last
 		break;

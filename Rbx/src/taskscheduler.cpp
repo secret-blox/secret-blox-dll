@@ -4,9 +4,12 @@
 
 using namespace SB::Rbx;
 
+uintptr_t taskScheduler = 0;
 TaskScheduler TaskScheduler::get()
 {
-	return TaskScheduler(getTaskScheduler());
+    if (!taskScheduler)
+        taskScheduler = getTaskScheduler();
+	return TaskScheduler(taskScheduler);
 }
 
 TaskScheduler::TaskScheduler(uintptr_t _baseAddress)

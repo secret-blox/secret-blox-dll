@@ -1,5 +1,3 @@
-#include <queue>
-
 #include "lua.h"
 #include "lobject.h"
 
@@ -25,7 +23,6 @@ class RbxBytecodeEncoder : public Luau::BytecodeEncoder {
     }
 };
 
-using ScriptsQueue = std::queue<std::string>;
 
 namespace SB::Execution {
     typedef enum {
@@ -40,8 +37,6 @@ namespace SB::Execution {
         _8_Replicator,				// Receiving data via replication
         COUNT_Identities            // Not a true identity. Used for enumeration
     } Identities;
-
-    extern ScriptsQueue scriptsQueue;
 
     extern bool ready;
     extern lua_State* rState; // raw state
@@ -68,6 +63,6 @@ namespace SB::Execution {
     /// it return the new thread and keep the thread on the stack for other operations
     /// </summary>
     lua_State* createThread(lua_State* L);
-    uintptr_t __cdecl schedulerHook(std::intptr_t self);
+    bool execute(std::string code);
     bool execute(lua_State* L, std::string code);
 }

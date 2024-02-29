@@ -153,7 +153,12 @@ LONG __stdcall SB::Memory::defaultExceptionFilter(EXCEPTION_POINTERS* exceptionI
         exceptionInfo->ContextRecord->R15
     );
 
-    printStacks(*exceptionInfo->ContextRecord);
+    try {
+        printStacks(*exceptionInfo->ContextRecord);
+    }
+    catch (...) {
+        SB::Logger::printf(XORSTR("Failed to walk stack\n"));
+    }
 
     ExitProcess(0);
 

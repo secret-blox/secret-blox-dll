@@ -13,8 +13,6 @@
 
 #include "offsets.hpp"
 
-ScriptsQueue SB::Execution::scriptsQueue;
-
 bool SB::Execution::ready = false;
 lua_State* SB::Execution::rState = nullptr;
 lua_State* SB::Execution::eState = nullptr;
@@ -127,18 +125,17 @@ lua_State* SB::Execution::createThread(lua_State* L)
 }
 
 RbxBytecodeEncoder encoder;
-uintptr_t __cdecl SB::Execution::schedulerHook(std::intptr_t self)
+bool SB::Execution::execute(std::string code)
 {
-    return uintptr_t();
+    return execute(eState, code);
 }
-
 bool SB::Execution::execute(lua_State *L, std::string code)
 {
-    if (!taskDefer)
-    {
-        SB::Logger::printf(XORSTR("taskDefer not set\n"));
+    if (!ready)
         return false;
-    }
+
+    if (!taskDefer)
+        return false;
 
     auto thread = createThread(L);
     lua_pop(thread, 1);

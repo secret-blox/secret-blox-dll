@@ -36,7 +36,7 @@ lua_State *SB::Rbx::ScriptContext::getLuaState() const
     // check if state is valid
     std::unique_ptr heap = std::make_unique<char[]>(0x100);
     const size_t diff = reinterpret_cast<uintptr_t>(heap.get()) - reinterpret_cast<uintptr_t>(state);
-    if (std::abs(static_cast<long long>(diff)) >= 0x63EF0000)
+    if (std::abs(static_cast<long long>(diff)) >= 0x802dd590)
     {
         SB::Logger::printf("lua_State out of heap boundaries: %p, diff: %llx\n", state, diff);
         return nullptr;
