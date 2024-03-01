@@ -7,7 +7,7 @@
 #include <stdint.h>
 
 #include "luaconf.h"
-
+#include "lsecurity.hpp"
 
 
 // option for multiple returns in `lua_pcall' and `lua_call'

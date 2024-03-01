@@ -47,7 +47,8 @@ DWORD WINAPI startMain(LPVOID lpReserved) {
     SB::Logger::printf(XORSTR("UNIT TEST\n"));
     if(!SB::Test::run())
     {
-        SB::Logger::printf(XORSTR("Unit test failed\n"));
+        SB::Logger::printf(XORSTR("UNIT TEST FAILED\n"));
+        ExitProcess(0);
         return FALSE;
     }
     SB::Logger::printf(XORSTR("UNIT TEST PASSED\n"));

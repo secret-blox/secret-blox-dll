@@ -1,6 +1,6 @@
 ﻿cmake_minimum_required (VERSION 3.8)
 
-option(UNIT_TEST "Perform unit testing" OFF)
+option(UNIT_TEST "Perform unit testing" ON)
 
 if(UNIT_TEST)
     add_definitions(-DUNIT_TEST)

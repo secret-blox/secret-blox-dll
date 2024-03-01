@@ -18,7 +18,7 @@ lua_State* SB::Execution::rState = nullptr;
 lua_State* SB::Execution::eState = nullptr;
 int SB::Execution::eStateRef = 0;
 
-lua_CFunc* SB::Execution::taskDefer = nullptr;
+lua_CFunc* SB::Execution::taskSpawn = nullptr;
 lua_CFunc* SB::Execution::coCreate = nullptr;
 
 void SB::Execution::setup()
@@ -38,8 +38,8 @@ void SB::Execution::setup()
     Rbx::ScriptContext scriptContext = luaGc->getScriptContext();
     Execution::rState = scriptContext.getLuaState();
     SB::Execution::coCreate = SB::Execution::getLibraryFunc(rState, "coroutine", "create");
-    SB::Execution::taskDefer = SB::Execution::getLibraryFunc(rState, "task", "defer");
-    if (!coCreate || !taskDefer)
+    SB::Execution::taskSpawn = SB::Execution::getLibraryFunc(rState, "task", "spawn");
+    if (!coCreate || !taskSpawn)
     {
         SB::Logger::printf(XORSTR("Failed to get coroutine.create/task.defer\n"));
         return;
@@ -117,10 +117,8 @@ lua_State* SB::Execution::createThread(lua_State* L)
         return nullptr;
     }
     auto L1 = reinterpret_cast<lua_State*>(L1TV.value.gc);
-    lua_pop(L, 2);
     lua_pop(L1, 1);
-    // push only the thread
-    lua_pushthread(L1); 
+    lua_pop(L, 2);
     return L1;
 }
 
@@ -131,15 +129,11 @@ bool SB::Execution::execute(std::string code)
 }
 bool SB::Execution::execute(lua_State *L, std::string code)
 {
-    if (!ready)
-        return false;
-
-    if (!taskDefer)
+    if (!ready || !taskSpawn)
         return false;
 
     auto thread = createThread(L);
-    lua_pop(thread, 1);
-    luaL_sandboxthread(thread); // crash on gc
+    //luaL_sandboxthread(thread);
 
     std::string compCode = "script=Instance.new(\"LocalScript\");\t" + code;
     std::string bytecode = Luau::compile(compCode, {}, {}, &encoder);
@@ -159,7 +153,7 @@ bool SB::Execution::execute(lua_State *L, std::string code)
         Proto* p = cl->l.p;
         setCapabilities(p, &sbCapabilities);
 
-        taskDefer(thread);
+        taskSpawn(thread);
         lua_pop(thread, 1);
     }
     else

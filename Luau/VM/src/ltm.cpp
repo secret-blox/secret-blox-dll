@@ -23,14 +23,12 @@ const char* const luaT_typenames[] = {
 
     "string",
 
-    LUAVM_SHUFFLE4(LUAVM_COMMA_SEP,
+    LUAVM_SHUFFLE5(LUAVM_COMMA_SEP,
     "table",
     "function",
     "userdata",
-    "thread"),
-
-
-    "buffer",
+    "thread",
+    "buffer")
 };
 
 const char* const luaT_eventname[] = {

@@ -15,20 +15,19 @@ namespace SB::Offsets
 {
 	#define OFFSET constexpr uintptr_t
 	namespace Luau {
-		OFFSET Hdummynode = 0x36774e8;				// [IMPORTANT]
-		OFFSET Hnilobject = 0x3677780;				// [IMPORTANT]
+		OFFSET Hdummynode = 0x36d3ce8;				// [IMPORTANT]
+		OFFSET Hnilobject = 0x36d3f80;				// [IMPORTANT]
 		namespace Userdata {
 			OFFSET identity = 0x30;					// [RAREUPDATE] [IMPORTANT]
 			OFFSET capFlags = 0x48;					// [RAREUPDATE] [IMPORTANT]
 		}
 	};
 	namespace Rbx {
-		const std::string version = "version-70a2467227df4077";
+		const std::string version = "version-bca459bcd1854ce4";
 		namespace Subs {
-			OFFSET printf = 0x11c3170;				// [IMPORTANT?]
-			OFFSET getTaskScheduler = 0x28a1900;	// [IMPORTANT]
-			OFFSET deobfTSJobsPtr = 0x28a2430;		// [IMPORTANT]
-			OFFSET pseudo2addr = 0x233d2c0;			// [IMPORTANT]
+			OFFSET printf = 0x11d3460;				// [IMPORTANT?]
+			OFFSET getTaskScheduler = 0x28f4c90;	// [IMPORTANT]
+			OFFSET deobfTSJobsPtr = 0x28f57c0;		// [IMPORTANT]
 		}
 		namespace Reflection {
 			namespace Descriptor {

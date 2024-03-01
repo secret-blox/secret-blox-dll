@@ -37,12 +37,20 @@ bool SB::Test::run()
     SB_ASSERT(dataModel.getBaseAddress() != 0);
     SB_ASSERT(scriptContext.getClassName() == "ScriptContext");
 
+    // verify nilobject & dummynode
+    SB::Logger::printf(XORSTR("Testing nilobject & dummynode\n"));
+    SB_ASSERT(rluaO_nilobject->tt == LUA_TNIL);
+    SB_ASSERT(rluaH_dummynode->key.tt == LUA_TNIL);
+    SB_ASSERT(rluaH_dummynode->val.tt == LUA_TNIL);
+
     lua_State* RL = scriptContext.getLuaState();
     SB_ASSERT(RL != nullptr);
     SB::Logger::printf(XORSTR("lua_State: %p\n"), RL);
+    SB_ASSERT(RL->tt == LUA_TTHREAD);
+    SB::Logger::printf(XORSTR("stackSize: %d\n"), (int)RL->stacksize);
 
     auto gt = RL->gt;
-    SB::Logger::printf(XORSTR("GlobalTable: %p\n"), gt);
+    SB::Logger::printf(XORSTR("RL GlobalTable: %p\n"), gt);
     SB_ASSERT(gt != nullptr);
     SB_ASSERT(gt->tt == LUA_TTABLE);
     
@@ -70,12 +78,22 @@ bool SB::Test::run()
     SB_ASSERT(strcmp(version.value.gc->ts.data, "Luau") == 0);
 
      // check table metatable by looking at game metatable
-    lua_rawgetfield(RL, LUA_GLOBALSINDEX, "game");
+    lua_getglobal(RL, "game");
     auto game = *luaA_toobject(RL, -1);
     SB_ASSERT(game.tt == LUA_TUSERDATA);
     SB_ASSERT(game.value.gc->u.metatable != nullptr);
     SB_ASSERT(game.value.gc->u.metatable->tt == LUA_TTABLE);
+    SB_ASSERT(game.value.gc->u.metatable->readonly == 1);
     lua_pop(RL, 1);
+
+    // try raw set field
+    lua_pushnumber(RL, 2069);
+    lua_rawsetfield(RL, LUA_GLOBALSINDEX, "epicnumber");
+    lua_rawgetfield(RL, LUA_GLOBALSINDEX, "epicnumber");
+    auto epicnumber = *luaA_toobject(RL, -1);
+    lua_pop(RL, 1);
+    SB_ASSERT(epicnumber.tt == LUA_TNUMBER);
+    SB_ASSERT(epicnumber.value.n == 2069);
 
     // verify closure struct
     lua_rawgetfield(RL, LUA_GLOBALSINDEX, "warn");
@@ -90,15 +108,45 @@ bool SB::Test::run()
     // SETUP EXECUTION 2
     SB::Execution::coCreate = SB::Execution::getLibraryFunc(RL, "coroutine", "create");
     SB_ASSERT(SB::Execution::coCreate != nullptr);
-    SB::Execution::taskDefer = SB::Execution::getLibraryFunc(RL, "task", "defer");
-    SB_ASSERT(SB::Execution::taskDefer != nullptr);
+    SB::Execution::taskSpawn = SB::Execution::getLibraryFunc(RL, "task", "spawn");
+    SB_ASSERT(SB::Execution::taskSpawn != nullptr);
     SB::Logger::printf(XORSTR("coCreate: %p\n"), (uintptr_t)SB::Execution::coCreate - SB::Memory::base);
 
     auto thread = SB::Execution::createThread(RL);
-    luaL_sandboxthread(thread);
+    SB_ASSERT(thread != nullptr);
+    SB_ASSERT(thread != RL);
+    SB_ASSERT(lua_gettop(thread) == 0);
+
+    //luaL_sandboxthread(thread);    
+    /*
+    SB_ASSERT((Table*)thread->gt != (Table*)RL->gt)
+    lua_getmetatable(thread, LUA_GLOBALSINDEX);
+    auto newGt = *luaA_toobject(thread, -1);
+    SB_ASSERT(newGt.tt == LUA_TTABLE);
+    SB_ASSERT(newGt.value.gc->h.readonly == 1);
+    lua_getfield(thread, -1, "__index");
+    auto gtIndex = *luaA_toobject(thread, -1);
+    lua_pop(thread, 2);
+    SB_ASSERT(gtIndex.tt == LUA_TTABLE);
+    SB_ASSERT((Table*)gtIndex.value.gc == RL->gt);
+    */
+    // try get game from new thread
+
+    lua_getglobal(thread, "game");
+    auto game2 = *luaA_toobject(thread, -1);
+    lua_pop(thread, 1);
+    SB::Logger::printf(XORSTR("game2: %p\n"), game2.value.gc );
+    SB::Logger::printf(XORSTR("game2tt: %d\n"), game2.tt );
+    SB_ASSERT(game2.tt == LUA_TUSERDATA);
+    SB_ASSERT(game2.value.gc == game.value.gc);
+
+
     SB::Execution::eState = thread;
+
+    lua_pushthread(thread);
     SB::Execution::eStateRef = lua_ref(thread, -1); // create ref to eState
     lua_pop(thread, 1);
+
     SB::Execution::setIdentity(thread, SB::Execution::_8_Replicator);
     SB::Execution::ready = true;
     SB::Logger::printf(XORSTR("eState: %p\n"), (uintptr_t)thread);

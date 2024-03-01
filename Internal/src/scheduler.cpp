@@ -4,6 +4,8 @@
 
 #include "Rbx/taskscheduler.hpp"
 
+#include "Security/xor.hpp"
+
 uintptr_t luaGcBase = 0;
 uintptr_t luaGcNewVFTable[10];
 uintptr_t jobCacheFunc = 0;
@@ -50,6 +52,7 @@ void SB::Scheduler::setup()
         Logger::printf("Failed to get LuaGc job\n");
         return;
     }
+    SB::Logger::printf(XORSTR("Copying Job VFTable\n"));
     luaGcBase = luaGc->baseAddress;
     luaGcOldVFTable = *reinterpret_cast<uintptr_t**>(luaGcBase);
     memcpy(luaGcNewVFTable, luaGcOldVFTable, sizeof(luaGcNewVFTable));
@@ -57,6 +60,7 @@ void SB::Scheduler::setup()
     jobCacheFunc = luaGcOldVFTable[2];
     luaGcNewVFTable[2] = reinterpret_cast<uintptr_t>(cacheHook);
 
+    SB::Logger::printf(XORSTR("Hooking Job VFTable\n"));
     *reinterpret_cast<uintptr_t**>(luaGcBase) = luaGcNewVFTable;
     ready = true;
 }
