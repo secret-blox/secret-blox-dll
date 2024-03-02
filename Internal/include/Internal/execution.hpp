@@ -42,7 +42,7 @@ namespace SB::Execution {
     extern lua_State* rState; // raw state
     extern lua_State* eState; // execution state
     extern int eStateRef; // execution state id reference
-    extern lua_CFunc* taskSpawn;
+    extern lua_CFunc* taskDefer;
     extern lua_CFunc* coCreate;
 
     void setup();

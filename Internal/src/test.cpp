@@ -62,6 +62,13 @@ bool SB::Test::run()
     // SETUP EXECUTION
     SB::Execution::rState = RL;
 
+    // verify global state 
+    TString* idxTS = RL->global->tmname[TM_INDEX];
+    SB::Logger::printf(XORSTR("idxTT: %d\n"), idxTS->tt);
+    SB_ASSERT(idxTS->tt == LUA_TSTRING);
+    SB::Logger::printf(XORSTR("idxTS: %s\n"), idxTS->data);
+    SB_ASSERT(strcmp(idxTS->data, "__index") == 0);
+
     /*
     lua_pushstring(RL, "epicstring");
     auto warnCC = reinterpret_cast<luaCFunCC*>SB_OFFSET(0xf2a1a0);
@@ -108,8 +115,8 @@ bool SB::Test::run()
     // SETUP EXECUTION 2
     SB::Execution::coCreate = SB::Execution::getLibraryFunc(RL, "coroutine", "create");
     SB_ASSERT(SB::Execution::coCreate != nullptr);
-    SB::Execution::taskSpawn = SB::Execution::getLibraryFunc(RL, "task", "spawn");
-    SB_ASSERT(SB::Execution::taskSpawn != nullptr);
+    SB::Execution::taskDefer = SB::Execution::getLibraryFunc(RL, "task", "defer");
+    SB_ASSERT(SB::Execution::taskDefer != nullptr);
     SB::Logger::printf(XORSTR("coCreate: %p\n"), (uintptr_t)SB::Execution::coCreate - SB::Memory::base);
 
     auto thread = SB::Execution::createThread(RL);
@@ -117,8 +124,8 @@ bool SB::Test::run()
     SB_ASSERT(thread != RL);
     SB_ASSERT(lua_gettop(thread) == 0);
 
-    //luaL_sandboxthread(thread);    
-    /*
+    luaL_sandboxthread(thread);    
+    
     SB_ASSERT((Table*)thread->gt != (Table*)RL->gt)
     lua_getmetatable(thread, LUA_GLOBALSINDEX);
     auto newGt = *luaA_toobject(thread, -1);
@@ -129,7 +136,6 @@ bool SB::Test::run()
     lua_pop(thread, 2);
     SB_ASSERT(gtIndex.tt == LUA_TTABLE);
     SB_ASSERT((Table*)gtIndex.value.gc == RL->gt);
-    */
     // try get game from new thread
 
     lua_getglobal(thread, "game");
@@ -146,6 +152,12 @@ bool SB::Test::run()
     lua_pushthread(thread);
     SB::Execution::eStateRef = lua_ref(thread, -1); // create ref to eState
     lua_pop(thread, 1);
+    // verify lua_ref
+    lua_getref(thread, SB::Execution::eStateRef);
+    auto eStateTV = *luaA_toobject(thread, -1);
+    lua_pop(thread, 1);
+    SB_ASSERT(eStateTV.tt == LUA_TTHREAD);
+    SB_ASSERT((lua_State*)eStateTV.value.gc == thread);
 
     SB::Execution::setIdentity(thread, SB::Execution::_8_Replicator);
     SB::Execution::ready = true;

@@ -18,7 +18,7 @@ lua_State* SB::Execution::rState = nullptr;
 lua_State* SB::Execution::eState = nullptr;
 int SB::Execution::eStateRef = 0;
 
-lua_CFunc* SB::Execution::taskSpawn = nullptr;
+lua_CFunc* SB::Execution::taskDefer = nullptr;
 lua_CFunc* SB::Execution::coCreate = nullptr;
 
 void SB::Execution::setup()
@@ -38,13 +38,14 @@ void SB::Execution::setup()
     Rbx::ScriptContext scriptContext = luaGc->getScriptContext();
     Execution::rState = scriptContext.getLuaState();
     SB::Execution::coCreate = SB::Execution::getLibraryFunc(rState, "coroutine", "create");
-    SB::Execution::taskSpawn = SB::Execution::getLibraryFunc(rState, "task", "spawn");
-    if (!coCreate || !taskSpawn)
+    SB::Execution::taskDefer = SB::Execution::getLibraryFunc(rState, "task", "defer");
+    if (!coCreate || !taskDefer)
     {
         SB::Logger::printf(XORSTR("Failed to get coroutine.create/task.defer\n"));
         return;
     }
     Execution::eState = createThread(rState);
+    lua_pushthread(eState);
     Execution::eStateRef = lua_ref(eState, -1); // create ref to eState
     lua_pop(eState, 1);
     luaL_sandboxthread(eState);
@@ -55,6 +56,12 @@ void SB::Execution::setup()
 
 void SB::Execution::unload()
 {
+    if (eStateRef)
+    {
+        lua_unref(eState, eStateRef);
+        eStateRef = 0;
+    }
+    return;
 }
 
 void SB::Execution::loadLibraries(lua_State* L)
@@ -129,11 +136,11 @@ bool SB::Execution::execute(std::string code)
 }
 bool SB::Execution::execute(lua_State *L, std::string code)
 {
-    if (!ready || !taskSpawn)
+    if (!ready || !taskDefer)
         return false;
 
     auto thread = createThread(L);
-    //luaL_sandboxthread(thread);
+    luaL_sandboxthread(thread);
 
     std::string compCode = "script=Instance.new(\"LocalScript\");\t" + code;
     std::string bytecode = Luau::compile(compCode, {}, {}, &encoder);
@@ -153,7 +160,7 @@ bool SB::Execution::execute(lua_State *L, std::string code)
         Proto* p = cl->l.p;
         setCapabilities(p, &sbCapabilities);
 
-        taskSpawn(thread);
+        taskDefer(thread);
         lua_pop(thread, 1);
     }
     else
@@ -164,7 +171,7 @@ bool SB::Execution::execute(lua_State *L, std::string code)
         );
         lua_pop(thread, 1);
     }
-
+    SB::Logger::printf(XORSTR("Executed, top=%d\n"), lua_gettop(thread));
 
     return true;
 }
