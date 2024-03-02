@@ -3,10 +3,11 @@
 #include "Internal/utils.hpp"
 #include "Internal/logger.hpp"
 #include "Internal/memory.hpp"
-#include "Internal/execution.hpp"
 #include "Internal/test.hpp"
-#include "Internal/scheduler.hpp"
 #include "Internal/websocket.hpp"
+
+#include "Execution/execution.hpp"
+#include "Execution/scheduler.hpp"
 
 #include "Rbx/rapi.hpp"
 
@@ -101,6 +102,6 @@ BOOL APIENTRY DllMain(HMODULE hModule,
     return TRUE;
 }
 
-extern "C" __declspec(dllexport) int secretBlox(int code, WPARAM wParam, LPARAM lParam) {
+extern "C" __declspec(dllexport) LRESULT secretBlox(int code, WPARAM wParam, LPARAM lParam) {
     return CallNextHookEx(NULL, code, wParam, lParam);
 }

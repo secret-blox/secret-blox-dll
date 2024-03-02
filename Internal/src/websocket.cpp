@@ -2,7 +2,8 @@
 
 #include "Internal/logger.hpp"
 #include "Internal/websocket.hpp"
-#include "Internal/scheduler.hpp"
+
+#include "Execution/scheduler.hpp"
 
 #include "Security/xor.hpp"
 

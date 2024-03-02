@@ -89,8 +89,8 @@ file(GLOB_RECURSE SEC_SRC_FILES "Security/src/*.cpp")
 file(GLOB_RECURSE SEC_HEADER_FILES "Security/include/*.h" "Security/include/*.hpp")
 
 # Find all source files in src & include directories
-file(GLOB_RECURSE SRC_FILES "Rbx/src/*.cpp" "Internal/src/*.cpp" "easywsclient/easywsclient.cpp")
-file(GLOB_RECURSE HEADER_FILES "Rbx/include/*.h" "Rbx/include/*.hpp" "Internal/include/*.h" "Internal/include/*.hpp" "easywsclient/easywsclient.hpp")
+file(GLOB_RECURSE SRC_FILES "Internal/src/*.cpp" "easywsclient/easywsclient.cpp")
+file(GLOB_RECURSE HEADER_FILES "Internal/include/*.h" "Internal/include/*.hpp" "easywsclient/easywsclient.hpp")
 
 # Security LIB
 add_library(SB.Security STATIC
@@ -112,7 +112,6 @@ add_library(SB.Internal SHARED
 )
 target_include_directories(SB.Internal
     PUBLIC Internal/include
-    PUBLIC Rbx/include
 	PUBLIC easywsclient
 	PUBLIC SB.Security
 	PUBLIC Luau.Common

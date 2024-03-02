@@ -1,11 +1,13 @@
 #include "Internal/test.hpp"
+#include "Internal/logger.hpp"
+#include "Internal/memory.hpp"
+
 #include "Rbx/scriptcontext.hpp"
 #include "Rbx/taskscheduler.hpp"
 
-#include "Internal/scheduler.hpp"
-#include "Internal/execution.hpp"
-#include "Internal/logger.hpp"
-#include "Internal/memory.hpp"
+#include "Execution/scheduler.hpp"
+#include "Execution/execution.hpp"
+
 #include "Security/xor.hpp"
 
 #include "lua.h"
@@ -23,14 +25,17 @@ bool SB::Test::run()
     const auto taskScheduler = SB::Rbx::TaskScheduler::get();
     SB::Logger::printf(XORSTR("TaskScheduler: %p\n"), taskScheduler.baseAddress);
 
+    // verify jobs count
     const auto jobs = taskScheduler.getJobs();
     const auto jobsSize = jobs.size();
     SB_ASSERT(jobsSize >= 20 && jobsSize <= 80); // jobs size should be between 20 and 80
     SB::Logger::printf(XORSTR("Jobs: %d\n"), jobs.size());
 
+    // verify LuaGc existence
     const auto luaGc = taskScheduler.getJobByName("LuaGc");
     SB_ASSERT(luaGc.has_value()); // LuaGc job should exist
 
+    // verify script context integrity
     Rbx::ScriptContext scriptContext = luaGc->getScriptContext();
     SB_ASSERT(scriptContext.getBaseAddress() != 0);
     Rbx::Instance dataModel = scriptContext.getParent();
@@ -43,14 +48,15 @@ bool SB::Test::run()
     SB_ASSERT(rluaH_dummynode->key.tt == LUA_TNIL);
     SB_ASSERT(rluaH_dummynode->val.tt == LUA_TNIL);
 
+    // retrive lua_State and verify integrity
     lua_State* RL = scriptContext.getLuaState();
     SB_ASSERT(RL != nullptr);
-    SB::Logger::printf(XORSTR("lua_State: %p\n"), RL);
+    SB::Logger::printf(XORSTR("Roblox lua_State: %p\n"), RL);
     SB_ASSERT(RL->tt == LUA_TTHREAD);
     SB::Logger::printf(XORSTR("stackSize: %d\n"), (int)RL->stacksize);
 
+    // verify global table
     auto gt = RL->gt;
-    SB::Logger::printf(XORSTR("RL GlobalTable: %p\n"), gt);
     SB_ASSERT(gt != nullptr);
     SB_ASSERT(gt->tt == LUA_TTABLE);
     
@@ -62,19 +68,13 @@ bool SB::Test::run()
     // SETUP EXECUTION
     SB::Execution::rState = RL;
 
-    // verify global state 
+    // verify global state integrity
+    SB::Logger::printf(XORSTR("Testing global state\n"));
     TString* idxTS = RL->global->tmname[TM_INDEX];
     SB::Logger::printf(XORSTR("idxTT: %d\n"), idxTS->tt);
     SB_ASSERT(idxTS->tt == LUA_TSTRING);
     SB::Logger::printf(XORSTR("idxTS: %s\n"), idxTS->data);
     SB_ASSERT(strcmp(idxTS->data, "__index") == 0);
-
-    /*
-    lua_pushstring(RL, "epicstring");
-    auto warnCC = reinterpret_cast<luaCFunCC*>SB_OFFSET(0xf2a1a0);
-    warnCC(RL);
-    */
-   // TODO: verify TString before performing operations on tables
 
     // verify table struct & tstring
     lua_rawgetfield(RL, LUA_GLOBALSINDEX, "_VERSION");
