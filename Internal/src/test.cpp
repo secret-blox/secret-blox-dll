@@ -76,6 +76,12 @@ bool SB::Test::run()
     SB::Logger::printf(XORSTR("idxTS: %s\n"), idxTS->data);
     SB_ASSERT(strcmp(idxTS->data, "__index") == 0);
 
+    TString* idxTS = RL->global->ttname[LUA_TFUNCTION];
+    SB::Logger::printf(XORSTR("idxTT: %d\n"), idxTS->tt);
+    SB_ASSERT(idxTS->tt == LUA_TSTRING);
+    SB::Logger::printf(XORSTR("idxTS: %s\n"), idxTS->data);
+    SB_ASSERT(strcmp(idxTS->data, "function") == 0);
+
     // verify table struct & tstring
     lua_rawgetfield(RL, LUA_GLOBALSINDEX, "_VERSION");
     auto version = *luaA_toobject(RL, -1);
@@ -119,13 +125,14 @@ bool SB::Test::run()
     SB_ASSERT(SB::Execution::taskDefer != nullptr);
     SB::Logger::printf(XORSTR("coCreate: %p\n"), (uintptr_t)SB::Execution::coCreate - SB::Memory::base);
 
+    // verify thread creation
     auto thread = SB::Execution::createThread(RL);
     SB_ASSERT(thread != nullptr);
     SB_ASSERT(thread != RL);
     SB_ASSERT(lua_gettop(thread) == 0);
 
+    // verify sandboxing
     luaL_sandboxthread(thread);    
-    
     SB_ASSERT((Table*)thread->gt != (Table*)RL->gt)
     lua_getmetatable(thread, LUA_GLOBALSINDEX);
     auto newGt = *luaA_toobject(thread, -1);
@@ -136,8 +143,8 @@ bool SB::Test::run()
     lua_pop(thread, 2);
     SB_ASSERT(gtIndex.tt == LUA_TTABLE);
     SB_ASSERT((Table*)gtIndex.value.gc == RL->gt);
-    // try get game from new thread
 
+    // verify sandbox env
     lua_getglobal(thread, "game");
     auto game2 = *luaA_toobject(thread, -1);
     lua_pop(thread, 1);
@@ -146,12 +153,12 @@ bool SB::Test::run()
     SB_ASSERT(game2.tt == LUA_TUSERDATA);
     SB_ASSERT(game2.value.gc == game.value.gc);
 
-
+    // SETUP EXECUTION 3
     SB::Execution::eState = thread;
-
     lua_pushthread(thread);
     SB::Execution::eStateRef = lua_ref(thread, -1); // create ref to eState
     lua_pop(thread, 1);
+
     // verify lua_ref
     lua_getref(thread, SB::Execution::eStateRef);
     auto eStateTV = *luaA_toobject(thread, -1);
@@ -161,13 +168,14 @@ bool SB::Test::run()
 
     SB::Execution::setIdentity(thread, SB::Execution::_8_Replicator);
     SB::Execution::ready = true;
+
     SB::Logger::printf(XORSTR("eState: %p\n"), (uintptr_t)thread);
     SB::Logger::printf(XORSTR("eStateRef: %d\n"), SB::Execution::eStateRef);
+    SB::Logger::printf(XORSTR("End Top: %d\n"), lua_gettop(RL));
+    SB::Logger::printf(XORSTR("End Top2: %d\n"), lua_gettop(thread));
     
     auto code = SB_SCRIPT_TEST;
     SB::Scheduler::queueScript(code);
-
-    SB::Logger::printf(XORSTR("End Top: %d\n"), lua_gettop(RL));
-    SB::Logger::printf(XORSTR("End Top2: %d\n"), lua_gettop(thread));
+    
     return true;
 }
