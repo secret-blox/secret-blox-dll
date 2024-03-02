@@ -6,10 +6,10 @@
 
 #include "Security/xor.hpp"
 
-uintptr_t luaGcBase = 0;
-uintptr_t luaGcNewVFTable[10];
+uintptr_t baseAddress = 0;
+uintptr_t newVFTable[10];
 uintptr_t jobCacheFunc = 0;
-uintptr_t* luaGcOldVFTable = 0;
+uintptr_t* oldVFTable = 0;
 
 namespace SB::Scheduler
 {
@@ -46,27 +46,27 @@ void SB::Scheduler::setup()
     if (ready)
         return;
     const auto taskScheduler = SB::Rbx::TaskScheduler::get();
-    const auto luaGc = taskScheduler.getJobByName("LuaGc");
-    if (!luaGc.has_value())
+    const auto job = taskScheduler.getJobByName("WaitingHybridScriptsJob");
+    if (!job.has_value())
     {
         Logger::printf("Failed to get LuaGc job\n");
         return;
     }
     SB::Logger::printf(XORSTR("Copying Job VFTable\n"));
-    luaGcBase = luaGc->baseAddress;
-    luaGcOldVFTable = *reinterpret_cast<uintptr_t**>(luaGcBase);
-    memcpy(luaGcNewVFTable, luaGcOldVFTable, sizeof(luaGcNewVFTable));
+    baseAddress = job->baseAddress;
+    oldVFTable = *reinterpret_cast<uintptr_t**>(baseAddress);
+    memcpy(newVFTable, oldVFTable, sizeof(newVFTable));
 
-    jobCacheFunc = luaGcOldVFTable[2];
-    luaGcNewVFTable[2] = reinterpret_cast<uintptr_t>(cacheHook);
+    jobCacheFunc = oldVFTable[2];
+    newVFTable[2] = reinterpret_cast<uintptr_t>(cacheHook);
 
     SB::Logger::printf(XORSTR("Hooking Job VFTable\n"));
-    *reinterpret_cast<uintptr_t**>(luaGcBase) = luaGcNewVFTable;
+    *reinterpret_cast<uintptr_t**>(baseAddress) = newVFTable;
     ready = true;
 }
 
 void SB::Scheduler::unload()
 {
-    *reinterpret_cast<uintptr_t**>(luaGcBase) = luaGcOldVFTable;
+    *reinterpret_cast<uintptr_t**>(baseAddress) = oldVFTable;
     ready = false;
 }
