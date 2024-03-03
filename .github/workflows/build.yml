@@ -23,9 +23,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4.1.1
 
-    - name: Configure Project
-      uses: threeal/cmake-action@v1.3.0
-
     - name: Configure CMake
       run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
       working-directory: ${{ github.workspace }}
