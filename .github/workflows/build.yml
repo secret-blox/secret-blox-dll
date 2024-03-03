@@ -1,0 +1,39 @@
+name: CMake Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build on x64 Release
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up CMake
+      uses: actions/setup-cmake@v1
+      with:
+        cmake-version: '3.21.3'
+
+    - name: Create build directory
+      run: mkdir build
+      working-directory: ${{ github.workspace }}
+
+    - name: Configure CMake
+      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_GENERATOR_PLATFORM=x64
+      working-directory: ${{ github.workspace }}
+
+    - name: Build
+      run: cmake --build build --config Release --target all
+      working-directory: ${{ github.workspace }}
+
+    - name: Run tests
+      run: ctest --test-dir build --output-on-failure
+      working-directory: ${{ github.workspace }}
