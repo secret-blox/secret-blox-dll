@@ -76,11 +76,11 @@ bool SB::Test::run()
     SB::Logger::printf(XORSTR("idxTS: %s\n"), idxTS->data);
     SB_ASSERT(strcmp(idxTS->data, "__index") == 0);
 
-    TString* idxTS = RL->global->ttname[LUA_TFUNCTION];
-    SB::Logger::printf(XORSTR("idxTT: %d\n"), idxTS->tt);
-    SB_ASSERT(idxTS->tt == LUA_TSTRING);
-    SB::Logger::printf(XORSTR("idxTS: %s\n"), idxTS->data);
-    SB_ASSERT(strcmp(idxTS->data, "function") == 0);
+    TString* funcTT = RL->global->ttname[LUA_TFUNCTION];
+    SB::Logger::printf(XORSTR("funcTT: %d\n"), funcTT->tt);
+    SB_ASSERT(funcTT->tt == LUA_TSTRING);
+    SB::Logger::printf(XORSTR("funcTT: %s\n"), funcTT->data);
+    SB_ASSERT(strcmp(funcTT->data, "function") == 0);
 
     // verify table struct & tstring
     lua_rawgetfield(RL, LUA_GLOBALSINDEX, "_VERSION");
