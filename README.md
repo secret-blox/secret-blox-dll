@@ -1,3 +1,6 @@
+SBDLL ![](https://github.com/secret-blox/secret-blox-dll/actions/workflows/build.yml/badge.svg)
+====
+
 ### Notes
 
 * Project namespace: `SB`

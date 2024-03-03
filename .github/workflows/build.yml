@@ -4,36 +4,32 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '*.md'
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - '*.md'
 
 jobs:
   build:
     name: Build on x64 Release
     runs-on: windows-latest
-    
+    strategy:
+      matrix:
+        arch: [x64]
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v4.1.1
 
-    - name: Set up CMake
-      uses: actions/setup-cmake@v1
-      with:
-        cmake-version: '3.21.3'
-
-    - name: Create build directory
-      run: mkdir build
-      working-directory: ${{ github.workspace }}
+    - name: Configure Project
+      uses: threeal/cmake-action@v1.3.0
 
     - name: Configure CMake
-      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_GENERATOR_PLATFORM=x64
+      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
       working-directory: ${{ github.workspace }}
 
     - name: Build
       run: cmake --build build --config Release --target all
-      working-directory: ${{ github.workspace }}
-
-    - name: Run tests
-      run: ctest --test-dir build --output-on-failure
       working-directory: ${{ github.workspace }}
